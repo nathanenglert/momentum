@@ -15,7 +15,7 @@ import {
 
 export interface DatePickerProps {
   className: string
-  value: Date
+  value: Date | undefined
   onChange: (...event: any[]) => void
 }
 

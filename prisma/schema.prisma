@@ -64,5 +64,6 @@ model Task {
   dueDate     DateTime?
   status      String    @default("NOT_STARTED")
   category    String
+  frequency   String    @default("SINGLE")
   User        User      @relation(fields: [userId], references: [id])
 }
