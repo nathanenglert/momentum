@@ -1,7 +1,9 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useTransition } from "react"
+import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Description } from "@radix-ui/react-dialog"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 
@@ -17,16 +19,16 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
-import { Combobox } from "./ui/combobox"
-import { DatePicker } from "./ui/date-picker"
+import { Combobox } from "../ui/combobox"
+import { DatePicker } from "../ui/date-picker"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select"
-import { Textarea } from "./ui/textarea"
+} from "../ui/select"
+import { Textarea } from "../ui/textarea"
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -39,19 +41,39 @@ const formSchema = z.object({
 })
 
 export function TaskForm() {
+  const router = useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {},
+    defaultValues: {
+      title: "",
+    },
   })
   const [hasDescription, setHasDescription] = useState(false)
   const [hasDueDate, setHasDueDate] = useState(false)
   const [hasCategory, setHasCategory] = useState(false)
   const [hasFrequency, setHasFrequency] = useState(false)
+  const [isPending, startTransition] = useTransition()
+  const [isFetching, setIsFetching] = useState(false)
+  const isMutating = isFetching || isPending
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    setIsFetching(true)
+
+    const res = await fetch("/api/task", {
+      method: "POST",
+      body: JSON.stringify(values),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+
+    setIsFetching(false)
+
+    form.reset()
+
+    startTransition(() => {
+      router.refresh()
+    })
   }
 
   return (
@@ -185,7 +207,9 @@ export function TaskForm() {
           >
             Frequency
           </Button>
-          <Button type="submit">Submit</Button>
+          <Button type="submit" disabled={isMutating}>
+            Submit
+          </Button>
         </div>
       </form>
     </Form>

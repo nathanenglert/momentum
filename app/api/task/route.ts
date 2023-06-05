@@ -14,7 +14,6 @@ export async function POST(req: Request) {
       userId: currentUserId,
       title,
       description,
-      category,
       dueDate,
     },
   })
@@ -35,7 +34,7 @@ export async function PUT(req: NextRequest) {
 
   const record = await prisma.task.update({
     where: { id: taskId },
-    data: { title, description, category, dueDate, status },
+    data: { title, description, dueDate, status },
   })
 
   return NextResponse.json(record)
