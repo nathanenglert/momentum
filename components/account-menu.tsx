@@ -3,27 +3,17 @@
 import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@radix-ui/react-popover"
 import { signIn, signOut, useSession } from "next-auth/react"
 
 import { Button } from "./ui/button"
 
 export default function AccountMenu() {
   const { data: session, status } = useSession()
-  const [menuActive, toggleMenuActive] = useState(false)
-  const accountMenu: any = useRef(null)
-
-  useEffect(() => {
-    const closeActiveMenus = (e: any) => {
-      if (
-        accountMenu.current &&
-        menuActive &&
-        !accountMenu.current.contains(e.target)
-      ) {
-        toggleMenuActive(false)
-      }
-    }
-    document?.addEventListener("mousedown", closeActiveMenus)
-  })
 
   if (status === "unauthenticated") {
     return (
@@ -41,45 +31,43 @@ export default function AccountMenu() {
   }
 
   return (
-    <div className="relative" ref={accountMenu}>
-      <Button
-        className="transition"
-        variant={`ghost`}
-        onClick={() => toggleMenuActive(!menuActive)}
-      >
-        <span className="sr-only">Menu</span>
-        <Image
-          src={session.user?.image ?? "/default-avatar.webp"}
-          className="h-10 w-10 rounded-full object-cover"
-          alt={session.user?.name || "User's avatar"}
-          height={40}
-          width={40}
-        />
-
-        <p className="ms-2 hidden text-left text-xs sm:block">
-          <strong className="block font-medium text-foreground">
-            {session.user?.name}
-          </strong>
-
-          <span className="text-muted-foreground">{session.user?.email}</span>
-        </p>
-
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="ms-4 hidden h-5 w-5 text-muted-foreground transition group-hover:text-gray-700 sm:block"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fillRule="evenodd"
-            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-            clipRule="evenodd"
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button className="transition" variant={`ghost`}>
+          <span className="sr-only">Menu</span>
+          <Image
+            src={session.user?.image ?? "/default-avatar.webp"}
+            className="h-10 w-10 rounded-full object-cover"
+            alt={session.user?.name || "User's avatar"}
+            height={40}
+            width={40}
           />
-        </svg>
-      </Button>
-      {menuActive && (
+
+          <p className="ms-2 hidden text-left text-xs sm:block">
+            <strong className="block font-medium text-foreground">
+              {session.user?.name}
+            </strong>
+
+            <span className="text-muted-foreground">{session.user?.email}</span>
+          </p>
+
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="ms-4 hidden h-5 w-5 text-muted-foreground transition group-hover:text-gray-700 sm:block"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fillRule="evenodd"
+              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+              clipRule="evenodd"
+            />
+          </svg>
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent>
         <div
-          className="absolute end-0 z-10 mt-2 w-56 divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-lg"
+          className="z-10 mb-2 w-56 divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-lg"
           role="menu"
         >
           <div className="p-2">
@@ -123,7 +111,7 @@ export default function AccountMenu() {
             </Button>
           </div>
         </div>
-      )}
-    </div>
+      </PopoverContent>
+    </Popover>
   )
 }
