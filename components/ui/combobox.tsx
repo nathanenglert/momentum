@@ -58,18 +58,22 @@ export function Combobox({ className, value, onChange }: ComboBoxProps) {
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className={cn("w-[200px] justify-between", className)}
+            className={cn(
+              "w-[200px] justify-between",
+              className,
+              !value && `text-muted-foreground`
+            )}
           >
             {value
               ? frameworks.find((framework) => framework.value === value)?.label
-              : "Select framework..."}
+              : "What pillar will it satisfy?"}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[200px] p-0">
           <Command>
-            <CommandInput placeholder="Search framework..." />
-            <CommandEmpty>No framework found.</CommandEmpty>
+            <CommandInput placeholder="Category" />
+            <CommandEmpty>No category found.</CommandEmpty>
             <CommandGroup>
               {frameworks.map((framework) => (
                 <CommandItem
