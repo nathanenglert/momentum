@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth"
 import { prisma } from "@/lib/prisma"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 
-import { Checkbox } from "../ui/checkbox"
+import { TaskCheckbox } from "./task-checkbox"
 
 export async function TaskList() {
   const session = await getServerSession(authOptions)
@@ -18,7 +18,7 @@ export async function TaskList() {
     <ul className="mt-12 space-y-4">
       {tasks.map((task) => (
         <li key={task.id} className="flex items-center space-x-2">
-          <Checkbox id={`done-${task.id}`} />
+          <TaskCheckbox id={task.id} status={task.status} />
           <label
             htmlFor={`done-${task.id}`}
             className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
