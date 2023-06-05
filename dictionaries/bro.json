@@ -1,0 +1,25 @@
+{
+  "taskForm": {
+    "title": {
+      "placeholder": "What are we crushing today?",
+      "description": "The title of the task you're about to rock!"
+    },
+    "description": {
+      "placeholder": "Why is it important?",
+      "description": "The deets of that task."
+    },
+    "frequency": {
+      "placeholder": "How often?",
+      "description": "How often you doing this thing?"
+    },
+    "dueDate": {
+      "placeholder": "When?",
+      "description": "When is that thing due?"
+    },
+    "category": {
+      "placeholder": "What pillar will it satisfy?",
+      "description": ""
+    },
+    "submit": "Submit"
+  }
+}

@@ -16,10 +16,16 @@ import {
 export interface DatePickerProps {
   className: string
   value: Date | undefined
+  placeholder: string
   onChange: (...event: any[]) => void
 }
 
-export function DatePicker({ className, value, onChange }: DatePickerProps) {
+export function DatePicker({
+  className,
+  value,
+  placeholder,
+  onChange,
+}: DatePickerProps) {
   return (
     <>
       <Popover>
@@ -33,7 +39,7 @@ export function DatePicker({ className, value, onChange }: DatePickerProps) {
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
-            {value ? format(value, "PPP") : <span>Pick a date</span>}
+            {value ? format(value, "PPP") : <span>{placeholder}</span>}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0">

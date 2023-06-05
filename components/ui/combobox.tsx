@@ -44,10 +44,16 @@ const frameworks = [
 export interface ComboBoxProps {
   className: string
   value: string | undefined
+  placeholder: string
   onChange: (...event: any[]) => void
 }
 
-export function Combobox({ className, value, onChange }: ComboBoxProps) {
+export function Combobox({
+  className,
+  value,
+  placeholder,
+  onChange,
+}: ComboBoxProps) {
   const [open, setOpen] = React.useState(false)
 
   return (
@@ -66,7 +72,7 @@ export function Combobox({ className, value, onChange }: ComboBoxProps) {
           >
             {value
               ? frameworks.find((framework) => framework.value === value)?.label
-              : "What pillar will it satisfy?"}
+              : placeholder}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>

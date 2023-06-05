@@ -3,10 +3,10 @@
 import { useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Description } from "@radix-ui/react-dialog"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 
+import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -40,7 +40,11 @@ const formSchema = z.object({
   frequency: z.string().optional(),
 })
 
-export function TaskForm() {
+export interface TaskFormProps {
+  dict: any
+}
+
+export function TaskForm({ dict }: TaskFormProps) {
   const router = useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -86,10 +90,10 @@ export function TaskForm() {
             <FormItem>
               <FormLabel className="sr-only">Title</FormLabel>
               <FormControl>
-                <Input placeholder="What are we crushing today?" {...field} />
+                <Input placeholder={dict.title.placeholder} {...field} />
               </FormControl>
               <FormDescription className="sr-only">
-                The title of the task you're about to rock!
+                {dict.title.description}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -103,10 +107,13 @@ export function TaskForm() {
               <FormItem>
                 <FormLabel className="sr-only">Description</FormLabel>
                 <FormControl>
-                  <Textarea placeholder="Why is it important?" {...field} />
+                  <Textarea
+                    placeholder={dict.description.placeholder}
+                    {...field}
+                  />
                 </FormControl>
                 <FormDescription className="sr-only">
-                  The deets of that task.
+                  {dict.description.description}
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -125,8 +132,10 @@ export function TaskForm() {
                   defaultValue={field.value}
                 >
                   <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="How often?" />
+                    <SelectTrigger
+                      className={cn(!field.value && `text-muted-foreground`)}
+                    >
+                      <SelectValue placeholder={dict.frequency.placeholder} />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
@@ -136,7 +145,7 @@ export function TaskForm() {
                   </SelectContent>
                 </Select>
                 <FormDescription className="sr-only">
-                  How often you doing this thing?
+                  {dict.frequency.description}
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -153,12 +162,13 @@ export function TaskForm() {
                 <FormControl>
                   <DatePicker
                     className={`w-full`}
+                    placeholder={dict.dueDate.placeholder}
                     value={field.value}
                     onChange={field.onChange}
                   />
                 </FormControl>
                 <FormDescription className="sr-only">
-                  When is that thing due?
+                  {dict.dueDate.description}
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -175,11 +185,14 @@ export function TaskForm() {
                 <FormControl>
                   <Combobox
                     className={`w-full`}
+                    placeholder={dict.category.placeholder}
                     value={field.value}
                     onChange={field.onChange}
                   />
                 </FormControl>
-                <FormDescription className="sr-only" />
+                <FormDescription className="sr-only">
+                  {dict.category.description}
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -208,7 +221,7 @@ export function TaskForm() {
             Frequency
           </Button>
           <Button type="submit" disabled={isMutating}>
-            Submit
+            {dict.submit}
           </Button>
         </div>
       </form>
