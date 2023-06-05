@@ -20,7 +20,7 @@ export default async function TodayPage() {
     <section className="container grid gap-6 pb-8 pt-6 md:py-10">
       <div className="w-[420px] mx-auto my-24">
         <TaskForm dict={dict.taskForm} />
-        <TaskList />
+        <TaskList dict={dict.taskList} />
       </div>
     </section>
   )

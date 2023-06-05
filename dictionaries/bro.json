@@ -20,6 +20,13 @@
       "placeholder": "What pillar will it satisfy?",
       "description": ""
     },
-    "submit": "Submit"
+    "submit": "Commit"
+  },
+  "taskList": {
+    "status": {
+      "complete": {
+        "toast": "CRUSHED!"
+      }
+    }
   }
 }
