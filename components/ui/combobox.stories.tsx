@@ -16,9 +16,11 @@ type Story = StoryObj<typeof Combobox>
 const ComboboxWithState = ({
   placeholder,
   className,
+  items,
 }: {
   placeholder: string
   className?: string
+  items: any[]
 }) => {
   const [value, setValue] = useState("")
   return (
@@ -27,6 +29,7 @@ const ComboboxWithState = ({
       value={value}
       onChange={(value) => setValue(value)}
       className={className}
+      items={items}
     />
   )
 }
@@ -34,8 +37,17 @@ const ComboboxWithState = ({
 export const Default: Story = {
   args: {
     placeholder: "Select something...",
+    items: [
+      { value: "alpha", label: "Alpha" },
+      { value: "bravo", label: "Bravo" },
+      { value: "charlie", label: "Charlie" },
+    ],
   },
-  render: ({ placeholder, className }) => (
-    <ComboboxWithState placeholder={placeholder} className={className} />
+  render: ({ placeholder, className, items }) => (
+    <ComboboxWithState
+      placeholder={placeholder}
+      className={className}
+      items={items}
+    />
   ),
 }

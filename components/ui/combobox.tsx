@@ -18,33 +18,16 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
-const frameworks = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-]
+type ComboboxItem = {
+  value: string
+  label: string
+}
 
 export interface ComboBoxProps {
   className?: string
   value: string | undefined
   placeholder: string
+  items: ComboboxItem[]
   onChange: (...event: any[]) => void
 }
 
@@ -52,6 +35,7 @@ export function Combobox({
   className,
   value,
   placeholder,
+  items,
   onChange,
 }: ComboBoxProps) {
   const [open, setOpen] = React.useState(false)
@@ -71,7 +55,7 @@ export function Combobox({
             )}
           >
             {value
-              ? frameworks.find((framework) => framework.value === value)?.label
+              ? items.find((item) => item.value === value)?.label
               : placeholder}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
@@ -81,9 +65,9 @@ export function Combobox({
             <CommandInput placeholder="Category" />
             <CommandEmpty>No category found.</CommandEmpty>
             <CommandGroup>
-              {frameworks.map((framework) => (
+              {items.map((item) => (
                 <CommandItem
-                  key={framework.value}
+                  key={item.value}
                   onSelect={(currentValue) => {
                     onChange(currentValue === value ? "" : currentValue)
                     setOpen(false)
@@ -92,10 +76,10 @@ export function Combobox({
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      value === framework.value ? "opacity-100" : "opacity-0"
+                      value === item.value ? "opacity-100" : "opacity-0"
                     )}
                   />
-                  {framework.label}
+                  {item.label}
                 </CommandItem>
               ))}
             </CommandGroup>
