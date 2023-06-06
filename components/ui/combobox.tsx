@@ -4,9 +4,11 @@ import * as React from "react"
 import { useState } from "react"
 import { Float } from "@headlessui-float/react"
 import { Combobox as HeadlessCombobox } from "@headlessui/react"
-import { Check } from "lucide-react"
+import { Check, X } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+
+import { Button } from "./button"
 
 type ComboboxItem = {
   value: string
@@ -30,6 +32,10 @@ export function Combobox({
 }: ComboBoxProps) {
   const [selectedItems, setSelectedItems] = useState([])
 
+  const removeItem = (itemToRemove: ComboboxItem) => {
+    setSelectedItems(selectedItems.filter((item) => item !== itemToRemove))
+  }
+
   return (
     <HeadlessCombobox
       value={selectedItems}
@@ -37,16 +43,28 @@ export function Combobox({
       multiple
     >
       <Float as="div" className="relative" floatingAs={React.Fragment}>
-        <HeadlessCombobox.Input
+        <div
           className={cn(
-            "flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+            "flex h-10 gap-2 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
             className
           )}
-          displayValue={(items: ComboboxItem[]) =>
-            items.map((item) => item.label).join(", ")
-          }
-          placeholder={placeholder}
-        />
+        >
+          {selectedItems.map((item: ComboboxItem) => (
+            <Button
+              type="button"
+              size={`xs`}
+              variant={`secondary`}
+              className="gap-2"
+              onClick={() => removeItem(item)}
+            >
+              {item.label} <X className="h-4 w-4 text-muted-foreground" />
+            </Button>
+          ))}
+          <HeadlessCombobox.Input
+            className={`flex-grow focus-visible:outline-none`}
+            placeholder={placeholder}
+          />
+        </div>
         <HeadlessCombobox.Options
           className={cn(
             "z-50 w-full mt-1 rounded-md border bg-popover p-0 text-popover-foreground shadow-md outline-none animate-in data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2"
