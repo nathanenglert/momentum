@@ -16,6 +16,8 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@headlessui-float/react": "^0.11.2",
+    "@headlessui/react": "^1.7.15",
     "@hookform/resolvers": "^3.1.0",
     "@next-auth/prisma-adapter": "^1.0.6",
     "@radix-ui/react-checkbox": "^1.0.4",

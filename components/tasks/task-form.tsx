@@ -188,6 +188,11 @@ export function TaskForm({ dict }: TaskFormProps) {
                     placeholder={dict.category.placeholder}
                     value={field.value}
                     onChange={field.onChange}
+                    items={[
+                      { value: "alpha", label: "Alpha" },
+                      { value: "bravo", label: "Bravo" },
+                      { value: "charlie", label: "Charlie" },
+                    ]}
                   />
                 </FormControl>
                 <FormDescription className="sr-only">
