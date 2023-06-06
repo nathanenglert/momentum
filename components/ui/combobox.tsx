@@ -42,7 +42,7 @@ const frameworks = [
 ]
 
 export interface ComboBoxProps {
-  className: string
+  className?: string
   value: string | undefined
   placeholder: string
   onChange: (...event: any[]) => void
