@@ -36,9 +36,20 @@ export function Combobox({
     (item) => isNotSelected(item) && (query === "" || matchesQuery(item))
   )
 
+  const handleChangeAndReset = (value: any[]) => {
+    onChange(value)
+    setQuery("")
+  }
+
   const handleQueryKeyDown = (evt: React.KeyboardEvent<HTMLInputElement>) => {
-    if (query !== "" || evt.key !== "Backspace") return
-    onChange(selected.slice(0, -1))
+    if (query !== "" && filteredItems.length === 0 && evt.key === "Enter") {
+      handleChangeAndReset([...selected, query])
+      return
+    }
+
+    if (query === "" && evt.key === "Backspace") {
+      onChange(selected.slice(0, -1))
+    }
   }
 
   const removeItem = (itemToRemove: string) => {
@@ -46,14 +57,7 @@ export function Combobox({
   }
 
   return (
-    <HeadlessCombobox
-      value={selected}
-      onChange={(value: []) => {
-        onChange(value)
-        setQuery("")
-      }}
-      multiple
-    >
+    <HeadlessCombobox value={selected} onChange={handleChangeAndReset} multiple>
       <Float as="div" className="relative" floatingAs={React.Fragment}>
         <div
           className={cn(
