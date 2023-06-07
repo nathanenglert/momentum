@@ -4,22 +4,17 @@ import * as React from "react"
 import { useState } from "react"
 import { Float } from "@headlessui-float/react"
 import { Combobox as HeadlessCombobox } from "@headlessui/react"
-import { Check, X } from "lucide-react"
+import { X } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
 import { Button } from "./button"
 
-export type ComboboxItem = {
-  id?: string | undefined
-  name: string
-}
-
 export interface ComboBoxProps {
   className?: string
-  selected: ComboboxItem[]
+  selected: string[]
   placeholder: string
-  items: ComboboxItem[]
+  items: string[]
   onChange: (...event: any[]) => void
 }
 
@@ -33,9 +28,9 @@ export function Combobox({
   const [query, setQuery] = useState("")
 
   const lowercasedQuery = query.toLowerCase()
-  const isNotSelected = (item: ComboboxItem) => !selected.includes(item)
-  const matchesQuery = (item: ComboboxItem) =>
-    item.name.toLowerCase().includes(lowercasedQuery)
+  const isNotSelected = (item: string) => !selected.includes(item)
+  const matchesQuery = (item: string) =>
+    item.toLowerCase().includes(lowercasedQuery)
 
   const filteredItems = items.filter(
     (item) => isNotSelected(item) && (query === "" || matchesQuery(item))
@@ -46,7 +41,7 @@ export function Combobox({
     onChange(selected.slice(0, -1))
   }
 
-  const removeItem = (itemToRemove: ComboboxItem) => {
+  const removeItem = (itemToRemove: string) => {
     onChange(selected.filter((item) => item !== itemToRemove))
   }
 
@@ -66,16 +61,16 @@ export function Combobox({
             className
           )}
         >
-          {selected.map((item: ComboboxItem) => (
+          {selected.map((item: string) => (
             <Button
               type="button"
-              key={item.name}
+              key={item}
               size={`xs`}
               variant={`secondary`}
               className="gap-2"
               onClick={() => removeItem(item)}
             >
-              {item.name} <X className="h-4 w-4 text-muted-foreground" />
+              {item} <X className="h-4 w-4 text-muted-foreground" />
             </Button>
           ))}
           <HeadlessCombobox.Input
@@ -93,7 +88,7 @@ export function Combobox({
         >
           {filteredItems.map((item) => (
             <HeadlessCombobox.Option
-              key={item.name}
+              key={item}
               value={item}
               as={React.Fragment}
             >
@@ -104,7 +99,7 @@ export function Combobox({
                     active ? "bg-accent text-accent-foreground" : ""
                   )}
                 >
-                  {item.name}
+                  {item}
                 </li>
               )}
             </HeadlessCombobox.Option>

@@ -37,11 +37,7 @@ const ComboboxWithState = ({
 export const Default: Story = {
   args: {
     placeholder: "Select something...",
-    items: [
-      { value: "alpha", label: "Alpha" },
-      { value: "bravo", label: "Bravo" },
-      { value: "charlie", label: "Charlie" },
-    ],
+    items: ["Alpha", "Bravo", "Charlie"],
   },
   render: ({ placeholder, className, items }) => (
     <ComboboxWithState
