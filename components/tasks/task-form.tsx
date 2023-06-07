@@ -43,9 +43,10 @@ const formSchema = z.object({
 
 export interface TaskFormProps {
   dict: any
+  possibleTags: string[]
 }
 
-export function TaskForm({ dict }: TaskFormProps) {
+export function TaskForm({ dict, possibleTags }: TaskFormProps) {
   const router = useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -56,7 +57,7 @@ export function TaskForm({ dict }: TaskFormProps) {
   })
   const [hasDescription, setHasDescription] = useState(false)
   const [hasDueDate, setHasDueDate] = useState(false)
-  const [hasCategory, setHasCategory] = useState(false)
+  const [hasTags, setHasTags] = useState(false)
   const [hasFrequency, setHasFrequency] = useState(false)
   const [isPending, startTransition] = useTransition()
   const [isFetching, setIsFetching] = useState(false)
@@ -189,7 +190,7 @@ export function TaskForm({ dict }: TaskFormProps) {
             )}
           />
         )}
-        {hasCategory && (
+        {hasTags && (
           <FormField
             control={form.control}
             name="tags"
@@ -202,7 +203,7 @@ export function TaskForm({ dict }: TaskFormProps) {
                     placeholder={dict.category.placeholder}
                     selected={field.value}
                     onChange={field.onChange}
-                    items={["Alpha", "Bravo", "Charlie"]}
+                    items={possibleTags}
                   />
                 </FormControl>
                 <FormDescription className="sr-only">
@@ -216,10 +217,10 @@ export function TaskForm({ dict }: TaskFormProps) {
         <div className="w-full flex items-center justify-end gap-4">
           <Button
             type="button"
-            variant={hasCategory ? `secondary` : `ghost`}
-            onClick={() => setHasCategory(!hasCategory)}
+            variant={hasTags ? `secondary` : `ghost`}
+            onClick={() => setHasTags(!hasTags)}
           >
-            Category
+            Tags
           </Button>
           <Button
             type="button"
