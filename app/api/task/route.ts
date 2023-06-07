@@ -41,9 +41,15 @@ export async function PUT(req: NextRequest) {
     return NextResponse.error()
   }
 
+  let completedDate = status
+    ? status === "COMPLETED"
+      ? new Date()
+      : null
+    : undefined
+
   const record = await prisma.task.update({
     where: { id: taskId },
-    data: { title, description, dueDate, status },
+    data: { title, description, dueDate, status, completedDate },
   })
 
   return NextResponse.json(record, { status: 200 })
