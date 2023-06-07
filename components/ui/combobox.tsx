@@ -11,8 +11,8 @@ import { cn } from "@/lib/utils"
 import { Button } from "./button"
 
 export type ComboboxItem = {
-  value: string
-  label: string
+  id?: string | undefined
+  name: string
 }
 
 export interface ComboBoxProps {
@@ -35,7 +35,7 @@ export function Combobox({
   const lowercasedQuery = query.toLowerCase()
   const isNotSelected = (item: ComboboxItem) => !selected.includes(item)
   const matchesQuery = (item: ComboboxItem) =>
-    item.label.toLowerCase().includes(lowercasedQuery)
+    item.name.toLowerCase().includes(lowercasedQuery)
 
   const filteredItems = items.filter(
     (item) => isNotSelected(item) && (query === "" || matchesQuery(item))
@@ -69,13 +69,13 @@ export function Combobox({
           {selected.map((item: ComboboxItem) => (
             <Button
               type="button"
-              key={item.label}
+              key={item.name}
               size={`xs`}
               variant={`secondary`}
               className="gap-2"
               onClick={() => removeItem(item)}
             >
-              {item.label} <X className="h-4 w-4 text-muted-foreground" />
+              {item.name} <X className="h-4 w-4 text-muted-foreground" />
             </Button>
           ))}
           <HeadlessCombobox.Input
@@ -93,7 +93,7 @@ export function Combobox({
         >
           {filteredItems.map((item) => (
             <HeadlessCombobox.Option
-              key={item.value}
+              key={item.name}
               value={item}
               as={React.Fragment}
             >
@@ -104,7 +104,7 @@ export function Combobox({
                     active ? "bg-accent text-accent-foreground" : ""
                   )}
                 >
-                  {item.label}
+                  {item.name}
                 </li>
               )}
             </HeadlessCombobox.Option>

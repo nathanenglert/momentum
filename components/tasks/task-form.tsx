@@ -37,10 +37,10 @@ const formSchema = z.object({
   }),
   description: z.string().optional(),
   dueDate: z.date().optional(),
-  category: z.array(
+  tags: z.array(
     z.object({
-      label: z.string(),
-      value: z.string(),
+      name: z.string(),
+      id: z.string().optional(),
     }) satisfies z.ZodType<ComboboxItem>
   ),
   frequency: z.string().optional(),
@@ -56,7 +56,7 @@ export function TaskForm({ dict }: TaskFormProps) {
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
-      category: [],
+      tags: [],
     },
   })
   const [hasDescription, setHasDescription] = useState(false)
@@ -196,7 +196,7 @@ export function TaskForm({ dict }: TaskFormProps) {
         {hasCategory && (
           <FormField
             control={form.control}
-            name="category"
+            name="tags"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="sr-only">Category</FormLabel>
@@ -207,9 +207,9 @@ export function TaskForm({ dict }: TaskFormProps) {
                     selected={field.value}
                     onChange={field.onChange}
                     items={[
-                      { value: "alpha", label: "Alpha" },
-                      { value: "bravo", label: "Bravo" },
-                      { value: "charlie", label: "Charlie" },
+                      { name: "Alpha" },
+                      { name: "Bravo" },
+                      { name: "Charlie" },
                     ]}
                   />
                 </FormControl>

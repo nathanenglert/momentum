@@ -63,7 +63,13 @@ model Task {
   description String?
   dueDate     DateTime?
   status      String    @default("NOT_STARTED")
-  categoryId  String?
   frequency   String    @default("SINGLE")
+  tags        Tag[]
   User        User      @relation(fields: [userId], references: [id])
+}
+
+model Tag {
+  id    String @id @default(cuid())
+  name  String @unique
+  tasks Task[]
 }
