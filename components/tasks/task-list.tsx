@@ -20,7 +20,7 @@ export async function TaskList({ dict }: { dict: any }) {
   return (
     <ul className="mt-12 space-y-4">
       {tasks.map((task) => (
-        <li key={task.id} className="flex justify-between gap-2">
+        <li key={task.id} className="flex justify-between">
           <div className="flex items-center space-x-2">
             <TaskCheckbox
               id={task.id}
@@ -39,11 +39,11 @@ export async function TaskList({ dict }: { dict: any }) {
               )}
             </label>
           </div>
-          {task.tags.map((tag, index) => (
-            <Badge variant={`outline`} className={cn(index === 0 && "ml-auto")}>
-              {tag.name}
-            </Badge>
-          ))}
+          <div className="flex items-end gap-2">
+            {task.tags.map((tag) => (
+              <Badge variant={`outline`}>{tag.name}</Badge>
+            ))}
+          </div>
         </li>
       ))}
     </ul>
