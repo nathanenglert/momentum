@@ -2,7 +2,6 @@ import { formatDistanceToNow } from "date-fns"
 import { getServerSession } from "next-auth"
 
 import { prisma } from "@/lib/prisma"
-import { cn } from "@/lib/utils"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 
 import { Badge } from "../ui/badge"
