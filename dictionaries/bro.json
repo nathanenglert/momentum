@@ -20,7 +20,11 @@
       "placeholder": "What pillar will it satisfy?",
       "description": ""
     },
-    "submit": "Commit"
+    "submit": {
+      "label": "Commit",
+      "toastSuccess": "Task added!",
+      "toastError": "It broke."
+    }
   },
   "taskList": {
     "status": {

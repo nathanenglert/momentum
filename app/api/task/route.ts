@@ -18,7 +18,7 @@ export async function POST(req: Request) {
     },
   })
 
-  return NextResponse.json(record)
+  return NextResponse.json(record, { status: 201 })
 }
 
 export async function PUT(req: NextRequest) {
@@ -37,7 +37,7 @@ export async function PUT(req: NextRequest) {
     data: { title, description, dueDate, status },
   })
 
-  return NextResponse.json(record)
+  return NextResponse.json(record, { status: 200 })
 }
 
 export async function DELETE(req: NextRequest) {
@@ -50,11 +50,11 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.error()
   }
 
-  const record = await prisma.task.delete({
+  await prisma.task.delete({
     where: {
       id: taskId,
     },
   })
 
-  return NextResponse.json(record)
+  return NextResponse.json({}, { status: 204 })
 }

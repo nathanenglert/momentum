@@ -29,6 +29,7 @@ import {
   SelectValue,
 } from "../ui/select"
 import { Textarea } from "../ui/textarea"
+import { useToast } from "../ui/use-toast"
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -65,6 +66,7 @@ export function TaskForm({ dict }: TaskFormProps) {
   const [isPending, startTransition] = useTransition()
   const [isFetching, setIsFetching] = useState(false)
   const isMutating = isFetching || isPending
+  const { toast } = useToast()
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsFetching(true)
@@ -79,11 +81,21 @@ export function TaskForm({ dict }: TaskFormProps) {
 
     setIsFetching(false)
 
-    form.reset()
+    if (res.status === 201) {
+      form.reset()
 
-    startTransition(() => {
-      router.refresh()
-    })
+      toast({
+        description: dict.submit.toastSuccess,
+      })
+
+      startTransition(() => {
+        router.refresh()
+      })
+    } else {
+      toast({
+        description: dict.submit.toastError,
+      })
+    }
   }
 
   return (
@@ -232,7 +244,7 @@ export function TaskForm({ dict }: TaskFormProps) {
             Frequency
           </Button>
           <Button type="submit" disabled={isMutating}>
-            {dict.submit}
+            {dict.submit.label}
           </Button>
         </div>
       </form>
