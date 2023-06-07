@@ -94,6 +94,7 @@ export function TaskForm({ dict }: TaskFormProps) {
     } else {
       toast({
         description: dict.submit.toastError,
+        variant: "destructive",
       })
     }
   }
