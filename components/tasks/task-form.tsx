@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
-import { Combobox } from "../ui/combobox"
+import { Combobox, ComboboxItem } from "../ui/combobox"
 import { DatePicker } from "../ui/date-picker"
 import {
   Select,
@@ -36,7 +36,12 @@ const formSchema = z.object({
   }),
   description: z.string().optional(),
   dueDate: z.date().optional(),
-  category: z.string().optional(),
+  category: z.array(
+    z.object({
+      label: z.string(),
+      value: z.string(),
+    }) satisfies z.ZodType<ComboboxItem>
+  ),
   frequency: z.string().optional(),
 })
 
@@ -50,6 +55,7 @@ export function TaskForm({ dict }: TaskFormProps) {
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
+      category: [],
     },
   })
   const [hasDescription, setHasDescription] = useState(false)
@@ -186,7 +192,7 @@ export function TaskForm({ dict }: TaskFormProps) {
                   <Combobox
                     className={`w-full`}
                     placeholder={dict.category.placeholder}
-                    value={field.value}
+                    selected={field.value}
                     onChange={field.onChange}
                     items={[
                       { value: "alpha", label: "Alpha" },

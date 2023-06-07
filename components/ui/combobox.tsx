@@ -10,14 +10,14 @@ import { cn } from "@/lib/utils"
 
 import { Button } from "./button"
 
-type ComboboxItem = {
+export type ComboboxItem = {
   value: string
   label: string
 }
 
 export interface ComboBoxProps {
   className?: string
-  value: string | undefined
+  selected: ComboboxItem[]
   placeholder: string
   items: ComboboxItem[]
   onChange: (...event: any[]) => void
@@ -25,16 +25,15 @@ export interface ComboBoxProps {
 
 export function Combobox({
   className,
-  value,
+  selected,
   placeholder,
   items,
   onChange,
 }: ComboBoxProps) {
-  const [selectedItems, setSelectedItems] = useState<ComboboxItem[]>([])
   const [query, setQuery] = useState("")
 
   const lowercasedQuery = query.toLowerCase()
-  const isNotSelected = (item: ComboboxItem) => !selectedItems.includes(item)
+  const isNotSelected = (item: ComboboxItem) => !selected.includes(item)
   const matchesQuery = (item: ComboboxItem) =>
     item.label.toLowerCase().includes(lowercasedQuery)
 
@@ -44,18 +43,18 @@ export function Combobox({
 
   const handleQueryKeyDown = (evt: React.KeyboardEvent<HTMLInputElement>) => {
     if (query !== "" || evt.key !== "Backspace") return
-    setSelectedItems(selectedItems.slice(0, -1))
+    onChange(selected.slice(0, -1))
   }
 
   const removeItem = (itemToRemove: ComboboxItem) => {
-    setSelectedItems(selectedItems.filter((item) => item !== itemToRemove))
+    onChange(selected.filter((item) => item !== itemToRemove))
   }
 
   return (
     <HeadlessCombobox
-      value={selectedItems}
+      value={selected}
       onChange={(value: []) => {
-        setSelectedItems(value)
+        onChange(value)
         setQuery("")
       }}
       multiple
@@ -67,7 +66,7 @@ export function Combobox({
             className
           )}
         >
-          {selectedItems.map((item: ComboboxItem) => (
+          {selected.map((item: ComboboxItem) => (
             <Button
               type="button"
               key={item.label}

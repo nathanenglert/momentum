@@ -22,11 +22,11 @@ const ComboboxWithState = ({
   className?: string
   items: any[]
 }) => {
-  const [value, setValue] = useState("")
+  const [value, setValue] = useState<any[]>([])
   return (
     <Combobox
       placeholder={placeholder}
-      value={value}
+      selected={value}
       onChange={(value) => setValue(value)}
       className={className}
       items={items}
