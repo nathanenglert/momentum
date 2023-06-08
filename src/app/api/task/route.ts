@@ -15,7 +15,7 @@ export async function POST(req: Request) {
       userId: currentUserId,
       title,
       description,
-      dueDate,
+      dueAt: dueDate,
       tags: {
         connectOrCreate: tags.map((tag: Tag) => {
           return {
@@ -41,7 +41,7 @@ export async function PUT(req: NextRequest) {
     return NextResponse.error()
   }
 
-  let completedDate = status
+  let completedAt = status
     ? status === "COMPLETED"
       ? new Date()
       : null
@@ -49,7 +49,7 @@ export async function PUT(req: NextRequest) {
 
   const record = await prisma.task.update({
     where: { id: taskId },
-    data: { title, description, dueDate, status, completedDate },
+    data: { title, description, dueAt: dueDate, status, completedAt },
   })
 
   return NextResponse.json(record, { status: 200 })

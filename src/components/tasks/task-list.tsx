@@ -14,7 +14,7 @@ export async function TaskList({ dict }: { dict: any }) {
   const tasks = await prisma.task.findMany({
     where: { userId: currentUserId },
     include: { tags: true },
-    orderBy: [{ status: "desc" }, { completedDate: "desc" }],
+    orderBy: [{ status: "desc" }, { completedAt: "desc" }],
   })
 
   return (
@@ -32,9 +32,9 @@ export async function TaskList({ dict }: { dict: any }) {
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
               {task.title}
-              {task.dueDate && (
+              {task.dueAt && (
                 <span className="italic text-muted-foreground">{` in ${formatDistanceToNow(
-                  task.dueDate
+                  task.dueAt
                 )}`}</span>
               )}
             </label>
