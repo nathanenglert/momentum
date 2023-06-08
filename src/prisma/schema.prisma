@@ -46,6 +46,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   Task          Task[]
+  Habit         Habit[]
 }
 
 model VerificationToken {
@@ -58,14 +59,15 @@ model VerificationToken {
 
 model Task {
   id            String    @id @default(cuid())
-  userId        String
-  title         String
+  completedDate DateTime?
   description   String?
   dueDate       DateTime?
-  completedDate DateTime?
+  habitId       String?
   status        String    @default("NOT_STARTED")
-  frequency     String    @default("SINGLE")
   tags          Tag[]
+  title         String
+  userId        String
+  Habit         Habit?    @relation(fields: [habitId], references: [id])
   User          User      @relation(fields: [userId], references: [id])
 }
 
@@ -73,4 +75,13 @@ model Tag {
   id    String @id @default(cuid())
   name  String @unique
   tasks Task[]
+}
+
+model Habit {
+  id           String @id @default(cuid())
+  frequency    String @default("WEEKLY")
+  originTaskId String
+  tasks        Task[]
+  userId       String
+  User         User   @relation(fields: [userId], references: [id])
 }
