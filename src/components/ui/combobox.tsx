@@ -78,7 +78,7 @@ export function Combobox({
             </Button>
           ))}
           <HeadlessCombobox.Input
-            className={`flex-grow focus-visible:outline-none`}
+            className={`flex-grow focus-visible:outline-none bg-transparent`}
             placeholder={placeholder}
             value={query}
             onKeyDown={handleQueryKeyDown}
