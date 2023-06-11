@@ -1,6 +1,5 @@
 import { composeStories } from "@storybook/testing-react"
 import { render, screen } from "@testing-library/react"
-import { expect, test } from "vitest"
 
 import * as stories from "./button.stories"
 
@@ -18,15 +17,15 @@ test("renders default button with override props", () => {
   const buttonElement = screen.getByText(/Hello world/i)
   expect(buttonElement).not.toBeNull()
 })
-
-test(`renders all variations of a button`, () => {
-  ;[
-    [`destructive`, Destructive],
-    [`ghost`, Ghost],
-    [`link`, Link],
-    [`outline`, Outline],
-    [`secondary`, Secondary],
-  ].map(([name, component]) => {
+//
+;[
+  [`destructive`, Destructive],
+  [`ghost`, Ghost],
+  [`link`, Link],
+  [`outline`, Outline],
+  [`secondary`, Secondary],
+].map(([name, component]) => {
+  test(`renders ${name} button`, () => {
     const Component = component
     render(<Component children={name as string} />)
     const buttonElement = screen.getByText(name as string)

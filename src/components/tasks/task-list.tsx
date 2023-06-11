@@ -40,7 +40,7 @@ export async function TaskList({ dict }: { dict: any }) {
             </label>
           </div>
           <div className="flex items-end gap-2">
-            {task.tags.map((tag) => (
+            {task.tags?.map((tag) => (
               <Badge variant={`outline`}>{tag.name}</Badge>
             ))}
           </div>
