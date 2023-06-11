@@ -164,7 +164,7 @@ export function TaskForm({ dict, possibleTags }: TaskFormProps) {
             control={form.control}
             name="dueDate"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="space-y-0">
                 <FormLabel className="sr-only">Due</FormLabel>
                 <FormControl>
                   <DatePicker
