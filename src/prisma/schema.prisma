@@ -45,8 +45,8 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  Task          Task[]
-  Habit         Habit[]
+  task          Task[]
+  habit         Habit[]
 }
 
 model VerificationToken {
@@ -69,8 +69,8 @@ model Task {
   title       String
   updatedAt   DateTime  @updatedAt
   userId      String
-  Habit       Habit?    @relation(fields: [habitId], references: [id])
-  User        User      @relation(fields: [userId], references: [id])
+  habit       Habit?    @relation(fields: [habitId], references: [id])
+  user        User      @relation(fields: [userId], references: [id])
 }
 
 model Tag {
@@ -85,5 +85,5 @@ model Habit {
   originTaskId String
   tasks        Task[]
   userId       String
-  User         User   @relation(fields: [userId], references: [id])
+  user         User   @relation(fields: [userId], references: [id])
 }
