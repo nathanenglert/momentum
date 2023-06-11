@@ -8,7 +8,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions)
   const currentUserId = session?.user?.id!
-  const { title, description, dueDate, tags } = await req.json()
+  const { title, description, dueDate, tags, frequency } = await req.json()
 
   const record = await prisma.task.create({
     data: {
@@ -26,6 +26,19 @@ export async function POST(req: Request) {
       },
     },
   })
+
+  if (frequency) {
+    await prisma.habit.create({
+      data: {
+        frequency,
+        originTaskId: record.id,
+        userId: currentUserId,
+        tasks: {
+          connect: { id: record.id },
+        },
+      },
+    })
+  }
 
   return NextResponse.json(record, { status: 201 })
 }
