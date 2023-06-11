@@ -135,32 +135,24 @@ export function TaskForm({ dict, possibleTags }: TaskFormProps) {
             )}
           />
         )}
-        {hasFrequency && (
+        {hasTags && (
           <FormField
             control={form.control}
-            name="frequency"
+            name="tags"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="sr-only">Frequency</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger
-                      className={cn(!field.value && `text-muted-foreground`)}
-                    >
-                      <SelectValue placeholder={dict.frequency.placeholder} />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="SINGLE">Just Once</SelectItem>
-                    <SelectItem value="DAILY">Daily</SelectItem>
-                    <SelectItem value="WEEKLY">Weekly</SelectItem>
-                  </SelectContent>
-                </Select>
+                <FormLabel className="sr-only">Category</FormLabel>
+                <FormControl>
+                  <Combobox
+                    className={`w-full`}
+                    placeholder={dict.category.placeholder}
+                    selected={field.value}
+                    onChange={field.onChange}
+                    items={possibleTags}
+                  />
+                </FormControl>
                 <FormDescription className="sr-only">
-                  {dict.frequency.description}
+                  {dict.category.description}
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -190,24 +182,32 @@ export function TaskForm({ dict, possibleTags }: TaskFormProps) {
             )}
           />
         )}
-        {hasTags && (
+        {hasFrequency && (
           <FormField
             control={form.control}
-            name="tags"
+            name="frequency"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="sr-only">Category</FormLabel>
-                <FormControl>
-                  <Combobox
-                    className={`w-full`}
-                    placeholder={dict.category.placeholder}
-                    selected={field.value}
-                    onChange={field.onChange}
-                    items={possibleTags}
-                  />
-                </FormControl>
+                <FormLabel className="sr-only">Frequency</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger
+                      className={cn(!field.value && `text-muted-foreground`)}
+                    >
+                      <SelectValue placeholder={dict.frequency.placeholder} />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="SINGLE">Just Once</SelectItem>
+                    <SelectItem value="DAILY">Daily</SelectItem>
+                    <SelectItem value="WEEKLY">Weekly</SelectItem>
+                  </SelectContent>
+                </Select>
                 <FormDescription className="sr-only">
-                  {dict.category.description}
+                  {dict.frequency.description}
                 </FormDescription>
                 <FormMessage />
               </FormItem>
