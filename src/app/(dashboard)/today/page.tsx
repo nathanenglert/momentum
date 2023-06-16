@@ -3,8 +3,8 @@ import { getServerSession } from "next-auth"
 
 import { prisma } from "@/lib/prisma"
 import { TaskForm } from "@/components/tasks/task-form"
-import { TaskList } from "@/components/tasks/task-list"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
+import { TaskList } from "@/app/app-components/task-list"
 import { getDictionary } from "@/app/dictionaries"
 
 export default async function TodayPage() {

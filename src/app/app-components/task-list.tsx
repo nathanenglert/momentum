@@ -1,11 +1,10 @@
-import { add, formatDistanceToNow, isPast } from "date-fns"
 import { getServerSession } from "next-auth"
 
+import { formatTime } from "@/lib/formatters"
 import { prisma } from "@/lib/prisma"
+import { Badge } from "@/components/ui/badge"
+import { TaskCheckbox } from "@/components/tasks/task-checkbox"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
-
-import { Badge } from "../ui/badge"
-import { TaskCheckbox } from "./task-checkbox"
 
 export async function TaskList({ dict }: { dict: any }) {
   const session = await getServerSession(authOptions)
@@ -16,21 +15,6 @@ export async function TaskList({ dict }: { dict: any }) {
     include: { tags: true },
     orderBy: [{ status: "desc" }, { completedAt: "desc" }],
   })
-
-  const formatTime = (d: Date) => {
-    const today = new Date()
-    const hours = today.getHours()
-    const minutes = today.getMinutes()
-    const seconds = today.getSeconds()
-    const milliseconds = today.getMilliseconds()
-
-    d.setHours(hours, minutes, seconds, milliseconds)
-
-    if (d.getDate() <= today.getDate()) return ` due today`
-    if (d.getDate() == today.getDate() + 1) return ` due tomorrow`
-
-    return ` in ${formatDistanceToNow(d)}`
-  }
 
   return (
     <ul className="mt-12 space-y-4">
