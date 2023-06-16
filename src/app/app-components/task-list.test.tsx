@@ -36,7 +36,7 @@ beforeEach(() => {
       dueAt: null,
       habitId: null,
       status: "NOT_STARTED",
-      title: "Foo This",
+      title: "Task Title",
       updatedAt: new Date(),
       userId: "1",
     },
@@ -59,9 +59,9 @@ async function resolvedComponent({
   return () => ComponentResolved
 }
 
-describe("task list", () => {
-  it("fwefw", async () => {
-    const HeaderResolved = await resolvedComponent({
+describe("<TaskList>", () => {
+  it("should render a task", async () => {
+    const ResolvedComp = await resolvedComponent({
       Component: TaskList,
       props: {
         dict: {
@@ -75,8 +75,8 @@ describe("task list", () => {
         },
       },
     })
-    render(<HeaderResolved />)
+    render(<ResolvedComp />)
 
-    expect(await screen.findByText("Foo This"))
+    expect(await screen.findByText("Task Title"))
   })
 })

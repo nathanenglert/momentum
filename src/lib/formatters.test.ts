@@ -1,6 +1,6 @@
 import { formatTime } from "./formatters"
 
-describe("formatTime", () => {
+describe("formatTime()", () => {
   it("should return `today`", () => {
     const now = new Date()
     const actual = formatTime(now)
