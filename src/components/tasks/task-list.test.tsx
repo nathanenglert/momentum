@@ -4,9 +4,6 @@ import { prismaMock } from "@/lib/prismaMock"
 
 import { TaskList } from "./task-list"
 
-// afterEach(() => {
-//   jest.restoreAllMocks()
-// })
 afterEach(cleanup)
 
 jest.mock("next/navigation", () => {
@@ -17,6 +14,7 @@ jest.mock("next/navigation", () => {
     }),
   }
 })
+
 jest.mock("next-auth", () => {
   return {
     __esModule: true,
@@ -38,7 +36,7 @@ beforeEach(() => {
       dueAt: null,
       habitId: null,
       status: "NOT_STARTED",
-      title: "Foo",
+      title: "Foo This",
       updatedAt: new Date(),
       userId: "1",
     },
@@ -50,19 +48,28 @@ beforeEach(() => {
  * @param {*} props
  * @returns {Promise<()=>JSX.Element>}
  */
-async function resolvedComponent(Component: (arg0: any) => any, props: any) {
+async function resolvedComponent({
+  Component,
+  props,
+}: {
+  Component: (arg0: any) => any
+  props: any
+}): Promise<() => any> {
   const ComponentResolved = await Component(props)
   return () => ComponentResolved
 }
 
 describe("task list", () => {
   it("fwefw", async () => {
-    const HeaderResolved = await resolvedComponent(TaskList, {
-      dict: {
-        taskList: {
-          status: {
-            complete: {
-              toast: "CRUSHED!",
+    const HeaderResolved = await resolvedComponent({
+      Component: TaskList,
+      props: {
+        dict: {
+          taskList: {
+            status: {
+              complete: {
+                toast: "CRUSHED!",
+              },
             },
           },
         },
@@ -70,6 +77,6 @@ describe("task list", () => {
     })
     render(<HeaderResolved />)
 
-    expect(await screen.findByText("Foo"))
+    expect(await screen.findByText("Foo This"))
   })
 })
