@@ -1,6 +1,6 @@
 import { cleanup, render, screen } from "@testing-library/react"
 
-import { prismaMock } from "@/lib/prismaMock"
+import { prismaMock } from "@/lib/prisma-mock"
 
 import { TaskList } from "./task-list"
 
