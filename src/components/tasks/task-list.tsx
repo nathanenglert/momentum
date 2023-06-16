@@ -1,4 +1,4 @@
-import { formatDistanceToNow } from "date-fns"
+import { add, formatDistanceToNow, isPast } from "date-fns"
 import { getServerSession } from "next-auth"
 
 import { prisma } from "@/lib/prisma"
@@ -17,6 +17,17 @@ export async function TaskList({ dict }: { dict: any }) {
     orderBy: [{ status: "desc" }, { completedAt: "desc" }],
   })
 
+  const formatTime = (d: Date) => {
+    const today = new Date()
+
+    if (isPast(d)) return ` due today`
+    // if (d.getDate() != today.getDate()) {
+    //   d = add(d, { days: 1 })
+    // }
+
+    return ` in ${formatDistanceToNow(d)}`
+  }
+
   return (
     <ul className="mt-12 space-y-4">
       {tasks.map((task) => (
@@ -33,9 +44,9 @@ export async function TaskList({ dict }: { dict: any }) {
             >
               {task.title}
               {task.dueAt && (
-                <span className="italic text-muted-foreground">{` in ${formatDistanceToNow(
-                  task.dueAt
-                )}`}</span>
+                <span className="italic text-muted-foreground">
+                  {formatTime(task.dueAt)}
+                </span>
               )}
             </label>
           </div>
