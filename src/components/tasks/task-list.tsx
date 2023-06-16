@@ -19,11 +19,15 @@ export async function TaskList({ dict }: { dict: any }) {
 
   const formatTime = (d: Date) => {
     const today = new Date()
+    const hours = today.getHours()
+    const minutes = today.getMinutes()
+    const seconds = today.getSeconds()
+    const milliseconds = today.getMilliseconds()
 
-    if (isPast(d)) return ` due today`
-    // if (d.getDate() != today.getDate()) {
-    //   d = add(d, { days: 1 })
-    // }
+    d.setHours(hours, minutes, seconds, milliseconds)
+
+    if (d.getDate() <= today.getDate()) return ` due today`
+    if (d.getDate() == today.getDate() + 1) return ` due tomorrow`
 
     return ` in ${formatDistanceToNow(d)}`
   }
@@ -43,7 +47,7 @@ export async function TaskList({ dict }: { dict: any }) {
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
               {task.title}
-              {task.dueAt && (
+              {task.dueAt && task.status != `COMPLETED` && (
                 <span className="italic text-muted-foreground">
                   {formatTime(task.dueAt)}
                 </span>
