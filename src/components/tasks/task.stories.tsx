@@ -15,16 +15,21 @@ export default meta
 type Story = StoryObj<typeof Task>
 
 const today = new Date()
-
-export const Default: Story = {
-  args: {
+const createTask = (override?: any) => {
+  const base = {
     id: "1",
     createdAt: today,
     status: NOT_STARTED,
     title: "A Task",
     tags: [],
     dict: {},
-  },
+  }
+
+  return { ...base, ...override }
+}
+
+export const Default: Story = {
+  args: createTask(),
   parameters: {
     nextjs: {
       appDirectory: true,
@@ -33,15 +38,7 @@ export const Default: Story = {
 }
 
 export const HasDueDate: Story = {
-  args: {
-    id: "1",
-    createdAt: today,
-    dueAt: new Date(),
-    status: NOT_STARTED,
-    title: "A Task",
-    tags: [],
-    dict: {},
-  },
+  args: createTask({ dueAt: new Date() }),
   parameters: {
     nextjs: {
       appDirectory: true,
@@ -50,15 +47,10 @@ export const HasDueDate: Story = {
 }
 
 export const HasDueDateInPast: Story = {
-  args: {
-    id: "1",
+  args: createTask({
     createdAt: add(today, { days: -1 }),
     dueAt: add(today, { days: -1 }),
-    status: NOT_STARTED,
-    title: "A Task",
-    tags: [],
-    dict: {},
-  },
+  }),
   parameters: {
     nextjs: {
       appDirectory: true,
@@ -67,14 +59,7 @@ export const HasDueDateInPast: Story = {
 }
 
 export const HasTag: Story = {
-  args: {
-    id: "1",
-    createdAt: today,
-    status: NOT_STARTED,
-    title: "A Task",
-    tags: [{ id: "1", name: "Foo" }],
-    dict: {},
-  },
+  args: createTask({ tags: [{ id: "1", name: "Foo" }] }),
   parameters: {
     nextjs: {
       appDirectory: true,
@@ -83,14 +68,16 @@ export const HasTag: Story = {
 }
 
 export const HasAged: Story = {
-  args: {
-    id: "1",
-    createdAt: add(today, { days: -2 }),
-    status: NOT_STARTED,
-    title: "A Task",
-    tags: [],
-    dict: {},
+  args: createTask({ createdAt: add(today, { days: -2 }) }),
+  parameters: {
+    nextjs: {
+      appDirectory: true,
+    },
   },
+}
+
+export const HasHabitStreak: Story = {
+  args: createTask({ habit: { streak: 2 } }),
   parameters: {
     nextjs: {
       appDirectory: true,

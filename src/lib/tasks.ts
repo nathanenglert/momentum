@@ -36,3 +36,9 @@ export function calculateStreak(tasks: Task[], terminator: Date) {
 
   return streak
 }
+
+export function formatStreak(streak: number): string {
+  if (streak == 1) return " to keep the streak"
+  if (streak >= 2) return ` to keep streaking (${streak})`
+  return ""
+}

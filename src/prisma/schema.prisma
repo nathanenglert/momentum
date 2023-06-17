@@ -82,6 +82,7 @@ model Tag {
 model Habit {
   id           String @id @default(cuid())
   frequency    String @default("WEEKLY")
+  streak       Int    @default(0)
   originTaskId String
   tasks        Task[]
   userId       String

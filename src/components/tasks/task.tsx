@@ -7,6 +7,7 @@ import {
   getLifecycleStage,
   wasYesterdayOrEarlier,
 } from "@/lib/dates"
+import { formatStreak } from "@/lib/tasks"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 
@@ -34,7 +35,10 @@ export interface TaskProps {
   id: string
   createdAt: Date
   dueAt: Date | null
-  habitId: string | null
+  habit: {
+    id: string
+    streak: number
+  } | null
   status: string
   title: string
   tags: {
@@ -50,6 +54,7 @@ export function Task({
   title,
   createdAt,
   dueAt,
+  habit,
   tags,
   dict,
 }: TaskProps) {
@@ -73,6 +78,11 @@ export function Task({
               })}
             >
               {formatTime(dueAt)}
+            </span>
+          )}
+          {habit && habit.streak > 0 && (
+            <span className="italic text-muted-foreground">
+              {formatStreak(habit.streak)}
             </span>
           )}
         </label>

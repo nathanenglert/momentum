@@ -1,6 +1,6 @@
 import { Task } from "@prisma/client"
 
-import { calculateStreak } from "./tasks"
+import { calculateStreak, formatStreak } from "./tasks"
 
 describe("calculateStreak()", () => {
   ;[
@@ -58,5 +58,22 @@ describe("calculateStreak()", () => {
       const actual = calculateStreak(tasks as Task[], terminator as Date)
       expect(actual).toEqual(expected)
     })
+  })
+})
+
+describe("formatSteak()", () => {
+  it("should return empty", () => {
+    const actual = formatStreak(0)
+    expect(actual).toEqual("")
+  })
+
+  it("should highlight the streak", () => {
+    const actual = formatStreak(1)
+    expect(actual).toContain("streak")
+  })
+
+  it("should display the streak total when greater than 1", () => {
+    const actual = formatStreak(2)
+    expect(actual).toContain("2")
   })
 })
