@@ -1,4 +1,4 @@
-import { formatTime } from "./formatters"
+import { formatTime, wasYesterdayOrEarlier } from "./dates"
 
 describe("formatTime()", () => {
   it("should return `today`", () => {
@@ -30,5 +30,30 @@ describe("formatTime()", () => {
     const actual = formatTime(day)
 
     expect(actual).toContain("past due")
+  })
+})
+
+describe("wasYesterdayOrEarlier()", () => {
+  it("should return true with past date", () => {
+    const day = new Date()
+    day.setDate(day.getDate() - 1)
+    const actual = wasYesterdayOrEarlier(day)
+
+    expect(actual).toBeTruthy()
+  })
+
+  it("should return false with today's date", () => {
+    const day = new Date()
+    const actual = wasYesterdayOrEarlier(day)
+
+    expect(actual).toBeFalsy()
+  })
+
+  it("should return true with future date", () => {
+    const day = new Date()
+    day.setDate(day.getDate() + 1)
+    const actual = wasYesterdayOrEarlier(day)
+
+    expect(actual).toBeFalsy()
   })
 })

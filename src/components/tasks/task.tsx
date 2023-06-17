@@ -1,6 +1,6 @@
 "use client"
 
-import { formatTime } from "@/lib/formatters"
+import { formatTime, wasYesterdayOrEarlier } from "@/lib/dates"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 
@@ -17,21 +17,6 @@ export interface TaskProps {
     name: string
   }[]
   dict: any
-}
-
-function wasYesterdayOrEarlier(date: Date) {
-  // Create a new date object for today's date
-  const today = new Date()
-
-  // Set the time components to 0 (start of the day) for both dates
-  date.setHours(0, 0, 0, 0)
-  today.setHours(0, 0, 0, 0)
-
-  // Subtract one day (in milliseconds) from today to get yesterday's date
-  const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000)
-
-  // Check if the given date is less than or equal to yesterday
-  return date <= yesterday
 }
 
 export function Task({ id, status, title, dueAt, tags, dict }: TaskProps) {

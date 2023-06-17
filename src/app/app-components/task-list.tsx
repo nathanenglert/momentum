@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth"
 
-import { formatTime } from "@/lib/formatters"
+import { formatTime } from "@/lib/dates"
 import { prisma } from "@/lib/prisma"
 import { Badge } from "@/components/ui/badge"
 import { TaskCheckbox } from "@/components/tasks/task-checkbox"
