@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { add } from "date-fns"
 
 import { Task } from "./task"
+import { NOT_STARTED } from "./task-status"
 
 const meta: Meta<typeof Task> = {
   title: "Tasks/Task",
@@ -19,7 +20,7 @@ export const Default: Story = {
   args: {
     id: "1",
     createdAt: today,
-    status: "NOT_STARTED",
+    status: NOT_STARTED,
     title: "A Task",
     tags: [],
     dict: {},
@@ -36,7 +37,7 @@ export const HasDueDate: Story = {
     id: "1",
     createdAt: today,
     dueAt: new Date(),
-    status: "NOT_STARTED",
+    status: NOT_STARTED,
     title: "A Task",
     tags: [],
     dict: {},
@@ -53,7 +54,7 @@ export const HasDueDateInPast: Story = {
     id: "1",
     createdAt: add(today, { days: -1 }),
     dueAt: add(today, { days: -1 }),
-    status: "NOT_STARTED",
+    status: NOT_STARTED,
     title: "A Task",
     tags: [],
     dict: {},
@@ -69,7 +70,7 @@ export const HasTag: Story = {
   args: {
     id: "1",
     createdAt: today,
-    status: "NOT_STARTED",
+    status: NOT_STARTED,
     title: "A Task",
     tags: [{ id: "1", name: "Foo" }],
     dict: {},
@@ -85,7 +86,7 @@ export const HasAged: Story = {
   args: {
     id: "1",
     createdAt: add(today, { days: -2 }),
-    status: "NOT_STARTED",
+    status: NOT_STARTED,
     title: "A Task",
     tags: [],
     dict: {},

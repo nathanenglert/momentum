@@ -1,3 +1,5 @@
+import { COMPLETED, NOT_STARTED } from "@/components/tasks/task-status"
+
 import { formatTime, getLifecycleStage, wasYesterdayOrEarlier } from "./dates"
 
 describe("formatTime()", () => {
@@ -39,7 +41,16 @@ describe("getLifecycleStage()", () => {
     const due = new Date()
     due.setDate(due.getDate() + 2)
 
-    const actual = getLifecycleStage(created, due)
+    const actual = getLifecycleStage(NOT_STARTED, created, due)
+
+    expect(actual).toEqual(0)
+  })
+
+  it("should return zero if completed", () => {
+    const created = new Date()
+    created.setDate(created.getDate() - 2)
+
+    const actual = getLifecycleStage(COMPLETED, created)
 
     expect(actual).toEqual(0)
   })
@@ -48,14 +59,14 @@ describe("getLifecycleStage()", () => {
     const created = new Date()
     created.setDate(created.getDate() + 2)
 
-    const actual = getLifecycleStage(created)
+    const actual = getLifecycleStage(NOT_STARTED, created)
 
     expect(actual).toEqual(0)
   })
 
   it("should return zero with today's date", () => {
     const created = new Date()
-    const actual = getLifecycleStage(created)
+    const actual = getLifecycleStage(NOT_STARTED, created)
 
     expect(actual).toEqual(0)
   })
@@ -63,7 +74,7 @@ describe("getLifecycleStage()", () => {
   it("should return one with a recently past date", () => {
     const created = new Date()
     created.setDate(created.getDate() - 2)
-    const actual = getLifecycleStage(created)
+    const actual = getLifecycleStage(NOT_STARTED, created)
 
     expect(actual).toEqual(1)
   })
