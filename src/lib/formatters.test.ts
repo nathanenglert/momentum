@@ -23,4 +23,12 @@ describe("formatTime()", () => {
 
     expect(actual).toContain("2 days")
   })
+
+  it("should return `past due`", () => {
+    const day = new Date()
+    day.setDate(day.getDate() - 1)
+    const actual = formatTime(day)
+
+    expect(actual).toContain("past due")
+  })
 })
