@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react"
 
 import * as stories from "./task.stories"
 
-const { Default, HasDueDate, HasTag, HasDueDateInPast } =
+const { Default, HasDueDate, HasTag, HasDueDateInPast, HasAged } =
   composeStories(stories)
 
 jest.mock("next/navigation", () => ({
@@ -37,5 +37,13 @@ describe("<Task>", () => {
     render(<HasTag />)
     const element = screen.getByText(/Foo/i)
     expect(element).not.toBeNull()
+  })
+
+  it("should increase size with age", () => {
+    render(<HasAged />)
+    const element = screen.getByText(/A Task/i)
+    const elementClass = element.getAttribute("class")
+    expect(element).not.toBeNull()
+    expect(elementClass).toContain("text-m")
   })
 })

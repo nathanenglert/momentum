@@ -1,4 +1,4 @@
-import { formatTime, wasYesterdayOrEarlier } from "./dates"
+import { formatTime, getLifecycleStage, wasYesterdayOrEarlier } from "./dates"
 
 describe("formatTime()", () => {
   it("should return `today`", () => {
@@ -30,6 +30,42 @@ describe("formatTime()", () => {
     const actual = formatTime(day)
 
     expect(actual).toContain("past due")
+  })
+})
+
+describe("getLifecycleStage()", () => {
+  it("should return zero if a due date exists", () => {
+    const created = new Date()
+    const due = new Date()
+    due.setDate(due.getDate() + 2)
+
+    const actual = getLifecycleStage(created, due)
+
+    expect(actual).toEqual(0)
+  })
+
+  it("should return zero with a future date", () => {
+    const created = new Date()
+    created.setDate(created.getDate() + 2)
+
+    const actual = getLifecycleStage(created)
+
+    expect(actual).toEqual(0)
+  })
+
+  it("should return zero with today's date", () => {
+    const created = new Date()
+    const actual = getLifecycleStage(created)
+
+    expect(actual).toEqual(0)
+  })
+
+  it("should return one with a recently past date", () => {
+    const created = new Date()
+    created.setDate(created.getDate() - 2)
+    const actual = getLifecycleStage(created)
+
+    expect(actual).toEqual(1)
   })
 })
 

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
+import { add } from "date-fns"
 
 import { Task } from "./task"
 
@@ -12,9 +13,12 @@ const meta: Meta<typeof Task> = {
 export default meta
 type Story = StoryObj<typeof Task>
 
+const today = new Date()
+
 export const Default: Story = {
   args: {
     id: "1",
+    createdAt: today,
     status: "NOT_STARTED",
     title: "A Task",
     tags: [],
@@ -30,6 +34,7 @@ export const Default: Story = {
 export const HasDueDate: Story = {
   args: {
     id: "1",
+    createdAt: today,
     dueAt: new Date(),
     status: "NOT_STARTED",
     title: "A Task",
@@ -46,7 +51,8 @@ export const HasDueDate: Story = {
 export const HasDueDateInPast: Story = {
   args: {
     id: "1",
-    dueAt: new Date(2023, 1, 1),
+    createdAt: add(today, { days: -1 }),
+    dueAt: add(today, { days: -1 }),
     status: "NOT_STARTED",
     title: "A Task",
     tags: [],
@@ -62,9 +68,26 @@ export const HasDueDateInPast: Story = {
 export const HasTag: Story = {
   args: {
     id: "1",
+    createdAt: today,
     status: "NOT_STARTED",
     title: "A Task",
     tags: [{ id: "1", name: "Foo" }],
+    dict: {},
+  },
+  parameters: {
+    nextjs: {
+      appDirectory: true,
+    },
+  },
+}
+
+export const HasAged: Story = {
+  args: {
+    id: "1",
+    createdAt: add(today, { days: -2 }),
+    status: "NOT_STARTED",
+    title: "A Task",
+    tags: [],
     dict: {},
   },
   parameters: {

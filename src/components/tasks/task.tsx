@@ -1,13 +1,37 @@
 "use client"
 
-import { formatTime, wasYesterdayOrEarlier } from "@/lib/dates"
+import { cva } from "class-variance-authority"
+
+import {
+  formatTime,
+  getLifecycleStage,
+  wasYesterdayOrEarlier,
+} from "@/lib/dates"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 
 import { TaskCheckbox } from "./task-checkbox"
 
+const taskVariants = cva(
+  "font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+  {
+    variants: {
+      lifecycle: {
+        0: "text-sm",
+        1: "text-md",
+        2: "text-l",
+        3: "text-xl",
+      },
+    },
+    defaultVariants: {
+      lifecycle: 0,
+    },
+  }
+)
+
 export interface TaskProps {
   id: string
+  createdAt: Date
   dueAt: Date | null
   habitId: string | null
   status: string
@@ -19,8 +43,17 @@ export interface TaskProps {
   dict: any
 }
 
-export function Task({ id, status, title, dueAt, tags, dict }: TaskProps) {
+export function Task({
+  id,
+  status,
+  title,
+  createdAt,
+  dueAt,
+  tags,
+  dict,
+}: TaskProps) {
   const isPastDue = dueAt && wasYesterdayOrEarlier(dueAt)
+  const lifecycle = getLifecycleStage(createdAt, dueAt)
 
   return (
     <li className="flex justify-between">
@@ -28,9 +61,7 @@ export function Task({ id, status, title, dueAt, tags, dict }: TaskProps) {
         <TaskCheckbox id={id} status={status} dict={dict.status} />
         <label
           htmlFor={`done-${id}`}
-          className={cn(
-            "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-          )}
+          className={cn(taskVariants({ lifecycle }))}
         >
           {title}
           {dueAt && status != `COMPLETED` && (

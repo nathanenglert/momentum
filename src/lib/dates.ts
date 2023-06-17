@@ -1,6 +1,10 @@
-import { formatDistanceToNow } from "date-fns"
+import {
+  differenceInCalendarDays,
+  formatDistanceToNow,
+  isAfter,
+} from "date-fns"
 
-export function formatTime(d: Date) {
+export function formatTime(d: Date): string {
   const today = new Date()
   const hours = today.getHours()
   const minutes = today.getMinutes()
@@ -16,7 +20,23 @@ export function formatTime(d: Date) {
   return ` in ${formatDistanceToNow(d)}`
 }
 
-export function wasYesterdayOrEarlier(date: Date) {
+export function getLifecycleStage(
+  created: Date,
+  due?: Date | null
+): 0 | 1 | 2 | 3 {
+  const today = new Date()
+
+  if (due || isAfter(created, today)) return 0
+
+  const age = differenceInCalendarDays(created, today)
+  if (age <= -6) return 3
+  if (age <= -4) return 2
+  if (age <= -2) return 1
+
+  return 0
+}
+
+export function wasYesterdayOrEarlier(date: Date): boolean {
   const today = new Date()
   date.setHours(0, 0, 0, 0)
   today.setHours(0, 0, 0, 0)
