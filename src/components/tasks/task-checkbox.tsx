@@ -26,7 +26,7 @@ export function TaskCheckbox({ id, isCompleted, dict }: TaskCheckboxProps) {
     setChecked(complete)
     setIsFetching(true)
 
-    const completedAt = complete ? new Date() : undefined
+    const completedAt = complete ? new Date() : null
     const res = await fetch(`/api/task?taskId=${id}`, {
       method: "PUT",
       body: JSON.stringify({
