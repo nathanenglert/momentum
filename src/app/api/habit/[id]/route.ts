@@ -15,7 +15,6 @@ export async function GET(
 }
 
 const frequencyToInterval = (frequency: string) => {
-  console.log(frequency)
   switch (frequency) {
     case "DAILY":
       return { days: 1 }
