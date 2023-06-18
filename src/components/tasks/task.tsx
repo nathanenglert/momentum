@@ -50,15 +50,15 @@ export interface TaskProps {
 export function Task({
   id,
   completedAt,
-  title,
   createdAt,
   dueAt,
   habit,
   tags,
+  title,
   dict,
 }: TaskProps) {
   const isCompleted = !!completedAt
-  const isPastDue = dueAt && wasYesterdayOrEarlier(dueAt)
+  const isPastDue = !!dueAt && wasYesterdayOrEarlier(dueAt)
   const lifecycle = getLifecycleStage(isCompleted, createdAt, dueAt)
 
   return (

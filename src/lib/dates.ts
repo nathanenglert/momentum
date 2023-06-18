@@ -5,6 +5,8 @@ import {
 } from "date-fns"
 
 export function formatTime(d: Date): string {
+  if (wasYesterdayOrEarlier(d)) return ` is past due`
+
   const today = new Date()
   const hours = today.getHours()
   const minutes = today.getMinutes()
@@ -13,7 +15,6 @@ export function formatTime(d: Date): string {
 
   d.setHours(hours, minutes, seconds, milliseconds)
 
-  if (d.getDate() < today.getDate()) return ` is past due`
   if (d.getDate() == today.getDate()) return ` due today`
   if (d.getDate() == today.getDate() + 1) return ` due tomorrow`
 
@@ -27,7 +28,7 @@ export function getLifecycleStage(
 ): 0 | 1 | 2 | 3 {
   const today = new Date()
 
-  if (isCompleted || due || isAfter(created, today)) return 0
+  if (isCompleted || !!due || isAfter(created, today)) return 0
 
   const age = differenceInCalendarDays(created, today)
   if (age <= -6) return 3
