@@ -81,7 +81,7 @@ export function Task({
               {formatTime(dueAt)}
             </span>
           )}
-          {habit && habit.streak > 0 && (
+          {habit && habit.streak > 0 && !completedAt && (
             <span className="italic text-muted-foreground">
               {formatStreak(habit.streak)}
             </span>
