@@ -13,7 +13,7 @@ export async function TaskList({ dict }: { dict: any }) {
   const tasks = await prisma.task.findMany({
     where: { userId: currentUserId },
     include: { tags: true },
-    orderBy: [{ status: "desc" }, { completedAt: "desc" }],
+    orderBy: [{ completedAt: "asc" }],
   })
 
   return (
@@ -23,7 +23,7 @@ export async function TaskList({ dict }: { dict: any }) {
           <div className="flex items-center space-x-2">
             <TaskCheckbox
               id={task.id}
-              status={task.status}
+              isCompleted={!!task.completedAt}
               dict={dict.status}
             />
             <label
@@ -31,7 +31,7 @@ export async function TaskList({ dict }: { dict: any }) {
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
               {task.title}
-              {task.dueAt && task.status != `COMPLETED` && (
+              {task.dueAt && !task.completedAt && (
                 <span className="italic text-muted-foreground">
                   {formatTime(task.dueAt)}
                 </span>

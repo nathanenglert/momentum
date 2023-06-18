@@ -5,6 +5,8 @@ import { getServerSession } from "next-auth"
 import { prisma } from "@/lib/prisma"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 
+import { updateStreak } from "./logic"
+
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions)
   const currentUserId = session?.user?.id!
@@ -58,6 +60,8 @@ export async function PUT(req: NextRequest) {
     where: { id: taskId },
     data: { title, description, dueAt, completedAt },
   })
+
+  await updateStreak(check, completedAt)
 
   return NextResponse.json(record, { status: 200 })
 }

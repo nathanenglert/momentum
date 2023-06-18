@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { add } from "date-fns"
 
+import { createTask, today } from "@/lib/mock-objects"
+
 import { Task } from "./task"
 
 const meta: Meta<typeof Task> = {
@@ -12,19 +14,6 @@ const meta: Meta<typeof Task> = {
 
 export default meta
 type Story = StoryObj<typeof Task>
-
-const today = new Date()
-const createTask = (override?: any) => {
-  const base = {
-    id: "1",
-    createdAt: today,
-    title: "A Task",
-    tags: [],
-    dict: {},
-  }
-
-  return { ...base, ...override }
-}
 
 export const Default: Story = {
   args: createTask(),
