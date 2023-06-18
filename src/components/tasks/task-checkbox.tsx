@@ -8,35 +8,36 @@ import { useToast } from "../ui/use-toast"
 
 export interface TaskCheckboxProps {
   id: string
-  status: string
+  isCompleted: boolean
   dict: any
 }
 
-export function TaskCheckbox({ id, status, dict }: TaskCheckboxProps) {
+export function TaskCheckbox({ id, isCompleted, dict }: TaskCheckboxProps) {
   const router = useRouter()
-  const [isChecked, setChecked] = useState(status === `COMPLETED`)
+  const [isChecked, setChecked] = useState(isCompleted)
   const [isPending, startTransition] = useTransition()
   const [isFetching, setIsFetching] = useState(false)
   const { toast } = useToast()
   const isMutating = isFetching || isPending
 
   const handleChange = async () => {
-    const newState = !isChecked
+    const complete = !isChecked
 
-    setChecked(newState)
+    setChecked(complete)
     setIsFetching(true)
 
+    const completedAt = complete ? new Date() : undefined
     const res = await fetch(`/api/task?taskId=${id}`, {
       method: "PUT",
       body: JSON.stringify({
-        status: newState ? `COMPLETED` : `NOT_STARTED`,
+        completedAt,
       }),
       headers: {
         "Content-Type": "application/json",
       },
     })
 
-    if (newState) {
+    if (complete) {
       toast({
         description: dict.complete.toast,
       })

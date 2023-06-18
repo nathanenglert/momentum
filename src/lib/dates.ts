@@ -21,13 +21,13 @@ export function formatTime(d: Date): string {
 }
 
 export function getLifecycleStage(
-  status: string,
+  isCompleted: boolean,
   created: Date,
   due?: Date | null
 ): 0 | 1 | 2 | 3 {
   const today = new Date()
 
-  if (status == "COMPLETED" || due || isAfter(created, today)) return 0
+  if (isCompleted || due || isAfter(created, today)) return 0
 
   const age = differenceInCalendarDays(created, today)
   if (age <= -6) return 3

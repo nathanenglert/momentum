@@ -47,22 +47,16 @@ export async function PUT(req: NextRequest) {
   const session = await getServerSession(authOptions)
   const currentUserId = session?.user?.id!
   const taskId = req.nextUrl.searchParams.get("taskId")!
-  const { title, description, dueDate, status } = await req.json()
+  const { title, description, dueAt, completedAt } = await req.json()
 
   const check = await prisma.task.findUnique({ where: { id: taskId } })
   if (check?.userId !== currentUserId) {
     return NextResponse.error()
   }
 
-  let completedAt = status
-    ? status === "COMPLETED"
-      ? new Date()
-      : null
-    : undefined
-
   const record = await prisma.task.update({
     where: { id: taskId },
-    data: { title, description, dueAt: dueDate, status, completedAt },
+    data: { title, description, dueAt, completedAt },
   })
 
   return NextResponse.json(record, { status: 200 })

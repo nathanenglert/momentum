@@ -36,7 +36,7 @@ const formSchema = z.object({
     message: "Title must be at least 2 characters.",
   }),
   description: z.string().optional(),
-  dueDate: z.date().optional(),
+  dueAt: z.date().optional(),
   tags: z.array(z.string()),
   frequency: z.string().optional(),
 })
@@ -162,7 +162,7 @@ export function TaskForm({ dict, possibleTags }: TaskFormProps) {
         {hasDueDate && (
           <FormField
             control={form.control}
-            name="dueDate"
+            name="dueAt"
             render={({ field }) => (
               <FormItem className="space-y-0">
                 <FormLabel className="sr-only">Due</FormLabel>

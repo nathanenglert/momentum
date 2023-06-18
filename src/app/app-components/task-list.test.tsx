@@ -35,7 +35,6 @@ beforeEach(() => {
       description: null,
       dueAt: null,
       habitId: null,
-      status: "NOT_STARTED",
       title: "Task Title",
       updatedAt: new Date(),
       userId: "1",

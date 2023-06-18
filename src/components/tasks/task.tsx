@@ -12,7 +12,6 @@ import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 
 import { TaskCheckbox } from "./task-checkbox"
-import { COMPLETED } from "./task-status"
 
 const taskVariants = cva(
   "font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
@@ -39,7 +38,7 @@ export interface TaskProps {
     id: string
     streak: number
   } | null
-  status: string
+  completedAt: Date | null
   title: string
   tags: {
     id: string
@@ -50,7 +49,7 @@ export interface TaskProps {
 
 export function Task({
   id,
-  status,
+  completedAt,
   title,
   createdAt,
   dueAt,
@@ -58,19 +57,20 @@ export function Task({
   tags,
   dict,
 }: TaskProps) {
+  const isCompleted = !!completedAt
   const isPastDue = dueAt && wasYesterdayOrEarlier(dueAt)
-  const lifecycle = getLifecycleStage(status, createdAt, dueAt)
+  const lifecycle = getLifecycleStage(isCompleted, createdAt, dueAt)
 
   return (
     <li className="flex justify-between">
       <div className="flex items-center space-x-2">
-        <TaskCheckbox id={id} status={status} dict={dict.status} />
+        <TaskCheckbox id={id} isCompleted={isCompleted} dict={dict.status} />
         <label
           htmlFor={`done-${id}`}
           className={cn(taskVariants({ lifecycle }))}
         >
           {title}
-          {dueAt && status != COMPLETED && (
+          {dueAt && !completedAt && (
             <span
               className={cn("italic", {
                 "text-destructive": isPastDue,

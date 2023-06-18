@@ -1,6 +1,7 @@
-import { COMPLETED, NOT_STARTED } from "@/components/tasks/task-status"
-
 import { formatTime, getLifecycleStage, wasYesterdayOrEarlier } from "./dates"
+
+const COMPLETED = true
+const NOT_STARTED = false
 
 describe("formatTime()", () => {
   it("should return `today`", () => {

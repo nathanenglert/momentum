@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { add } from "date-fns"
 
 import { Task } from "./task"
-import { NOT_STARTED } from "./task-status"
 
 const meta: Meta<typeof Task> = {
   title: "Tasks/Task",
@@ -19,7 +18,6 @@ const createTask = (override?: any) => {
   const base = {
     id: "1",
     createdAt: today,
-    status: NOT_STARTED,
     title: "A Task",
     tags: [],
     dict: {},
