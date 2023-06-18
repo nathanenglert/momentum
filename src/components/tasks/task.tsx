@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 
 import { TaskCheckbox } from "./task-checkbox"
+import { TaskOptions } from "./task-options"
 
 const taskVariants = cva(
   "font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
@@ -93,6 +94,7 @@ export function Task({
             {tag.name}
           </Badge>
         ))}
+        <TaskOptions id={id} dict={dict.status} />
       </div>
     </li>
   )

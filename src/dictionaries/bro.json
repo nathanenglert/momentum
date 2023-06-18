@@ -30,6 +30,9 @@
     "status": {
       "complete": {
         "toast": "CRUSHED!"
+      },
+      "delete": {
+        "toast": "It gone."
       }
     }
   }
