@@ -50,7 +50,7 @@ export function TaskOptions({ id, dict }: TaskOptionsProps) {
       </PopoverTrigger>
       <PopoverContent>
         <div
-          className="z-10 mb-2 w-56 divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-lg"
+          className="z-10 mb-2 w-40 divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-lg"
           role="menu"
         >
           <div className="p-2">
