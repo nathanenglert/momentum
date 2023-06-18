@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/popover"
 
 export interface DatePickerProps {
+  autoFocus?: boolean
   className: string
   value: Date | undefined
   placeholder: string
@@ -21,6 +22,7 @@ export interface DatePickerProps {
 }
 
 export function DatePicker({
+  autoFocus,
   className,
   value,
   placeholder,
@@ -31,6 +33,7 @@ export function DatePicker({
       <Popover>
         <PopoverTrigger asChild>
           <Button
+            autoFocus={autoFocus}
             variant={"outline"}
             className={cn(
               "w-[280px] justify-start text-left font-normal",

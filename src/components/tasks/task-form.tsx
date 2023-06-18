@@ -104,7 +104,7 @@ export function TaskForm({ dict, possibleTags }: TaskFormProps) {
           render={({ field }) => (
             <FormItem>
               <FormLabel className="sr-only">Title</FormLabel>
-              <FormControl>
+              <FormControl autoFocus>
                 <Input placeholder={dict.title.placeholder} {...field} />
               </FormControl>
               <FormDescription className="sr-only">
@@ -123,6 +123,7 @@ export function TaskForm({ dict, possibleTags }: TaskFormProps) {
                 <FormLabel className="sr-only">Description</FormLabel>
                 <FormControl>
                   <Textarea
+                    autoFocus
                     placeholder={dict.description.placeholder}
                     {...field}
                   />
@@ -144,6 +145,7 @@ export function TaskForm({ dict, possibleTags }: TaskFormProps) {
                 <FormLabel className="sr-only">Category</FormLabel>
                 <FormControl>
                   <Combobox
+                    autoFocus
                     className={`w-full`}
                     placeholder={dict.category.placeholder}
                     selected={field.value}
@@ -168,6 +170,7 @@ export function TaskForm({ dict, possibleTags }: TaskFormProps) {
                 <FormLabel className="sr-only">Due</FormLabel>
                 <FormControl>
                   <DatePicker
+                    autoFocus
                     className={`w-full`}
                     placeholder={dict.dueDate.placeholder}
                     value={field.value}
@@ -195,6 +198,7 @@ export function TaskForm({ dict, possibleTags }: TaskFormProps) {
                 >
                   <FormControl>
                     <SelectTrigger
+                      autoFocus
                       className={cn(!field.value && `text-muted-foreground`)}
                     >
                       <SelectValue placeholder={dict.frequency.placeholder} />

@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils"
 import { Button } from "./button"
 
 export interface ComboBoxProps {
+  autoFocus?: boolean
   className?: string
   selected: string[]
   placeholder: string
@@ -19,6 +20,7 @@ export interface ComboBoxProps {
 }
 
 export function Combobox({
+  autoFocus,
   className,
   selected,
   placeholder,
@@ -78,6 +80,7 @@ export function Combobox({
             </Button>
           ))}
           <HeadlessCombobox.Input
+            autoFocus={autoFocus}
             className={`flex-grow focus-visible:outline-none bg-transparent`}
             placeholder={placeholder}
             value={query}
