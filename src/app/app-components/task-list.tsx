@@ -16,7 +16,7 @@ export async function TaskList({ dict }: { dict: any }) {
       OR: [{ completedAt: null }, { completedAt: { gte: today } }],
     },
     include: { tags: true, habit: true },
-    orderBy: [{ completedAt: "desc" }, { dueAt: "asc" }],
+    orderBy: [{ completedAt: "asc" }, { dueAt: "desc" }],
   })
 
   return (
