@@ -1,22 +1,17 @@
 import {
   differenceInCalendarDays,
+  endOfYesterday,
   formatDistanceToNow,
   isAfter,
+  isBefore,
+  isToday,
+  isTomorrow,
 } from "date-fns"
 
 export function formatTime(d: Date): string {
   if (wasYesterdayOrEarlier(d)) return ` is past due`
-
-  const today = new Date()
-  const hours = today.getHours()
-  const minutes = today.getMinutes()
-  const seconds = today.getSeconds()
-  const milliseconds = today.getMilliseconds()
-
-  d.setHours(hours, minutes, seconds, milliseconds)
-
-  if (d.getDate() == today.getDate()) return ` due today`
-  if (d.getDate() == today.getDate() + 1) return ` due tomorrow`
+  if (isToday(d)) return ` due today`
+  if (isTomorrow(d)) return ` due tomorrow`
 
   return ` in ${formatDistanceToNow(d)}`
 }
@@ -39,11 +34,6 @@ export function getLifecycleStage(
 }
 
 export function wasYesterdayOrEarlier(date: Date): boolean {
-  const today = new Date()
-  date.setHours(0, 0, 0, 0)
-  today.setHours(0, 0, 0, 0)
-
-  const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000)
-
-  return date <= yesterday
+  const yesterday = endOfYesterday()
+  return isBefore(date, yesterday)
 }

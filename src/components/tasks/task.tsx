@@ -71,7 +71,7 @@ export function Task({
           className={cn(taskVariants({ lifecycle }))}
         >
           {title}
-          {dueAt && !completedAt && (
+          {!!dueAt && !completedAt && (
             <span
               className={cn("italic", {
                 "text-destructive": isPastDue,

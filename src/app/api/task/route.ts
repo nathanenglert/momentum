@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import { Tag } from "@prisma/client"
-import { endOfDay } from "date-fns"
+import { endOfToday } from "date-fns"
 import { getServerSession } from "next-auth"
 
 import { prisma } from "@/lib/prisma"
@@ -11,7 +11,7 @@ export async function POST(req: Request) {
   const currentUserId = session?.user?.id!
   const { title, description, dueDate, tags, frequency } = await req.json()
 
-  const dueAt = frequency && !dueDate ? endOfDay(new Date()) : dueDate
+  const dueAt = frequency && !dueDate ? endOfToday() : dueDate
   const record = await prisma.task.create({
     data: {
       userId: currentUserId,
