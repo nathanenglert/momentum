@@ -1,3 +1,4 @@
+import { startOfDay } from "date-fns"
 import { getServerSession } from "next-auth"
 
 import { prisma } from "@/lib/prisma"
@@ -7,11 +8,15 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 export async function TaskList({ dict }: { dict: any }) {
   const session = await getServerSession(authOptions)
   const currentUserId = session?.user?.id!
+  const today = startOfDay(new Date())
 
   const tasks = await prisma.task.findMany({
-    where: { userId: currentUserId },
+    where: {
+      userId: currentUserId,
+      OR: [{ completedAt: null }, { completedAt: { gte: today } }],
+    },
     include: { tags: true, habit: true },
-    orderBy: [{ completedAt: "desc" }],
+    orderBy: [{ completedAt: "desc" }, { dueAt: "asc" }],
   })
 
   return (
