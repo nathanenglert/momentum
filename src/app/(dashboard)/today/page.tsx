@@ -17,12 +17,13 @@ export default async function TodayPage() {
 
   const dict = await getDictionary("bro")
   const tags = (await prisma.tag.findMany({ take: 100 })).map((tag) => tag.name)
+  const AwaitedTaskList: JSX.Element = await TaskList({ dict: dict.taskList })
 
   return (
     <section className="container grid gap-6 pb-8 pt-6 md:py-10">
-      <div className="w-[420px] mx-auto my-24">
+      <div className="w-[600px] mx-auto my-24">
         <TaskForm dict={dict.taskForm} possibleTags={tags} />
-        <TaskList dict={dict.taskList} />
+        {AwaitedTaskList}
       </div>
     </section>
   )

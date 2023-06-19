@@ -27,7 +27,7 @@ test("renders default button with override props", () => {
 ].map(([name, component]) => {
   test(`renders ${name} button`, () => {
     const Component = component
-    render(<Component children={name as string} />)
+    render(<Component>{name as string}</Component>)
     const buttonElement = screen.getByText(name as string)
     expect(buttonElement).not.toBeNull()
   })

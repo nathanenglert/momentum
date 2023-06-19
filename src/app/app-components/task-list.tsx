@@ -11,7 +11,7 @@ export async function TaskList({ dict }: { dict: any }) {
   const tasks = await prisma.task.findMany({
     where: { userId: currentUserId },
     include: { tags: true, habit: true },
-    orderBy: [{ completedAt: "asc" }],
+    orderBy: [{ completedAt: "desc" }],
   })
 
   return (
