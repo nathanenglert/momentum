@@ -31,7 +31,7 @@ yarn-error.log*
 
 # local data
 data.db*
-src/prisma/*.db*
+prisma/*.db*
 
 # turbo
 .turbo
