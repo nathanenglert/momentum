@@ -2,6 +2,7 @@ import { Task } from "@prisma/client"
 import {
   differenceInCalendarDays,
   endOfDay,
+  isBefore,
   isToday,
   startOfDay,
 } from "date-fns"
@@ -51,27 +52,25 @@ export function formatStreak(streak: number): string {
 export function sortTasksByCriteria(tasks: Task[]): Task[] {
   tasks.sort((a, b) => {
     // Check if the task is due today
-    const aDueToday = !!a.dueAt && isToday(a.dueAt) && !a.completedAt
-    const bDueToday = !!b.dueAt && isToday(b.dueAt) && !b.completedAt
+    const aDueToday = !!a.dueAt && isToday(a.dueAt)
+    const bDueToday = !!b.dueAt && isToday(b.dueAt)
 
     // Compare based on the criteria
+    if (!a.completedAt && !b.completedAt) {
+      // 1. All tasks that are due today
+      if (aDueToday && !bDueToday) return -1
+      if (bDueToday && !aDueToday) return 1
 
-    // 1. All tasks that are due today
-    if (aDueToday && !bDueToday) return -1
-    if (bDueToday && !aDueToday) return 1
-
-    // 2. All tasks that do not have a due date
-    if (!a.dueAt && !!b.dueAt) return -1
-    if (!!a.dueAt && !b.dueAt) return 1
-
+      // 2. All tasks that do not have a due date
+      if (!a.dueAt && !!b.dueAt) return -1
+      if (!!a.dueAt && !b.dueAt) return 1
+    }
     // 3. All other tasks that are due in the future
     if (!a.completedAt && !!b.completedAt) return -1
     if (!!a.completedAt && !b.completedAt) return 1
 
-    // 4. All completed tasks
-    // (No need to handle this case explicitly as it's the final category)
-
-    return 0 // Keep the original order for tasks in the same category
+    // 4. All completed tasks, sorted by date
+    return isBefore(a.completedAt!, b.completedAt!) ? -1 : 1
   })
 
   return tasks
