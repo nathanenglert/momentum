@@ -21,6 +21,7 @@ import { Input } from "@/components/ui/input"
 
 import { Combobox } from "../ui/combobox"
 import { DatePicker } from "../ui/date-picker"
+import { QuickInput } from "../ui/quick-input"
 import {
   Select,
   SelectContent,
@@ -105,7 +106,11 @@ export function TaskForm({ dict, possibleTags }: TaskFormProps) {
             <FormItem>
               <FormLabel className="sr-only">Title</FormLabel>
               <FormControl autoFocus>
-                <Input placeholder={dict.title.placeholder} {...field} />
+                <QuickInput
+                  onQuickEnter={form.handleSubmit(onSubmit)}
+                  placeholder={dict.title.placeholder}
+                  {...field}
+                />
               </FormControl>
               <FormDescription className="sr-only">
                 {dict.title.description}
