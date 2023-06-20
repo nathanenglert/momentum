@@ -8,6 +8,8 @@ import {
   PopoverTrigger,
 } from "@radix-ui/react-popover"
 
+import { cn } from "@/lib/utils"
+
 import { Button } from "../ui/button"
 import { useToast } from "../ui/use-toast"
 
@@ -43,7 +45,7 @@ export function TaskOptions({ id, dict }: TaskOptionsProps) {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button className="transition" variant={`ghost`}>
+        <Button className={cn("transition", "py-0 h-auto")} variant={`ghost`}>
           <span className="sr-only">Menu</span>
           ...
         </Button>
