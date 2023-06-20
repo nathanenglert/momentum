@@ -1,6 +1,8 @@
 import { Task } from "@prisma/client"
+import { add } from "date-fns"
 
-import { calculateStreak, formatStreak } from "./tasks"
+import { createTask as t } from "./mock-objects"
+import { calculateStreak, formatStreak, sortTasksByCriteria } from "./tasks"
 
 describe("calculateStreak()", () => {
   ;[
@@ -75,5 +77,39 @@ describe("formatSteak()", () => {
   it("should display the streak total when greater than 1", () => {
     const actual = formatStreak(2)
     expect(actual).toContain("2")
+  })
+})
+
+describe("sortTasksByCriteria()", () => {
+  const today = new Date()
+  const tomorrow = add(today, { days: 1 })
+
+  ;[
+    [
+      t({ id: "0", dueAt: today, completedAt: null }),
+      t({ id: "1", dueAt: null, completedAt: null }),
+      t({ id: "2", dueAt: tomorrow, completedAt: null }),
+      t({ id: "3", dueAt: today, completedAt: today }),
+    ],
+    [
+      t({ id: "1", dueAt: null, completedAt: null }),
+      t({ id: "0", dueAt: today, completedAt: null }),
+      t({ id: "3", dueAt: today, completedAt: today }),
+      t({ id: "2", dueAt: tomorrow, completedAt: null }),
+    ],
+    [
+      t({ id: "3", dueAt: today, completedAt: today }),
+      t({ id: "2", dueAt: tomorrow, completedAt: null }),
+      t({ id: "1", dueAt: null, completedAt: null }),
+      t({ id: "0", dueAt: today, completedAt: null }),
+    ],
+  ].map((tasks: Task[]) => {
+    it("should keep the sort", () => {
+      const actual = sortTasksByCriteria(tasks)
+
+      for (let i = 0; i < tasks.length; i++) {
+        expect(actual[i].id).toEqual(i.toString())
+      }
+    })
   })
 })

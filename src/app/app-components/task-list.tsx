@@ -1,8 +1,10 @@
+import { Habit, Tag, Task } from "@prisma/client"
 import { startOfDay } from "date-fns"
 import { getServerSession } from "next-auth"
 
 import { prisma } from "@/lib/prisma"
-import { Task } from "@/components/tasks/task"
+import { sortTasksByCriteria } from "@/lib/tasks"
+import { Task as TaskItem } from "@/components/tasks/task"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 
 export async function TaskList({ dict }: { dict: any }) {
@@ -16,13 +18,17 @@ export async function TaskList({ dict }: { dict: any }) {
       OR: [{ completedAt: null }, { completedAt: { gte: today } }],
     },
     include: { tags: true, habit: true },
-    orderBy: [{ completedAt: "asc" }, { dueAt: "desc" }],
   })
+
+  const sorted = sortTasksByCriteria(tasks) as (Task & {
+    tags: Tag[]
+    habit: Habit | null
+  })[]
 
   return (
     <ul className="mt-12 space-y-4">
-      {tasks.map((task) => (
-        <Task
+      {sorted.map((task) => (
+        <TaskItem
           key={task.id}
           id={task.id}
           completedAt={task.completedAt}

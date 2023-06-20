@@ -1,5 +1,10 @@
 import { Task } from "@prisma/client"
-import { differenceInCalendarDays, endOfDay, startOfDay } from "date-fns"
+import {
+  differenceInCalendarDays,
+  endOfDay,
+  isToday,
+  startOfDay,
+} from "date-fns"
 
 export function calculateStreak(tasks: Task[], terminator: Date) {
   if (tasks.length === 0) return 0
@@ -41,4 +46,33 @@ export function formatStreak(streak: number): string {
   if (streak == 1) return " to keep the streak"
   if (streak >= 2) return ` to keep streaking (${streak})`
   return ""
+}
+
+export function sortTasksByCriteria(tasks: Task[]): Task[] {
+  tasks.sort((a, b) => {
+    // Check if the task is due today
+    const aDueToday = !!a.dueAt && isToday(a.dueAt) && !a.completedAt
+    const bDueToday = !!b.dueAt && isToday(b.dueAt) && !b.completedAt
+
+    // Compare based on the criteria
+
+    // 1. All tasks that are due today
+    if (aDueToday && !bDueToday) return -1
+    if (bDueToday && !aDueToday) return 1
+
+    // 2. All tasks that do not have a due date
+    if (!a.dueAt && !!b.dueAt) return -1
+    if (!!a.dueAt && !b.dueAt) return 1
+
+    // 3. All other tasks that are due in the future
+    if (!a.completedAt && !!b.completedAt) return -1
+    if (!!a.completedAt && !b.completedAt) return 1
+
+    // 4. All completed tasks
+    // (No need to handle this case explicitly as it's the final category)
+
+    return 0 // Keep the original order for tasks in the same category
+  })
+
+  return tasks
 }
