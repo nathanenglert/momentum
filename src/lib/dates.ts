@@ -1,4 +1,5 @@
 import {
+  add,
   differenceInCalendarDays,
   endOfYesterday,
   formatDistanceToNow,
@@ -12,7 +13,7 @@ export function formatTime(d: Date): string {
   if (wasYesterdayOrEarlier(d)) return ` is past due`
   if (isToday(d)) return ` due today`
   if (isTomorrow(d)) return ` due tomorrow`
-
+  d = add(d, { days: 1 })
   return ` in ${formatDistanceToNow(d)}`
 }
 
