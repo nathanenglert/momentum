@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { Tag } from "@prisma/client"
 import { add, isFuture } from "date-fns"
 
 import { prisma } from "@/lib/prisma"
@@ -52,7 +53,9 @@ export async function POST(
       description: lastTask.description,
       dueAt: nextDate,
       habitId: params.id,
-      tags: { connect: lastTask.tags },
+      tags: {
+        connect: lastTask.tags.map((tag: Tag) => ({ id: tag.id })),
+      },
     },
   })
 

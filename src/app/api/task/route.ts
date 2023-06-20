@@ -21,8 +21,8 @@ export async function POST(req: Request) {
       tags: {
         connectOrCreate: tags.map((tag: Tag) => {
           return {
-            where: { name: tag },
-            create: { name: tag },
+            where: { name: tag.name },
+            create: { name: tag.name },
           }
         }),
       },
