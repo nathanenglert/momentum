@@ -1,38 +1,25 @@
+import { add } from "date-fns"
+
 import { formatTime, getLifecycleStage, wasYesterdayOrEarlier } from "./dates"
 
 const COMPLETED = true
 const NOT_STARTED = false
 
 describe("formatTime()", () => {
-  it("should return `today`", () => {
-    const now = new Date()
-    const actual = formatTime(now)
+  ;[
+    [{ days: 0 }, `today`],
+    [{ days: 1 }, `tomorrow`],
+    [{ days: 2 }, `2 days`],
+    [{ weeks: 1 }, `1 week`],
+    [{ days: 33 }, `1 month 3 days`],
+    [{ days: -1 }, `past due`],
+  ].forEach(([modifier, expected]) => {
+    it(`should return \`${expected}\``, () => {
+      const now = add(new Date(), modifier as Duration)
+      const actual = formatTime(now)
 
-    expect(actual).toContain("today")
-  })
-
-  it("should return `tomorrow`", () => {
-    const tomorrow = new Date()
-    tomorrow.setDate(tomorrow.getDate() + 1)
-    const actual = formatTime(tomorrow)
-
-    expect(actual).toContain("tomorrow")
-  })
-
-  it("should return `n days`", () => {
-    const day = new Date()
-    day.setDate(day.getDate() + 2)
-    const actual = formatTime(day)
-
-    expect(actual).toContain("3 days")
-  })
-
-  it("should return `past due`", () => {
-    const day = new Date()
-    day.setDate(day.getDate() - 1)
-    const actual = formatTime(day)
-
-    expect(actual).toContain("past due")
+      expect(actual).toContain(expected)
+    })
   })
 })
 

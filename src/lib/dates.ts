@@ -1,8 +1,7 @@
 import {
-  add,
   differenceInCalendarDays,
   endOfYesterday,
-  formatDistanceToNow,
+  formatDuration,
   isAfter,
   isBefore,
   isToday,
@@ -13,8 +12,11 @@ export function formatTime(d: Date): string {
   if (wasYesterdayOrEarlier(d)) return ` is past due`
   if (isToday(d)) return ` due today`
   if (isTomorrow(d)) return ` due tomorrow`
-  d = add(d, { days: 1 })
-  return ` in ${formatDistanceToNow(d)}`
+  const totalDays = differenceInCalendarDays(d, new Date())
+  const months = Math.floor(totalDays / 30)
+  const weeks = Math.floor((totalDays - months * 30) / 7)
+  const days = totalDays - months * 30 - weeks * 7
+  return ` in ${formatDuration({ months, weeks, days })}`
 }
 
 export function getLifecycleStage(
