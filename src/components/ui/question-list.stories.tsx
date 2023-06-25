@@ -21,6 +21,20 @@ export const Default: Story = {
   },
 }
 
+export const YesNo: Story = {
+  args: {
+    questions: [{ text: "Are you still reading every day?", type: "YES_NO" }],
+  },
+}
+
+export const Scale: Story = {
+  args: {
+    questions: [
+      { text: "How are you feeling about Cyberpunk today?", type: "SCALE" },
+    ],
+  },
+}
+
 export const Empty: Story = {
   args: {
     questions: [],
