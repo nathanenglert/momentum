@@ -10,6 +10,7 @@ import {
 } from "@radix-ui/react-popover"
 import { signIn, signOut, useSession } from "next-auth/react"
 
+import { ThemeToggle } from "./theme-toggle"
 import { Button } from "./ui/button"
 
 export default function AccountMenu() {
@@ -85,6 +86,10 @@ export default function AccountMenu() {
                 {name}
               </Link>
             ))}
+          </div>
+
+          <div className="p-2">
+            <ThemeToggle />
           </div>
 
           <div className="p-2">
