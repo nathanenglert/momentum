@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth"
 import { prisma } from "@/lib/prisma"
 import { TaskForm } from "@/components/tasks/task-form"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
+import { TaskActivity } from "@/app/app-components/task-activity"
 import { TaskList } from "@/app/app-components/task-list"
 import { getDictionary } from "@/app/dictionaries"
 
@@ -18,12 +19,14 @@ export default async function TodayPage() {
   const dict = await getDictionary("bro")
   const tags = (await prisma.tag.findMany({ take: 100 })).map((tag) => tag.name)
   const AwaitedTaskList: JSX.Element = await TaskList({ dict: dict.taskList })
+  const AwaitedTaskActivity: JSX.Element = await TaskActivity()
 
   return (
     <section className="container grid gap-6 pb-8 pt-6 md:py-10">
       <div className="w-[600px] mx-auto my-24">
         <TaskForm dict={dict.taskForm} possibleTags={tags} />
         {AwaitedTaskList}
+        {AwaitedTaskActivity}
       </div>
     </section>
   )
