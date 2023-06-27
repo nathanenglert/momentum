@@ -12,20 +12,21 @@ export function HeatMapChart({
   endDate: Date
 }) {
   const colors = {
-    0: "#EBEDF0",
-    2: "#C6E48B",
-    4: "#7BC96F",
-    10: "#239A3B",
-    20: "#196127",
-    30: "#000",
+    0: "#1e293b",
+    2: "#14532d",
+    4: "#15803d",
+    10: "#22c55e",
+    20: "#86efac",
+    30: "#dcfce7",
   }
-  console.log(values)
+
   return (
     <HeatMap
       value={values}
       width={600}
       startDate={startDate}
       endDate={endDate}
+      legendCellSize={0}
       panelColors={colors}
     />
   )
