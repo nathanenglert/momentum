@@ -28,6 +28,8 @@ export function HeatMapChart({
       endDate={endDate}
       legendCellSize={0}
       panelColors={colors}
+      weekLabels={false}
+      monthLabels={false}
     />
   )
 }

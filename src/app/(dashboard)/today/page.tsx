@@ -22,12 +22,12 @@ export default async function TodayPage() {
   const AwaitedTaskActivity: JSX.Element = await TaskActivity()
 
   return (
-    <section className="container grid gap-6 pb-8 pt-6 md:py-10">
-      <div className="w-[600px] mx-auto my-24">
+    <section className="container grid gap-6 md:py-10">
+      <div className="w-[600px] mx-auto mt-24">
         <LogFormSwitcher dict={dict} tags={tags} />
         {AwaitedTaskList}
-        {AwaitedTaskActivity}
       </div>
+      <div className="w-[600px] mx-auto mt-8">{AwaitedTaskActivity}</div>
     </section>
   )
 }

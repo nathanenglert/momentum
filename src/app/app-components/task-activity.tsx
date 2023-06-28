@@ -1,5 +1,5 @@
 import { HeatMapValue } from "@uiw/react-heat-map"
-import { add, endOfYesterday, format, startOfToday } from "date-fns"
+import { add, endOfToday, format, startOfToday } from "date-fns"
 import { getServerSession } from "next-auth"
 
 import { prisma } from "@/lib/prisma"
@@ -9,7 +9,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 export async function TaskActivity() {
   const session = await getServerSession(authOptions)
   const currentUserId = session?.user?.id!
-  const endDate = endOfYesterday()
+  const endDate = endOfToday()
   const startDate = add(startOfToday(), { days: -90 })
 
   const tasks = await prisma.task.findMany({
