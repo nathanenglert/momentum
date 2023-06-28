@@ -1,4 +1,19 @@
 {
+  "noteForm": {
+    "title": {
+      "placeholder": "Jot down your genius thoughts here, bro...",
+      "description": "That idea, thought, or note you gotta jot."
+    },
+    "category": {
+      "placeholder": "Tag it, bag it, find it later...",
+      "description": ""
+    },
+    "submit": {
+      "label": "Jot It",
+      "toastSuccess": "Note saved!",
+      "toastError": "It broke."
+    }
+  },
   "taskForm": {
     "title": {
       "placeholder": "What are we crushing today?",

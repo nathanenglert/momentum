@@ -65,7 +65,12 @@ export function Task({
   return (
     <li className="flex justify-between">
       <div className="flex items-center space-x-2">
-        <TaskCheckbox id={id} isCompleted={isCompleted} dict={dict.status} />
+        <TaskCheckbox
+          id={id}
+          className={`mx-4`}
+          isCompleted={isCompleted}
+          dict={dict.status}
+        />
         <label
           htmlFor={`done-${id}`}
           className={cn(taskVariants({ lifecycle }))}

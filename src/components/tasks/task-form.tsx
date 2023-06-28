@@ -153,7 +153,7 @@ export function TaskForm({ dict, possibleTags }: TaskFormProps) {
                     autoFocus
                     className={`w-full`}
                     placeholder={dict.category.placeholder}
-                    selected={field.value}
+                    selected={field.value as string[]}
                     onChange={field.onChange}
                     items={possibleTags}
                   />
@@ -245,7 +245,7 @@ export function TaskForm({ dict, possibleTags }: TaskFormProps) {
           >
             Frequency
           </Button>
-          <Button type="submit" disabled={isMutating}>
+          <Button type="submit" className="w-[100px]" disabled={isMutating}>
             {dict.submit.label}
           </Button>
         </div>

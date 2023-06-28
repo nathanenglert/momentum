@@ -8,11 +8,17 @@ import { useToast } from "../ui/use-toast"
 
 export interface TaskCheckboxProps {
   id: string
+  className?: string
   isCompleted: boolean
   dict: any
 }
 
-export function TaskCheckbox({ id, isCompleted, dict }: TaskCheckboxProps) {
+export function TaskCheckbox({
+  id,
+  className,
+  isCompleted,
+  dict,
+}: TaskCheckboxProps) {
   const router = useRouter()
   const [isChecked, setChecked] = useState(isCompleted)
   const [isPending, startTransition] = useTransition()
@@ -50,6 +56,7 @@ export function TaskCheckbox({ id, isCompleted, dict }: TaskCheckboxProps) {
   return (
     <Checkbox
       id={`done-${id}`}
+      className={className}
       checked={isChecked}
       disabled={isMutating}
       onClick={handleChange}

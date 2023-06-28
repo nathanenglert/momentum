@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { TaskOptions } from "./task-options"
+import { LogOptions } from "./log-options"
 
-const meta: Meta<typeof TaskOptions> = {
-  title: "Tasks/Task Options",
-  component: TaskOptions,
+const meta: Meta<typeof LogOptions> = {
+  title: "Core/Log Options",
+  component: LogOptions,
   tags: ["autodocs"],
   argTypes: {},
 }
 
 export default meta
-type Story = StoryObj<typeof TaskOptions>
+type Story = StoryObj<typeof LogOptions>
 
 export const Default: Story = {
   args: {
