@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 
+import eventBus from "@/lib/event-bus"
 import { Button } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
 import { MeterForm } from "@/components/meters/meter-form"
@@ -20,6 +21,10 @@ export function LogFormSwitcher({ dict, tags }: { dict: any; tags: string[] }) {
   const handleSwitch = () => {
     setLogType((logType + 1) % config.length)
   }
+
+  eventBus.on("log-type:change", (type: number) => {
+    setLogType(type)
+  })
 
   const Icon = config[logType].icon
   const Form = config[logType].form
