@@ -1,16 +1,24 @@
-import { forwardRef, useEffect, useRef } from "react"
+import { forwardRef, useEffect, useRef, useState } from "react"
 
 import { Input, InputProps } from "./input"
 
 export interface QuickInputProps extends InputProps {
+  useLengthWarning?: boolean
   onQuickEnter: () => void
 }
 
 const QuickInput = forwardRef<HTMLInputElement, QuickInputProps>(
-  ({ onQuickEnter, ...props }, ref) => {
+  ({ onQuickEnter, useLengthWarning = true, ...props }, ref) => {
     const inputRef = useRef<HTMLInputElement | null>(null)
+    const [hasLengthWarning, setHasLengthWarning] = useState(false)
 
     const handleKeyDown = (event: KeyboardEvent) => {
+      setHasLengthWarning(
+        useLengthWarning &&
+          !!inputRef.current &&
+          inputRef.current.value.length > 40
+      )
+
       // Check if Command (metaKey) is pressed along with the Enter key
       if (event.metaKey && event.key === "Enter") {
         onQuickEnter()
@@ -34,18 +42,25 @@ const QuickInput = forwardRef<HTMLInputElement, QuickInputProps>(
     }, [])
 
     return (
-      <Input
-        ref={(element) => {
-          inputRef.current = element
-          if (!ref) return
-          if (typeof ref === "function") {
-            ref(element)
-          } else {
-            ref.current = element
-          }
-        }}
-        {...props}
-      />
+      <>
+        <Input
+          ref={(element) => {
+            inputRef.current = element
+            if (!ref) return
+            if (typeof ref === "function") {
+              ref(element)
+            } else {
+              ref.current = element
+            }
+          }}
+          {...props}
+        />
+        {hasLengthWarning && (
+          <p className="text-sm font-medium text-warning">
+            The text may be a little long.
+          </p>
+        )}
+      </>
     )
   }
 )
