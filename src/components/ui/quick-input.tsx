@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useRef, useState } from "react"
+import { ChangeEvent, forwardRef, useEffect, useRef, useState } from "react"
 
 import { Input, InputProps } from "./input"
 
@@ -13,17 +13,17 @@ const QuickInput = forwardRef<HTMLInputElement, QuickInputProps>(
     const [hasLengthWarning, setHasLengthWarning] = useState(false)
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      setHasLengthWarning(
-        useLengthWarning &&
-          !!inputRef.current &&
-          inputRef.current.value.length > 40
-      )
-
       // Check if Command (metaKey) is pressed along with the Enter key
       if (event.metaKey && event.key === "Enter") {
         onQuickEnter()
       }
     }
+
+    useEffect(() => {
+      setHasLengthWarning(
+        useLengthWarning && !!props.value && String(props.value).length > 40
+      )
+    }, [props.value])
 
     useEffect(() => {
       const inputElement = inputRef.current
