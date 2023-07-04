@@ -15,7 +15,7 @@ import { useToast } from "../ui/use-toast"
 
 export interface LogOptionsProps {
   id: string
-  type: "task" | "note"
+  type: "task" | "note" | "meter"
   dict: any
 }
 

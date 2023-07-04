@@ -239,3 +239,37 @@ Bro! That's TOTALLY on brand. Last one, how about the placeholder for the tags c
 > **"Tag it, bag it, find it later..."**
 >
 > It's catchy, it's instructive, and it keeps up with our bro vibes. What do you think, broseidon, king of the brocean?
+
+<br>
+
+Alright, brope, we're adding a concept called "meters" as well! Meters are similar to habits in that they track the same task over multiple days. However, habits are meant to be completed on a specific schedule. Meters track how many times you've completed a task over a certain time period, regardless of the rigidity.
+
+You know what to do. I need some placeholder text for the meter textbox and the tags combobox!
+
+<br>
+
+> Bro, I'm digging the concept of "meters"! It's like a flexible habit tracker, perfect for those tasks that don't fit neatly into a daily or weekly schedule. Alright, let's get those placeholders sorted:
+>
+> For the meter textbox:
+> "What's your meter, bro? Track it here..."
+>
+> For the tags combobox:
+> "Tag your meter, find your flow..."
+>
+> These placeholders keep up with our bro vibes and encourage users to track and categorize their meters. What do you think, brometheus? Ready to measure the momentum?
+
+<br>
+
+Sick, bro. How about the text for the submit button of the meter form?
+
+<br>
+
+> Bro, we're on a roll! For the meter form submit button, we want something that captures the essence of setting a meter and getting ready to track it. How about we go with "Set the Pace"? It's motivational, it's on brand, and it perfectly captures the action of setting a meter. What do you think, bro? Ready to set the pace?
+
+<br>
+
+Bro, that's the vibe! The problem is it's a little too long. Any ideas for a shorter version that's just as tubular?
+
+<br>
+
+> Totally get you, bro! We want something short, sweet, and full of energy. How about we go with "Track It"? It's concise, it's motivational, and it perfectly captures the action of setting a meter. What do you think, bro? Ready to track it?

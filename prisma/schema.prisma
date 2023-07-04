@@ -48,6 +48,7 @@ model User {
   task          Task[]
   habit         Habit[]
   notes         Note[]
+  meters        Meter[]
 }
 
 model VerificationToken {
@@ -74,10 +75,11 @@ model Task {
 }
 
 model Tag {
-  id    String @id @default(cuid())
-  name  String @unique
-  tasks Task[]
-  notes Note[]
+  id     String  @id @default(cuid())
+  name   String  @unique
+  tasks  Task[]
+  notes  Note[]
+  meters Meter[]
 }
 
 model Habit {
@@ -91,6 +93,16 @@ model Habit {
 }
 
 model Note {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  tags      Tag[]
+  title     String
+  updatedAt DateTime @updatedAt
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Meter {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   tags      Tag[]

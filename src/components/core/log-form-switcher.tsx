@@ -4,19 +4,21 @@ import { useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
+import { MeterForm } from "@/components/meters/meter-form"
 import { NoteForm } from "@/components/notes/note-form"
 import { TaskForm } from "@/components/tasks/task-form"
 
-const config = {
-  task: { icon: Icons.checkSquare, form: TaskForm },
-  note: { icon: Icons.minus, form: NoteForm },
-}
+const config = [
+  { icon: Icons.checkSquare, form: TaskForm, dict: "taskForm" },
+  { icon: Icons.minus, form: NoteForm, dict: "noteForm" },
+  { icon: Icons.copyPlus, form: MeterForm, dict: "meterForm" },
+]
 
 export function LogFormSwitcher({ dict, tags }: { dict: any; tags: string[] }) {
-  const [logType, setLogType] = useState<"task" | "note">("task")
+  const [logType, setLogType] = useState(0)
 
   const handleSwitch = () => {
-    setLogType(logType === "task" ? "note" : "task")
+    setLogType((logType + 1) % config.length)
   }
 
   const Icon = config[logType].icon
@@ -30,7 +32,7 @@ export function LogFormSwitcher({ dict, tags }: { dict: any; tags: string[] }) {
         </Button>
       </div>
       <div className="flex-grow">
-        <Form dict={dict[`${logType}Form`]} possibleTags={tags} />
+        <Form dict={dict[config[logType].dict]} possibleTags={tags} />
       </div>
     </div>
   )

@@ -2,6 +2,7 @@ import { startOfDay } from "date-fns"
 import { getServerSession } from "next-auth"
 
 import { prisma } from "@/lib/prisma"
+import { Meter as MeterItem } from "@/components/meters/meter"
 import { Note as NoteItem } from "@/components/notes/note"
 import { Task as TaskItem } from "@/components/tasks/task"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
@@ -35,6 +36,12 @@ export async function LogList({ dict }: { dict: any }) {
     orderBy: { completedAt: "desc" },
   })
 
+  const meters = await prisma.meter.findMany({
+    where: { userId: currentUserId },
+    include: { tags: true },
+    orderBy: { createdAt: "desc" },
+  })
+
   return (
     <ul className="mt-12 space-y-4">
       {tasks.map((task) => (
@@ -47,7 +54,7 @@ export async function LogList({ dict }: { dict: any }) {
           habit={task.habit}
           tags={task.tags}
           title={task.title}
-          dict={dict}
+          dict={dict.taskList}
         />
       ))}
       {notes.map((note) => (
@@ -57,7 +64,7 @@ export async function LogList({ dict }: { dict: any }) {
           createdAt={note.createdAt}
           tags={note.tags}
           title={note.title}
-          dict={dict}
+          dict={dict.taskList}
         />
       ))}
       {completed.map((task) => (
@@ -70,7 +77,16 @@ export async function LogList({ dict }: { dict: any }) {
           habit={task.habit}
           tags={task.tags}
           title={task.title}
-          dict={dict}
+          dict={dict.taskList}
+        />
+      ))}
+      {meters.map((meter) => (
+        <MeterItem
+          key={meter.id}
+          id={meter.id}
+          tags={meter.tags}
+          title={meter.title}
+          dict={{ ...dict.meterForm, ...dict.taskList }}
         />
       ))}
     </ul>

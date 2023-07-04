@@ -1,4 +1,19 @@
 {
+  "meterForm": {
+    "title": {
+      "placeholder": "What's your meter, bro? Track it here...",
+      "description": ""
+    },
+    "category": {
+      "placeholder": "Tag your meter, find your flow...",
+      "description": ""
+    },
+    "submit": {
+      "label": "Track It",
+      "toastSuccess": "Meter running!",
+      "toastError": "It broke."
+    }
+  },
   "noteForm": {
     "title": {
       "placeholder": "Jot down your genius thoughts here, bro...",

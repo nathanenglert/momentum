@@ -18,7 +18,7 @@ export default async function TodayPage() {
 
   const dict = await getDictionary("bro")
   const tags = (await prisma.tag.findMany({ take: 100 })).map((tag) => tag.name)
-  const AwaitedTaskList: JSX.Element = await LogList({ dict: dict.taskList })
+  const AwaitedTaskList: JSX.Element = await LogList({ dict })
   const AwaitedTaskActivity: JSX.Element = await TaskActivity()
 
   return (
