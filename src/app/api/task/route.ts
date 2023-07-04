@@ -9,7 +9,8 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions)
   const currentUserId = session?.user?.id!
-  const { title, description, dueAt, tags, frequency } = await req.json()
+  const { title, description, dueAt, tags, frequency, completedAt } =
+    await req.json()
 
   const dueDate = frequency && !dueAt ? endOfToday() : dueAt
   const record = await prisma.task.create({
@@ -18,6 +19,7 @@ export async function POST(req: Request) {
       title,
       description,
       dueAt: dueDate,
+      completedAt,
       tags: {
         connectOrCreate: tags.map((tag: string) => {
           return {

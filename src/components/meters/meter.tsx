@@ -34,6 +34,7 @@ export function Meter({ id, tags, title, dict }: MeterProps) {
     const res = await fetch("/api/task", {
       method: "POST",
       body: JSON.stringify({
+        completedAt: new Date(),
         title,
         tags: tags.map((tag) => tag.name),
       }),
