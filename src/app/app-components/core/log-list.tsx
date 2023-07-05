@@ -2,6 +2,7 @@ import { startOfDay } from "date-fns"
 import { getServerSession } from "next-auth"
 
 import { prisma } from "@/lib/prisma"
+import { LogGroup } from "@/components/core/log-group"
 import { Meter as MeterItem } from "@/components/meters/meter"
 import { Note as NoteItem } from "@/components/notes/note"
 import { Task as TaskItem } from "@/components/tasks/task"
@@ -67,28 +68,36 @@ export async function LogList({ dict }: { dict: any }) {
           dict={dict.taskList}
         />
       ))}
-      {completed.map((task) => (
-        <TaskItem
-          key={task.id}
-          id={task.id}
-          completedAt={task.completedAt}
-          createdAt={task.createdAt}
-          dueAt={task.dueAt}
-          habit={task.habit}
-          tags={task.tags}
-          title={task.title}
-          dict={dict.taskList}
-        />
-      ))}
-      {meters.map((meter) => (
-        <MeterItem
-          key={meter.id}
-          id={meter.id}
-          tags={meter.tags}
-          title={meter.title}
-          dict={{ ...dict.meterForm, ...dict.taskList }}
-        />
-      ))}
+      {completed.length > 0 && (
+        <LogGroup title={`Completed Tasks (${completed.length})`}>
+          {completed.map((task) => (
+            <TaskItem
+              key={task.id}
+              id={task.id}
+              completedAt={task.completedAt}
+              createdAt={task.createdAt}
+              dueAt={task.dueAt}
+              habit={task.habit}
+              tags={task.tags}
+              title={task.title}
+              dict={dict.taskList}
+            />
+          ))}
+        </LogGroup>
+      )}
+      {meters.length > 0 && (
+        <LogGroup title="Meters">
+          {meters.map((meter) => (
+            <MeterItem
+              key={meter.id}
+              id={meter.id}
+              tags={meter.tags}
+              title={meter.title}
+              dict={{ ...dict.meterForm, ...dict.taskList }}
+            />
+          ))}
+        </LogGroup>
+      )}
     </ul>
   )
 }
