@@ -8,6 +8,8 @@ import { Note as NoteItem } from "@/components/notes/note"
 import { Task as TaskItem } from "@/components/tasks/task"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 
+import { InspirationalQuote } from "../../../components/core/inspirational-quote"
+
 export async function LogList({ dict }: { dict: any }) {
   const session = await getServerSession(authOptions)
   const currentUserId = session?.user?.id!
@@ -45,6 +47,21 @@ export async function LogList({ dict }: { dict: any }) {
 
   return (
     <ul className="mt-12 space-y-4">
+      {tasks.length === 0 && (
+        <li className="pl-[56px] mb-12 space-y-4">
+          <p
+            dangerouslySetInnerHTML={{
+              __html:
+                completed.length > 0
+                  ? dict.taskList.empty.noTasksLeft
+                  : dict.taskList.empty.noTasks,
+            }}
+          />
+          {completed.length == 0 && (
+            <InspirationalQuote dict={dict.inspiration} />
+          )}
+        </li>
+      )}
       {tasks.map((task) => (
         <TaskItem
           key={task.id}

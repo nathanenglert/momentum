@@ -57,6 +57,10 @@
     }
   },
   "taskList": {
+    "empty": {
+      "noTasks": "No tasks today, bro? Let's get something on the board!",
+      "noTasksLeft": "Brotacular! You've crushed all your tasks for the day.<br>Time to kick back or add more tasks, bro!"
+    },
     "status": {
       "complete": {
         "toast": "CRUSHED!"
@@ -65,5 +69,47 @@
         "toast": "It gone."
       }
     }
-  }
+  },
+  "inspiration": [
+    {
+      "message": "Bro, you wanna get ahead? Just hit the gas and start, bro!",
+      "author": "Mark Twainbro"
+    },
+    {
+      "message": "Bro, don't just watch the clock; be the clock. Keep the momentum!",
+      "author": "Sam Brovenson"
+    },
+    {
+      "message": "Your future is all about the hustle you put in today, bro.",
+      "author": "Mahatma \"The Bro\" Gandhi"
+    },
+    {
+      "message": "Productivity ain't no accident, bro. It's all about that commitment, smart planning, and focused grind.",
+      "author": "Paul Broyer"
+    },
+    {
+      "message": "You don't gotta see the whole staircase, bro, just take that first step.",
+      "author": "Martin Luther King, Bro."
+    },
+    {
+      "message": "The secret to epic work? Love what you do, bro.",
+      "author": "Steve Brobs"
+    },
+    {
+      "message": "Your work is gonna fill a big part of your life, bro. The only way to be truly stoked is to do work that you think is rad.",
+      "author": "Steve Brobs"
+    },
+    {
+      "message": "The only limit to our tomorrow is the doubts we have today, bro.",
+      "author": "Franklin D. Broosevelt"
+    },
+    {
+      "message": "Believe you can and you're already halfway there, bro.",
+      "author": "Theodore Broosevelt"
+    },
+    {
+      "message": "Don't just count the days, bro, make the days count.",
+      "author": "Muhammad Broli"
+    }
+  ]
 }
