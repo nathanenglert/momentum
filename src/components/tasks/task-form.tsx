@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useTransition } from "react"
+import { useEffect, useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -17,7 +17,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
 
 import { Combobox } from "../ui/combobox"
 import { DatePicker } from "../ui/date-picker"
@@ -96,6 +95,10 @@ export function TaskForm({ dict, possibleTags }: TaskFormProps) {
     }
   }
 
+  useEffect(() => {
+    form.setFocus("title")
+  }, [form.setFocus])
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -105,8 +108,9 @@ export function TaskForm({ dict, possibleTags }: TaskFormProps) {
           render={({ field }) => (
             <FormItem>
               <FormLabel className="sr-only">Title</FormLabel>
-              <FormControl autoFocus>
+              <FormControl>
                 <QuickInput
+                  autoFocus
                   onQuickEnter={form.handleSubmit(onSubmit)}
                   placeholder={dict.title.placeholder}
                   {...field}

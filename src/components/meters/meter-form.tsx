@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useTransition } from "react"
+import { useEffect, useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -80,6 +80,10 @@ export function MeterForm({
     }
   }
 
+  useEffect(() => {
+    form.setFocus("title")
+  }, [form.setFocus])
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -89,8 +93,9 @@ export function MeterForm({
           render={({ field }) => (
             <FormItem>
               <FormLabel className="sr-only">Title</FormLabel>
-              <FormControl autoFocus>
+              <FormControl>
                 <QuickInput
+                  autoFocus
                   onQuickEnter={form.handleSubmit(onSubmit)}
                   placeholder={dict.title.placeholder}
                   {...field}

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import eventBus from "@/lib/event-bus"
 import { Button } from "@/components/ui/button"
@@ -22,9 +22,11 @@ export function LogFormSwitcher({ dict, tags }: { dict: any; tags: string[] }) {
     setLogType((logType + 1) % config.length)
   }
 
-  eventBus.on("log-type:change", (type: number) => {
-    setLogType(type)
-  })
+  useEffect(() => {
+    eventBus.on("log-type:change", (type: number) => {
+      setLogType(type)
+    })
+  }, [])
 
   const Icon = config[logType].icon
   const Form = config[logType].form
