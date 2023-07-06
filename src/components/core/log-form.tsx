@@ -114,10 +114,17 @@ export function LogForm({ type, features, dict, possibleTags }: LogFormProps) {
               <FormLabel className="sr-only">Title</FormLabel>
               <FormControl>
                 <QuickInput
+                  name="tags"
                   autoFocus
                   onQuickEnter={form.handleSubmit(onSubmit)}
                   placeholder={dict.title.placeholder}
-                  {...field}
+                  value={field.value?.toString() ?? ""}
+                  onChange={(e) => {
+                    const value = e.target.value
+                    if (typeof value === "string") {
+                      field.onChange(value)
+                    }
+                  }}
                 />
               </FormControl>
               <FormDescription className="sr-only">
