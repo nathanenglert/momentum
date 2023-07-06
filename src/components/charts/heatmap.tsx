@@ -2,6 +2,17 @@
 
 import HeatMap, { HeatMapValue } from "@uiw/react-heat-map"
 
+// < Start of Major Hack >
+const consoleError = console.error
+const SUPPRESSED_WARNINGS = ["prop is being spread into JSX:", "at HeatMap"]
+
+console.error = (msg, ...args) => {
+  if (!SUPPRESSED_WARNINGS.some((entry) => msg.includes(entry))) {
+    consoleError(msg, ...args)
+  }
+}
+// < End of Major Hack >
+
 export function HeatMapChart({
   values,
   startDate,
