@@ -96,8 +96,9 @@ export function TaskForm({ dict, possibleTags }: TaskFormProps) {
   }
 
   useEffect(() => {
+    if (form.formState.isDirty) return
     form.setFocus("title")
-  }, [form.setFocus])
+  }, [form.setFocus, form.formState.isDirty])
 
   return (
     <Form {...form}>
