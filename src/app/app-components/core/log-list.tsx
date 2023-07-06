@@ -1,4 +1,4 @@
-import { startOfDay } from "date-fns"
+import { startOfToday, startOfTomorrow } from "date-fns"
 import { getServerSession } from "next-auth"
 
 import { prisma } from "@/lib/prisma"
@@ -13,30 +13,48 @@ import { InspirationalQuote } from "../../../components/core/inspirational-quote
 export async function LogList({ dict }: { dict: any }) {
   const session = await getServerSession(authOptions)
   const currentUserId = session?.user?.id!
-  const today = startOfDay(new Date())
+  const today = startOfToday()
+  const tomorrow = startOfTomorrow()
 
   const tasks = await prisma.task.findMany({
     where: {
       userId: currentUserId,
-      completedAt: null,
+      OR: [{ completedAt: null }, { completedAt: { gte: today } }],
     },
     include: { tags: true, habit: true },
     orderBy: [{ dueAt: "asc" }, { createdAt: "asc" }],
   })
 
+  const tasksCompleted = tasks
+    .filter((task) => task.completedAt)
+    .sort((a, b) => {
+      if (a.completedAt! > b.completedAt!) return -1
+      if (a.completedAt! < b.completedAt!) return 1
+      return 0
+    })
+
+  const tasksInFuture = tasks
+    .filter((task) => task.dueAt && task.dueAt >= tomorrow)
+    .sort((a, b) => {
+      if (a.dueAt! < b.dueAt!) return -1
+      if (a.dueAt! > b.dueAt!) return 1
+      return 0
+    })
+
+  const tasksToday = tasks
+    .filter(
+      (task) => !task.completedAt && (!task.dueAt || task.dueAt < tomorrow)
+    )
+    .sort((a, b) => {
+      if (a.createdAt < b.createdAt) return -1
+      if (a.createdAt > b.createdAt) return 1
+      return 0
+    })
+
   const notes = await prisma.note.findMany({
     where: { userId: currentUserId, createdAt: { gte: today } },
     include: { tags: true },
     orderBy: { createdAt: "asc" },
-  })
-
-  const completed = await prisma.task.findMany({
-    where: {
-      userId: currentUserId,
-      completedAt: { gte: today },
-    },
-    include: { tags: true, habit: true },
-    orderBy: { completedAt: "desc" },
   })
 
   const meters = await prisma.meter.findMany({
@@ -52,17 +70,17 @@ export async function LogList({ dict }: { dict: any }) {
           <p
             dangerouslySetInnerHTML={{
               __html:
-                completed.length > 0
+                tasksCompleted.length > 0
                   ? dict.taskList.empty.noTasksLeft
                   : dict.taskList.empty.noTasks,
             }}
           />
-          {completed.length == 0 && (
+          {tasksCompleted.length == 0 && (
             <InspirationalQuote dict={dict.inspiration} />
           )}
         </li>
       )}
-      {tasks.map((task) => (
+      {tasksToday.map((task) => (
         <TaskItem
           key={task.id}
           id={task.id}
@@ -85,9 +103,26 @@ export async function LogList({ dict }: { dict: any }) {
           dict={dict.taskList}
         />
       ))}
-      {completed.length > 0 && (
-        <LogGroup title={`Completed Tasks (${completed.length})`}>
-          {completed.map((task) => (
+      {tasksInFuture.length > 0 && (
+        <LogGroup title={`Future Tasks (${tasksInFuture.length})`}>
+          {tasksInFuture.map((task) => (
+            <TaskItem
+              key={task.id}
+              id={task.id}
+              completedAt={task.completedAt}
+              createdAt={task.createdAt}
+              dueAt={task.dueAt}
+              habit={task.habit}
+              tags={task.tags}
+              title={task.title}
+              dict={dict.taskList}
+            />
+          ))}
+        </LogGroup>
+      )}
+      {tasksCompleted.length > 0 && (
+        <LogGroup title={`Completed Tasks (${tasksCompleted.length})`}>
+          {tasksCompleted.map((task) => (
             <TaskItem
               key={task.id}
               id={task.id}
