@@ -1,9 +1,8 @@
-import { HeatMapValue } from "@uiw/react-heat-map"
 import { add, endOfToday, format, startOfToday } from "date-fns"
 import { getServerSession } from "next-auth"
 
 import { prisma } from "@/lib/prisma"
-import { HeatMapChart } from "@/components/charts/heatmap"
+import { HeatMapChart, TaggedHeatMapValue } from "@/components/charts/heatmap"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 
 export async function TaskActivity() {
@@ -23,22 +22,16 @@ export async function TaskActivity() {
     orderBy: {
       completedAt: "asc",
     },
+    include: {
+      tags: true,
+    },
   })
 
-  const values = tasks
-    .map((task) => ({
-      date: format(task.completedAt!, "yyyy/M/d"),
-      count: 1,
-    }))
-    .reduce((acc, curr) => {
-      const existing = acc.find((item) => item.date === curr.date)
-      if (existing) {
-        existing.count += 1
-      } else {
-        acc.push(curr as HeatMapValue)
-      }
-      return acc
-    }, [] as HeatMapValue[])
+  const values = tasks.map((task) => ({
+    date: format(task.completedAt!, "yyyy/M/d"),
+    tags: task.tags.map((tag) => tag.name),
+    count: 1,
+  })) as TaggedHeatMapValue[]
 
   return (
     <HeatMapChart values={values} startDate={startDate} endDate={endDate} />
