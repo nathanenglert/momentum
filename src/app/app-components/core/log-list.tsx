@@ -34,7 +34,7 @@ export async function LogList({ dict }: { dict: any }) {
     })
 
   const tasksInFuture = tasks
-    .filter((task) => task.dueAt && task.dueAt >= tomorrow)
+    .filter((task) => !task.completedAt && task.dueAt && task.dueAt >= tomorrow)
     .sort((a, b) => {
       if (a.dueAt! < b.dueAt!) return -1
       if (a.dueAt! > b.dueAt!) return 1
