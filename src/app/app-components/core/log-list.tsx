@@ -65,7 +65,7 @@ export async function LogList({ dict }: { dict: any }) {
 
   return (
     <ul className="mt-12 space-y-4">
-      {tasks.length === 0 && (
+      {tasksToday.length === 0 && (
         <li className="pl-[56px] mb-12 space-y-4">
           <p
             dangerouslySetInnerHTML={{
