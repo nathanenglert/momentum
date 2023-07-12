@@ -99,7 +99,12 @@ export function Task({
             {tag.name}
           </Badge>
         ))}
-        <TaskOptions id={id} dict={dict.status} />
+        <TaskOptions
+          id={id}
+          dict={dict.status}
+          dueAt={dueAt}
+          completedAt={completedAt}
+        />
       </div>
     </li>
   )

@@ -67,6 +67,9 @@
       },
       "delete": {
         "toast": "It gone."
+      },
+      "push": {
+        "toast": "I got you, bro."
       }
     }
   },

@@ -24,7 +24,9 @@ export async function PUT(
     data: { title, description, dueAt, completedAt },
   })
 
-  await updateStreak(check, completedAt)
+  if (completedAt !== undefined) {
+    await updateStreak(check, completedAt)
+  }
 
   return NextResponse.json(record, { status: 200 })
 }
