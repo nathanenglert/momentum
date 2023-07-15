@@ -70,7 +70,7 @@ export default function AccountMenu() {
           </svg>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-[240px]">
+      <DropdownMenuContent className="w-[240px] mb-2">
         <div className="p-2">
           {[
             [`About`, `/about`],
