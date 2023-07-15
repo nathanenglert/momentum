@@ -3,8 +3,7 @@
 import { useState } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-// @ts-ignore
-import cookieCutter from "cookie-cutter"
+import Cookies from "js-cookie"
 import { Moon, Sun, ThumbsUp, Trash } from "lucide-react"
 import { signIn, signOut, useSession } from "next-auth/react"
 import { useTheme } from "next-themes"
@@ -22,7 +21,7 @@ import {
 export default function AccountMenu() {
   const { data: session, status } = useSession()
   const { setTheme, theme } = useTheme()
-  const [useBro, setUseBro] = useState(cookieCutter.get("locale") === "bro")
+  const [useBro, setUseBro] = useState(Cookies.get("locale") === "bro")
   const router = useRouter()
 
   if (status === "unauthenticated") {
@@ -43,7 +42,7 @@ export default function AccountMenu() {
   const handleLocaleChange = () => {
     const temp = !useBro
     const newLocale = temp ? "bro" : "en"
-    cookieCutter.set("locale", newLocale)
+    Cookies.set("locale", newLocale)
 
     setUseBro(temp)
     router.refresh()
