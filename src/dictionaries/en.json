@@ -1,1 +1,118 @@
-{}
+{
+  "meterForm": {
+    "title": {
+      "placeholder": "What would you like to track?",
+      "description": ""
+    },
+    "category": {
+      "placeholder": "Give your meter a tag...",
+      "description": ""
+    },
+    "submit": {
+      "label": "Track It",
+      "toastSuccess": "Meter saved!",
+      "toastError": "An error occurred."
+    }
+  },
+  "noteForm": {
+    "title": {
+      "placeholder": "What would you like to save?",
+      "description": "That idea, thought, or note you need to write."
+    },
+    "category": {
+      "placeholder": "Give your note a tag...",
+      "description": ""
+    },
+    "submit": {
+      "label": "Save",
+      "toastSuccess": "Note saved!",
+      "toastError": "An error occurred."
+    }
+  },
+  "taskForm": {
+    "title": {
+      "placeholder": "What would you like to do?",
+      "description": "The title of the task you're about to work on!"
+    },
+    "description": {
+      "placeholder": "Why is it important?",
+      "description": "The details of that task."
+    },
+    "frequency": {
+      "placeholder": "How often?",
+      "description": "How often are you doing this task?"
+    },
+    "dueDate": {
+      "placeholder": "When?",
+      "description": "When is that task due?"
+    },
+    "category": {
+      "placeholder": "Give your task a tag...",
+      "description": ""
+    },
+    "submit": {
+      "label": "Add Task",
+      "toastSuccess": "Task added!",
+      "toastError": "An error occurred."
+    }
+  },
+  "taskList": {
+    "empty": {
+      "noTasks": "No tasks today? Let's get something on the board!",
+      "noTasksLeft": "Great job! You've completed all your tasks for the day.<br>Time to relax or add more tasks!"
+    },
+    "status": {
+      "complete": {
+        "toast": "Completed!"
+      },
+      "delete": {
+        "toast": "Deleted."
+      },
+      "push": {
+        "toast": "Task moved."
+      }
+    }
+  },
+  "inspiration": [
+    {
+      "message": "If you want to get ahead, just start and keep going!",
+      "author": "Mark Twain"
+    },
+    {
+      "message": "Don't just watch the clock; be productive. Keep the momentum!",
+      "author": "Samuel Johnson"
+    },
+    {
+      "message": "Your future is shaped by the effort you put in today.",
+      "author": "Mahatma Gandhi"
+    },
+    {
+      "message": "Productivity is not an accident; it's the result of commitment, smart planning, and focused effort.",
+      "author": "Paul Meyer"
+    },
+    {
+      "message": "You don't have to see the whole staircase, just take the first step.",
+      "author": "Martin Luther King Jr."
+    },
+    {
+      "message": "The secret to great work? Love what you do.",
+      "author": "Steve Jobs"
+    },
+    {
+      "message": "Your work takes up a significant part of your life. Find fulfillment in doing what you love.",
+      "author": "Steve Jobs"
+    },
+    {
+      "message": "The only limit to our tomorrow is the doubts we have today.",
+      "author": "Franklin D. Roosevelt"
+    },
+    {
+      "message": "Believe you can, and you're already halfway there.",
+      "author": "Theodore Roosevelt"
+    },
+    {
+      "message": "Don't just count the days, make the days count.",
+      "author": "Muhammad Ali"
+    }
+  ]
+}

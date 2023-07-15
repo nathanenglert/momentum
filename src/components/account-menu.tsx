@@ -1,24 +1,29 @@
 "use client"
 
+import { useState } from "react"
 import Image from "next/image"
-import Link from "next/link"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@radix-ui/react-popover"
+import { useRouter } from "next/navigation"
+// @ts-ignore
+import cookieCutter from "cookie-cutter"
+import { Moon, Sun, ThumbsUp, Trash } from "lucide-react"
 import { signIn, signOut, useSession } from "next-auth/react"
+import { useTheme } from "next-themes"
 
-import { ThemeToggle } from "./theme-toggle"
+import { cn } from "@/lib/utils"
+
 import { Button } from "./ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu"
 
 export default function AccountMenu() {
   const { data: session, status } = useSession()
+  const { setTheme, theme } = useTheme()
+  const [useBro, setUseBro] = useState(cookieCutter.get("locale") === "bro")
+  const router = useRouter()
 
   if (status === "unauthenticated") {
     return (
@@ -33,6 +38,15 @@ export default function AccountMenu() {
 
   if (status === "loading" || !session) {
     return <>...</>
+  }
+
+  const handleLocaleChange = () => {
+    const temp = !useBro
+    const newLocale = temp ? "bro" : "en"
+    cookieCutter.set("locale", newLocale)
+
+    setUseBro(temp)
+    router.refresh()
   }
 
   return (
@@ -71,12 +85,12 @@ export default function AccountMenu() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-[240px] mb-2">
-        <div className="p-2">
-          {[
-            [`About`, `/about`],
-            [`Account`, `/account`],
-            [`Profile`, `/u/${session.user?.id}`],
-          ].map(([name, url]) => (
+        {/* {[
+          [`About`, `/about`],
+          [`Account`, `/account`],
+          [`Profile`, `/u/${session.user?.id}`],
+        ].map(([name, url]) => (
+          <DropdownMenuItem>
             <Link
               href={url}
               className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
@@ -85,38 +99,55 @@ export default function AccountMenu() {
             >
               {name}
             </Link>
-          ))}
-        </div>
+          </DropdownMenuItem>
+        ))} */}
 
-        <div className="p-2">
-          <ThemeToggle />
-        </div>
+        <AccountMenuItem onClick={handleLocaleChange}>
+          <ThumbsUp size={16} className={cn({ "text-muted": !useBro })} />
+          Use Bro
+        </AccountMenuItem>
 
-        <div className="p-2">
-          <Button
-            className="gap-2 w-full"
-            variant={`ghost`}
-            role="menuitem"
-            onClick={() => signOut()}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-              />
-            </svg>
-            Sign out
-          </Button>
-        </div>
+        <AccountMenuItem
+          onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+        >
+          {theme === "light" ? (
+            <Sun
+              size={16}
+              className="rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
+            />
+          ) : (
+            <Moon
+              size={16}
+              className="rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
+            />
+          )}
+          Toggle theme
+        </AccountMenuItem>
+
+        <AccountMenuItem onClick={() => signOut()}>
+          <Trash size={16} />
+          Sign out
+        </AccountMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
+  )
+}
+
+function AccountMenuItem({
+  children,
+  onClick,
+  ...props
+}: {
+  children: React.ReactNode
+  onClick: () => void
+}) {
+  return (
+    <DropdownMenuItem
+      className="gap-2 p-2 cursor-pointer"
+      onClick={onClick}
+      {...props}
+    >
+      {children}
+    </DropdownMenuItem>
   )
 }

@@ -1,3 +1,4 @@
+import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import { getServerSession } from "next-auth"
 
@@ -17,7 +18,11 @@ export default async function TodayPage() {
     redirect("/api/auth/signin")
   }
 
-  const dict = await getDictionary("bro")
+  const cookieStore = cookies()
+  const localeCookie = cookieStore.get("locale")
+  const locale = localeCookie ? localeCookie.value : "en"
+
+  const dict = await getDictionary(locale)
   const tags = (await prisma.tag.findMany({ take: 100 })).map((tag) => tag.name)
   const AwaitedTaskList: JSX.Element = await LogList({ dict })
   const AwaitedTaskActivity: JSX.Element = await TaskActivity()
