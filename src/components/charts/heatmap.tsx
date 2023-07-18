@@ -7,6 +7,7 @@ import {
   Select,
   SelectContent,
   SelectItem,
+  SelectSeparator,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
@@ -45,16 +46,24 @@ export function HeatMapChart({
   }
   const [tagFilter, setTagFilter] = useState<string | null>(null)
 
-  const tags = values.reduce((acc, curr) => {
-    curr.tags.forEach((tag) => {
-      if (!acc.includes(tag)) {
-        acc.push(tag)
-      }
-    })
-    return acc
-  }, [] as string[])
+  const tags = values
+    .reduce((acc, curr) => {
+      curr.tags.forEach((tag) => {
+        if (!acc.includes(tag)) {
+          acc.push(tag)
+        }
+      })
+      return acc
+    }, [] as string[])
+    .sort()
   const filtered = values
-    .filter((value) => !tagFilter || value.tags.includes(tagFilter))
+    .filter(
+      (value) =>
+        !tagFilter ||
+        (tagFilter == "TAGS" && !!value.tags.length) ||
+        (tagFilter == "NOTAGS" && !value.tags.length) ||
+        value.tags.includes(tagFilter)
+    )
     .map((value) => ({
       date: value.date,
       count: value.count,
@@ -80,7 +89,10 @@ export function HeatMapChart({
             <SelectValue placeholder="Filter" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value={""}>All</SelectItem>
+            <SelectItem value={""}>all</SelectItem>
+            <SelectItem value={"TAGS"}>all tagged</SelectItem>
+            <SelectItem value={"NOTAGS"}>no tags</SelectItem>
+            <SelectSeparator />
             {tags.map((tag) => (
               <SelectItem key={tag} value={tag}>
                 {tag}

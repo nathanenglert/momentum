@@ -19,7 +19,7 @@ async function main() {
     console.log(``)
 
     count++
-    if (count == 3) return
+    if (count == 10) return
   }
 }
 
