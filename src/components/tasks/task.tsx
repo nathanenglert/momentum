@@ -15,14 +15,14 @@ import { TaskCheckbox } from "./task-checkbox"
 import { TaskOptions } from "./task-options"
 
 const taskVariants = cva(
-  "font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+  "leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
   {
     variants: {
       lifecycle: {
-        0: "text-sm",
-        1: "text-md",
-        2: "text-l",
-        3: "text-xl",
+        0: "text-sm font-medium",
+        1: "text-md font-medium",
+        2: "text-l font-bold",
+        3: "text-xl text-destructive-foreground font-bold",
       },
     },
     defaultVariants: {
