@@ -152,30 +152,6 @@ export function LogForm({ type, features, dict, possibleTags }: LogFormProps) {
             )}
           />
         )}
-        {features?.dueDate && hasDueDate && (
-          <FormField
-            control={form.control}
-            name="dueAt"
-            render={({ field }) => (
-              <FormItem className="space-y-0">
-                <FormLabel className="sr-only">Due</FormLabel>
-                <FormControl>
-                  <DatePicker
-                    autoFocus
-                    className={`w-full`}
-                    placeholder={dict.dueDate.placeholder}
-                    value={field.value}
-                    onChange={field.onChange}
-                  />
-                </FormControl>
-                <FormDescription className="sr-only">
-                  {dict.dueDate.description}
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        )}
         {features?.frequency && hasFrequency && (
           <FormField
             control={form.control}
@@ -209,6 +185,30 @@ export function LogForm({ type, features, dict, possibleTags }: LogFormProps) {
             )}
           />
         )}
+        {features?.dueDate && hasDueDate && (
+          <FormField
+            control={form.control}
+            name="dueAt"
+            render={({ field }) => (
+              <FormItem className="space-y-0">
+                <FormLabel className="sr-only">Due</FormLabel>
+                <FormControl>
+                  <DatePicker
+                    autoFocus
+                    className={`w-full`}
+                    placeholder={dict.dueDate.placeholder}
+                    value={field.value}
+                    onChange={field.onChange}
+                  />
+                </FormControl>
+                <FormDescription className="sr-only">
+                  {dict.dueDate.description}
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
         <div className="w-full flex items-center justify-end gap-4">
           {features?.tags && (
             <Button
@@ -219,15 +219,6 @@ export function LogForm({ type, features, dict, possibleTags }: LogFormProps) {
               Tags
             </Button>
           )}
-          {features?.dueDate && (
-            <Button
-              type="button"
-              variant={hasDueDate ? `secondary` : `ghost`}
-              onClick={() => setHasDueDate(!hasDueDate)}
-            >
-              Due
-            </Button>
-          )}
           {features?.frequency && (
             <Button
               type="button"
@@ -235,6 +226,15 @@ export function LogForm({ type, features, dict, possibleTags }: LogFormProps) {
               onClick={() => setHasFrequency(!hasFrequency)}
             >
               Frequency
+            </Button>
+          )}
+          {features?.dueDate && (
+            <Button
+              type="button"
+              variant={hasDueDate ? `secondary` : `ghost`}
+              onClick={() => setHasDueDate(!hasDueDate)}
+            >
+              {hasFrequency ? "Start" : "Due"}
             </Button>
           )}
           <Button type="submit" className="w-[100px]" disabled={isMutating}>
