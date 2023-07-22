@@ -1,0 +1,10 @@
+FROM --platform=linux/arm64/v8 node:18-alpine3.16
+RUN apk add --no-cache alpine-conf && setup-timezone -z America/Chicago
+RUN apk add --update nodejs 
+RUN apk add --update apk-cron && rm -rf /var/cache/apk/*
+COPY /cron .
+COPY /src/jobs ./jobs
+RUN chmod 755 /entry.sh
+RUN /usr/bin/crontab /crontab.txt
+
+CMD ["/entry.sh"]

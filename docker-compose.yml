@@ -1,0 +1,41 @@
+version: "3.9"
+services:
+  momentum:
+    build:
+      context: .
+      dockerfile: Dockerfile.local
+    image: momentum
+    command: npm run dev
+    ports:
+      - 3000:3000
+    environment:
+      TZ: "America/Chicago"
+    env_file:
+      - .env
+    networks:
+      - momentum-network
+    volumes:
+      - .:/app
+  momentum-cron:
+    build:
+      context: .
+      dockerfile: Dockerfile.cron
+    image: momentum-cron
+    command: /entry.sh
+    environment:
+      TZ: "America/Chicago"
+    networks:
+      - momentum-network
+    volumes:
+      - .:/app
+    depends_on:
+      - momentum
+
+volumes:
+  momentum-data:
+
+networks:
+  momentum-network:
+    # Please DO NOT change this network to external because this is where the network is created.
+    # Only declare it as external in other services that will join this network.
+    name: momentum-network
