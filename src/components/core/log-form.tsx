@@ -66,6 +66,7 @@ export function LogForm({ type, features, dict, possibleTags }: LogFormProps) {
   const [isFetching, setIsFetching] = useState(false)
   const isMutating = isFetching || isPending
   const { toast } = useToast()
+  const needsExtendedWidth = dict.submit.label.length > 10
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsFetching(true)
@@ -237,7 +238,14 @@ export function LogForm({ type, features, dict, possibleTags }: LogFormProps) {
               {hasFrequency ? "Start" : "Due"}
             </Button>
           )}
-          <Button type="submit" className="w-[100px]" disabled={isMutating}>
+          <Button
+            type="submit"
+            className={cn({
+              "w-[100px]": !needsExtendedWidth,
+              "w-[160px]": needsExtendedWidth,
+            })}
+            disabled={isMutating}
+          >
             {dict.submit.label}
           </Button>
         </div>

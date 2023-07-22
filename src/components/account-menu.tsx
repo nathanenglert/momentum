@@ -4,24 +4,29 @@ import { useState } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import Cookies from "js-cookie"
-import { Moon, Sun, ThumbsUp, Trash } from "lucide-react"
+import { Moon, Sun, Trash } from "lucide-react"
 import { signIn, signOut, useSession } from "next-auth/react"
 import { useTheme } from "next-themes"
-
-import { cn } from "@/lib/utils"
 
 import { Button } from "./ui/button"
 import {
   DropdownMenu,
+  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu"
+
+const locales = ["en", "bro", "yoda"]
 
 export default function AccountMenu() {
   const { data: session, status } = useSession()
   const { setTheme, theme } = useTheme()
-  const [useBro, setUseBro] = useState(Cookies.get("locale") === "bro")
+  const [locale, setLocale] = useState<string>(
+    locales.includes(Cookies.get("locale")!) ? Cookies.get("locale")! : "en"
+  )
   const router = useRouter()
 
   if (status === "unauthenticated") {
@@ -39,12 +44,10 @@ export default function AccountMenu() {
     return <>...</>
   }
 
-  const handleLocaleChange = () => {
-    const temp = !useBro
-    const newLocale = temp ? "bro" : "en"
+  const handleLocaleChange = (newLocale: string) => {
     Cookies.set("locale", newLocale)
+    setLocale(newLocale)
 
-    setUseBro(temp)
     router.refresh()
   }
 
@@ -84,28 +87,16 @@ export default function AccountMenu() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-[240px] mb-2">
-        {/* {[
-          [`About`, `/about`],
-          [`Account`, `/account`],
-          [`Profile`, `/u/${session.user?.id}`],
-        ].map(([name, url]) => (
-          <DropdownMenuItem>
-            <Link
-              href={url}
-              className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-              key={name}
-              role="menuitem"
-            >
-              {name}
-            </Link>
-          </DropdownMenuItem>
-        ))} */}
-
-        <AccountMenuItem onClick={handleLocaleChange}>
-          <ThumbsUp size={16} className={cn({ "text-muted": !useBro })} />
-          Use Bro
-        </AccountMenuItem>
-
+        <DropdownMenuLabel>Locale</DropdownMenuLabel>
+        {locales.map((item) => (
+          <DropdownMenuCheckboxItem
+            checked={item === locale}
+            onCheckedChange={() => handleLocaleChange(item)}
+          >
+            {item}
+          </DropdownMenuCheckboxItem>
+        ))}
+        <DropdownMenuSeparator />
         <AccountMenuItem
           onClick={() => setTheme(theme === "light" ? "dark" : "light")}
         >

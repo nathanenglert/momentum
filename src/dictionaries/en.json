@@ -2,11 +2,11 @@
   "meterForm": {
     "title": {
       "placeholder": "What would you like to track?",
-      "description": ""
+      "description": "The title of the thing you want to track over time."
     },
     "category": {
       "placeholder": "Give your meter a tag...",
-      "description": ""
+      "description": "How would you categorize this thing?"
     },
     "submit": {
       "label": "Track It",
@@ -21,7 +21,7 @@
     },
     "category": {
       "placeholder": "Give your note a tag...",
-      "description": ""
+      "description": "How would you categorize this note?"
     },
     "submit": {
       "label": "Save",
@@ -48,7 +48,7 @@
     },
     "category": {
       "placeholder": "Give your task a tag...",
-      "description": ""
+      "description": "How would you categorize this task?"
     },
     "submit": {
       "label": "Add Task",

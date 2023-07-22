@@ -1,0 +1,118 @@
+{
+  "meterForm": {
+    "title": {
+      "placeholder": "Hmm, what track you wish, young Padawan?",
+      "description": "The name of your interest, this would be. Tracked through time it will."
+    },
+    "category": {
+      "placeholder": "A tag, your meter needs...",
+      "description": "In your mind, how fits this thing?"
+    },
+    "submit": {
+      "label": "Proceed, we will",
+      "toastSuccess": "Stored in the archives, your meter is!",
+      "toastError": "Hmm, disturbed the force is. An error, there was."
+    }
+  },
+  "noteForm": {
+    "title": {
+      "placeholder": "And what store in the Jedi archives would you?",
+      "description": "A thought, an idea, or note - pen it you should."
+    },
+    "category": {
+      "placeholder": "A label for your note, you must choose...",
+      "description": "Hmm, fits where in your world, this note does?"
+    },
+    "submit": {
+      "label": "Preserve, we must",
+      "toastSuccess": "Stored in the archives, your note is!",
+      "toastError": "Hmm, disturbed the force is. An error, there was."
+    }
+  },
+  "taskForm": {
+    "title": {
+      "placeholder": "Hmm, what accomplish you must?",
+      "description": "Your mission, this title is!"
+    },
+    "description": {
+      "placeholder": "Of importance it is, why?",
+      "description": "Your mission's details, these are."
+    },
+    "frequency": {
+      "placeholder": "How frequent, this mission is?",
+      "description": "This mission, how often undertake you will?"
+    },
+    "dueDate": {
+      "placeholder": "By when, this mission is?",
+      "description": "Your mission, when it is due?"
+    },
+    "category": {
+      "placeholder": "A tag for your mission, select...",
+      "description": "Hmm, fits where in your tasks, this mission does?"
+    },
+    "submit": {
+      "label": "Succeed, we shall",
+      "toastSuccess": "Added to your quest, the mission is!",
+      "toastError": "Hmm, disturbed the force is. An error, there was."
+    }
+  },
+  "taskList": {
+    "empty": {
+      "noTasks": "Tasks today, you have none? Hmm, something on the board, we must get!",
+      "noTasksLeft": "A Jedi's work, well done! All tasks for the day, you have finished.<br>Relax, or more tasks add, you may!"
+    },
+    "status": {
+      "complete": {
+        "toast": "Completed, it has been!"
+      },
+      "delete": {
+        "toast": "Vanished, it has."
+      },
+      "push": {
+        "toast": "Shifted, the task has."
+      }
+    }
+  },
+  "inspiration": [
+    {
+      "message": "Ahead, you want to get? Begin you must, and continue you shall!",
+      "author": "Mark Twain"
+    },
+    {
+      "message": "Clock-watching, not for the Jedi it is. Momentum, you must keep!",
+      "author": "Samuel Johnson"
+    },
+    {
+      "message": "Today's effort, shapes your future it does.",
+      "author": "Mahatma Gandhi"
+    },
+    {
+      "message": "Accident, productivity is not. Result of commitment, planning, and effort, it is.",
+      "author": "Paul Meyer"
+    },
+    {
+      "message": "Whole staircase, you need not see. Take the first step, you must.",
+      "author": "Martin Luther King Jr."
+    },
+    {
+      "message": "Great work's secret? In what you do, love you must.",
+      "author": "Steve Jobs"
+    },
+    {
+      "message": "Significant part of life, your work takes up. Do what you love, find fulfillment, you will.",
+      "author": "Steve Jobs"
+    },
+    {
+      "message": "Limits of tomorrow, today's doubts they are.",
+      "author": "Franklin D. Roosevelt"
+    },
+    {
+      "message": "Believe you can, and already halfway there, you are.",
+      "author": "Theodore Roosevelt"
+    },
+    {
+      "message": "Count the days, do not. Make the days count, you should.",
+      "author": "Muhammad Ali"
+    }
+  ]
+}
