@@ -42,7 +42,7 @@ export async function POST(
   })
 
   if (!habit || !lastTask) return NextResponse.json({}, { status: 500 })
-  if (isFuture(lastTask.dueAt!)) return NextResponse.json({}, { status: 204 })
+  if (isFuture(lastTask.dueAt!)) return new Response(null, { status: 204 })
 
   const interval = frequencyToInterval(habit.frequency)
   const nextDate = add(lastTask.dueAt!, interval)
