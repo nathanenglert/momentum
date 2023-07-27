@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth"
 
 import { prisma } from "@/lib/prisma"
 import { CommandMenu } from "@/components/core/command-menu"
+import { HabitWatcher } from "@/components/core/habit-watcher"
 import { LogFormSwitcher } from "@/components/core/log-form-switcher"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 import { LogList } from "@/app/app-components/core/log-list"
@@ -35,6 +36,7 @@ export default async function TodayPage() {
       </div>
       <div className="w-[600px] mx-auto mt-8">{AwaitedTaskActivity}</div>
       <CommandMenu />
+      <HabitWatcher />
     </section>
   )
 }

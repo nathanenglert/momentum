@@ -92,6 +92,7 @@ export default function AccountMenu() {
           <DropdownMenuCheckboxItem
             checked={item === locale}
             onCheckedChange={() => handleLocaleChange(item)}
+            key={item}
           >
             {item}
           </DropdownMenuCheckboxItem>
