@@ -75,10 +75,13 @@ export async function POST(
   if (!forDate && isFuture(lastTask.dueAt!))
     return new Response(null, { status: 204 })
 
-  let nextDate
-  if (!!forDate) nextDate = forDate
-  else {
+  let nextDate, completedDate
+  if (!!forDate) {
+    nextDate = forDate
+    completedDate = autoComplete ? forDate : undefined
+  } else {
     nextDate = await findNextDate(lastTask.dueAt!, lastTask.title!, habit)
+    completedDate = autoComplete ? new Date() : undefined
   }
 
   const nextTask = await prisma.task.create({
@@ -88,7 +91,7 @@ export async function POST(
       description: lastTask.description,
       dueAt: nextDate,
       habitId: params.id,
-      completedAt: autoComplete ? new Date() : undefined,
+      completedAt: completedDate,
       tags: {
         connect: lastTask.tags.map((tag: Tag) => ({ id: tag.id })),
       },

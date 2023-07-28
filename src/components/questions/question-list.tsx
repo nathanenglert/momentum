@@ -1,4 +1,7 @@
+"use client"
+
 import * as React from "react"
+import { Question } from "@prisma/client"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -11,11 +14,11 @@ import {
 
 import { Icons } from "../icons"
 import { MissedHabitQuestion } from "./missed-habit-question"
-import { BaseScaleQuestion, BaseYesNoQuestion, Question } from "./question-item"
+import { BaseScaleQuestion, BaseYesNoQuestion } from "./question-item"
 
 export interface QuestionListProps {
   className?: String
-  questions: Array<Question>
+  questions: Question[]
 }
 
 function getQuestionComponent(question: Question): React.ReactNode {
@@ -57,13 +60,17 @@ export function QuestionList({ className, questions }: QuestionListProps) {
       <CardContent>
         <div className="w-full flex justify-between items-center p-4">
           <div>
-            <Button variant={`ghost`} onClick={decrement}>
+            <Button variant={`ghost`} onClick={decrement} disabled={index == 0}>
               <Icons.chevronLeft />
             </Button>
           </div>
           {QuestionComponent}
           <div>
-            <Button variant={`ghost`} onClick={increment}>
+            <Button
+              variant={`ghost`}
+              onClick={increment}
+              disabled={index == questions.length - 1}
+            >
               <Icons.chevronRight />
             </Button>
           </div>

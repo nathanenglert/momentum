@@ -6,6 +6,7 @@ import { prisma } from "@/lib/prisma"
 import { CommandMenu } from "@/components/core/command-menu"
 import { HabitWatcher } from "@/components/core/habit-watcher"
 import { LogFormSwitcher } from "@/components/core/log-form-switcher"
+import { QuestionList } from "@/components/questions/question-list"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 import { LogList } from "@/app/app-components/core/log-list"
 import { TaskActivity } from "@/app/app-components/task-activity"
@@ -27,6 +28,11 @@ export default async function TodayPage() {
   const tags = (await prisma.tag.findMany({ take: 100 })).map((tag) => tag.name)
   const AwaitedTaskList: JSX.Element = await LogList({ dict })
   const AwaitedTaskActivity: JSX.Element = await TaskActivity()
+  const questions = await prisma.question.findMany({
+    where: {
+      userId: currentUserId,
+    },
+  })
 
   return (
     <section className="container grid gap-6 md:py-10">
@@ -34,6 +40,11 @@ export default async function TodayPage() {
         <LogFormSwitcher dict={dict} tags={tags} />
         {AwaitedTaskList}
       </div>
+      {questions.length > 0 && (
+        <div className="w-[600px] mx-auto mt-2">
+          <QuestionList questions={questions} />
+        </div>
+      )}
       <div className="w-[600px] mx-auto mt-8">{AwaitedTaskActivity}</div>
       <CommandMenu />
       <HabitWatcher />

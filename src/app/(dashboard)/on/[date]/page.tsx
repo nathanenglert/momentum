@@ -14,7 +14,7 @@ export default async function OnDatePage({
 }) {
   const session = await getServerSession(authOptions)
   const currentUserId = session?.user?.id!
-  const date = new Date(params.date)
+  const date = new Date(`${params.date}T12:00:00.000Z`)
 
   if (!currentUserId) {
     redirect("/api/auth/signin")

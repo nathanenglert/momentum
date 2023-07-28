@@ -1,12 +1,7 @@
+import { Question } from "@prisma/client"
+
 import { Icons } from "../icons"
 import { Button } from "../ui/button"
-
-export interface Question {
-  id: string
-  text: string
-  type: string
-  reference?: string
-}
 
 export interface QuestionProps {
   question: Question

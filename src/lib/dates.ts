@@ -4,6 +4,7 @@ import {
   formatDuration,
   isAfter,
   isBefore,
+  isEqual,
   isToday,
   isTomorrow,
 } from "date-fns"
@@ -38,5 +39,5 @@ export function getLifecycleStage(
 
 export function wasYesterdayOrEarlier(date: Date): boolean {
   const yesterday = endOfYesterday()
-  return isBefore(date, yesterday)
+  return isEqual(date, yesterday) || isBefore(date, yesterday)
 }

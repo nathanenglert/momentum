@@ -1,8 +1,11 @@
+"use client"
+
 import { useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
+import { Question } from "@prisma/client"
 
 import { useToast } from "../ui/use-toast"
-import { BaseYesNoQuestion, Question } from "./question-item"
+import { BaseYesNoQuestion } from "./question-item"
 
 export function MissedHabitQuestion({ question }: { question: Question }) {
   const router = useRouter()
