@@ -18,6 +18,7 @@ async function checkRoutine() {
     const habit = habits[index]
     const response = await fetch(`/api/habit/${habit.id}`, {
       method: "POST",
+      body: JSON.stringify({}),
     })
     console.log(`${habit.id} >> ${response.status}`)
   }

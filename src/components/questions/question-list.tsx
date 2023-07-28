@@ -10,15 +10,25 @@ import {
 } from "@/components/ui/card"
 
 import { Icons } from "../icons"
-
-export interface Question {
-  text: String
-  type: String
-}
+import { MissedHabitQuestion } from "./missed-habit-question"
+import { BaseScaleQuestion, BaseYesNoQuestion, Question } from "./question-item"
 
 export interface QuestionListProps {
   className?: String
   questions: Array<Question>
+}
+
+function getQuestionComponent(question: Question): React.ReactNode {
+  switch (question.type) {
+    case "MISSED_HABIT":
+      return <MissedHabitQuestion question={question} />
+    case "YES_NO":
+      return <BaseYesNoQuestion question={question} onAnswer={() => {}} />
+    case "SCALE":
+      return <BaseScaleQuestion question={question} onAnswer={() => {}} />
+  }
+
+  return <>Oops, we have a problem.</>
 }
 
 export function QuestionList({ className, questions }: QuestionListProps) {
@@ -37,6 +47,8 @@ export function QuestionList({ className, questions }: QuestionListProps) {
     setIndex((index + numQuestions - 1) % numQuestions)
   }
 
+  const QuestionComponent = getQuestionComponent(questions[index])
+
   return (
     <Card className={cn(className, "w-full")}>
       <CardHeader>
@@ -49,34 +61,7 @@ export function QuestionList({ className, questions }: QuestionListProps) {
               <Icons.chevronLeft />
             </Button>
           </div>
-          <div>
-            <p>{questions[index].text}</p>
-            <div className="flex items-center justify-center gap-2 mt-4">
-              {questions[index].type === "YES_NO" ? (
-                <>
-                  <Button variant={`outline`}>Yes</Button>
-                  <Button variant={`outline`}>No</Button>
-                </>
-              ) : (
-                <>
-                  <Button variant={`outline`}>
-                    <Icons.thumbsDown size={16} />
-                    <Icons.thumbsDown size={16} />
-                  </Button>
-                  <Button variant={`outline`}>
-                    <Icons.thumbsDown size={16} />
-                  </Button>
-                  <Button variant={`outline`}>
-                    <Icons.thumbsUp size={16} />
-                  </Button>
-                  <Button variant={`outline`}>
-                    <Icons.thumbsUp size={16} />
-                    <Icons.thumbsUp size={16} />
-                  </Button>
-                </>
-              )}
-            </div>
-          </div>
+          {QuestionComponent}
           <div>
             <Button variant={`ghost`} onClick={increment}>
               <Icons.chevronRight />

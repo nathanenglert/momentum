@@ -4,23 +4,28 @@ import { getServerSession } from "next-auth"
 import { prisma } from "@/lib/prisma"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 
+export async function GET(req: Request) {
+  const session = await getServerSession(authOptions)
+  const currentUserId = session?.user?.id!
+
+  const records = await prisma.question.findMany({
+    where: { userId: currentUserId },
+  })
+
+  return NextResponse.json(records, { status: 200 })
+}
+
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions)
   const currentUserId = session?.user?.id!
-  const { title, tags } = await req.json()
+  const { text, type, reference } = await req.json()
 
-  const record = await prisma.note.create({
+  const record = await prisma.question.create({
     data: {
       userId: currentUserId,
-      title,
-      tags: {
-        connectOrCreate: tags.map((tag: string) => {
-          return {
-            where: { name: tag },
-            create: { name: tag, tasks: { create: [] } },
-          }
-        }),
-      },
+      text,
+      type,
+      reference,
     },
   })
 
