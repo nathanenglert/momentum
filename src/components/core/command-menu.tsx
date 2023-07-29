@@ -33,19 +33,31 @@ export function CommandMenu() {
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup heading="Suggestions">
-          <CommandItem onSelect={() => handleLogTypeChange("task")}>
+          <CommandItem
+            onSelect={() => handleLogTypeChange("task")}
+            className="task text-accent-foreground"
+          >
             <Icons.checkSquare className="mr-2 h-4 w-4" />
             <span>Create Task</span>
           </CommandItem>
-          <CommandItem onSelect={() => handleLogTypeChange("note")}>
+          <CommandItem
+            onSelect={() => handleLogTypeChange("note")}
+            className="note text-accent-foreground"
+          >
             <Icons.minus className="mr-2 h-4 w-4" />
             <span>Create Note</span>
           </CommandItem>
-          <CommandItem onSelect={() => handleLogTypeChange("meter")}>
+          <CommandItem
+            onSelect={() => handleLogTypeChange("meter")}
+            className="meter text-accent-foreground"
+          >
             <Icons.copyPlus className="mr-2 h-4 w-4" />
             <span>Create Meter</span>
           </CommandItem>
-          <CommandItem onSelect={() => handleLogTypeChange("metric")}>
+          <CommandItem
+            onSelect={() => handleLogTypeChange("metric")}
+            className="metric text-accent-foreground"
+          >
             <TrendingUp className="mr-2 h-4 w-4" />
             <span>Create Metric</span>
           </CommandItem>
