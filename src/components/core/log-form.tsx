@@ -215,6 +215,7 @@ export function LogForm({ type, features, dict, possibleTags }: LogFormProps) {
             <Button
               type="button"
               variant={hasTags ? `secondary` : `ghost`}
+              className="text-accent-foreground"
               onClick={() => setHasTags(!hasTags)}
             >
               Tags
@@ -224,6 +225,7 @@ export function LogForm({ type, features, dict, possibleTags }: LogFormProps) {
             <Button
               type="button"
               variant={hasFrequency ? `secondary` : `ghost`}
+              className="text-accent-foreground"
               onClick={() => setHasFrequency(!hasFrequency)}
             >
               Frequency
@@ -233,6 +235,7 @@ export function LogForm({ type, features, dict, possibleTags }: LogFormProps) {
             <Button
               type="button"
               variant={hasDueDate ? `secondary` : `ghost`}
+              className="text-accent-foreground"
               onClick={() => setHasDueDate(!hasDueDate)}
             >
               {hasFrequency ? "Start" : "Due"}

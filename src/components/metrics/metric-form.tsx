@@ -140,6 +140,7 @@ export function MetricForm({ dict, possibleTags }: MetricFormProps) {
           <Button
             type="button"
             variant={hasTags ? `secondary` : `ghost`}
+            className="text-accent-foreground"
             onClick={() => setHasTags(!hasTags)}
           >
             Tags
