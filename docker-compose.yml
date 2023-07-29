@@ -16,20 +16,20 @@ services:
       - momentum-network
     volumes:
       - .:/app
-  momentum-cron:
-    build:
-      context: .
-      dockerfile: Dockerfile.cron
-    image: momentum-cron
-    command: /entry.sh
-    environment:
-      TZ: "America/Chicago"
-    networks:
-      - momentum-network
-    volumes:
-      - .:/app
-    depends_on:
-      - momentum
+  # momentum-cron:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.cron
+  #   image: momentum-cron
+  #   command: /entry.sh
+  #   environment:
+  #     TZ: "America/Chicago"
+  #   networks:
+  #     - momentum-network
+  #   volumes:
+  #     - .:/app
+  #   depends_on:
+  #     - momentum
 
 volumes:
   momentum-data:
