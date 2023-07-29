@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu"
 import { TrendingUp } from "lucide-react"
 
 import eventBus from "@/lib/event-bus"
@@ -11,22 +12,36 @@ import { MetricForm } from "@/components/metrics/metric-form"
 import { NoteForm } from "@/components/notes/note-form"
 import { TaskForm } from "@/components/tasks/task-form"
 
-const config = [
-  { icon: Icons.checkSquare, form: TaskForm, dict: "taskForm" },
-  { icon: Icons.minus, form: NoteForm, dict: "noteForm" },
-  { icon: Icons.copyPlus, form: MeterForm, dict: "meterForm" },
-  { icon: TrendingUp, form: MetricForm, dict: "metricForm" },
-]
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "../ui/dropdown-menu"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select"
+
+const config = {
+  task: { icon: Icons.checkSquare, form: TaskForm, dict: "taskForm" },
+  note: { icon: Icons.minus, form: NoteForm, dict: "noteForm" },
+  meter: { icon: Icons.copyPlus, form: MeterForm, dict: "meterForm" },
+  metric: { icon: TrendingUp, form: MetricForm, dict: "metricForm" },
+}
+export type LogType = "task" | "note" | "meter" | "metric"
 
 export function LogFormSwitcher({ dict, tags }: { dict: any; tags: string[] }) {
-  const [logType, setLogType] = useState(0)
+  const [logType, setLogType] = useState<LogType>("task")
 
-  const handleSwitch = () => {
-    setLogType((logType + 1) % config.length)
-  }
+  // const handleSwitch = () => {
+  //   setLogType((logType + 1) % config.length)
+  // }
 
   useEffect(() => {
-    eventBus.on("log-type:change", (type: number) => {
+    eventBus.on("log-type:change", (type: LogType) => {
       setLogType(type)
     })
   }, [])
@@ -37,9 +52,26 @@ export function LogFormSwitcher({ dict, tags }: { dict: any; tags: string[] }) {
   return (
     <div className="w-full flex">
       <div>
-        <Button className="mt-2" variant={`ghost`} onClick={handleSwitch}>
-          <Icon size={20} />
-        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              className="mt-2 focus-visible:ring-2 focus-visible:ring-offset-0"
+              variant={`ghost`}
+            >
+              <Icon size={20} />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            {Object.keys(config).map((key) => (
+              <DropdownMenuItem
+                key={key}
+                onClick={() => setLogType(key as LogType)}
+              >
+                {key}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
       <div className="flex-grow">
         <Form dict={dict[config[logType].dict]} possibleTags={tags} />

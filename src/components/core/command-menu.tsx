@@ -15,13 +15,15 @@ import {
 } from "@/components/ui/command"
 import { Icons } from "@/components/icons"
 
+import { LogType } from "./log-form-switcher"
+
 export function CommandMenu() {
   const [isOpen, setIsOpen] = useState(false)
 
   useKeyboardShortcut(["meta", "k"], () => setIsOpen(true))
 
-  const handleLogTypeChange = (type: number) => {
-    eventBus.dispatch("log-type:change", type)
+  const handleLogTypeChange = (type: string) => {
+    eventBus.dispatch("log-type:change", type as LogType)
     setIsOpen(false)
   }
 
@@ -31,19 +33,19 @@ export function CommandMenu() {
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup heading="Suggestions">
-          <CommandItem onSelect={() => handleLogTypeChange(0)}>
+          <CommandItem onSelect={() => handleLogTypeChange("task")}>
             <Icons.checkSquare className="mr-2 h-4 w-4" />
             <span>Create Task</span>
           </CommandItem>
-          <CommandItem onSelect={() => handleLogTypeChange(1)}>
+          <CommandItem onSelect={() => handleLogTypeChange("note")}>
             <Icons.minus className="mr-2 h-4 w-4" />
             <span>Create Note</span>
           </CommandItem>
-          <CommandItem onSelect={() => handleLogTypeChange(2)}>
+          <CommandItem onSelect={() => handleLogTypeChange("meter")}>
             <Icons.copyPlus className="mr-2 h-4 w-4" />
             <span>Create Meter</span>
           </CommandItem>
-          <CommandItem onSelect={() => handleLogTypeChange(3)}>
+          <CommandItem onSelect={() => handleLogTypeChange("metric")}>
             <TrendingUp className="mr-2 h-4 w-4" />
             <span>Create Metric</span>
           </CommandItem>
