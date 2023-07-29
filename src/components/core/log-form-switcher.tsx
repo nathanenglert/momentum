@@ -1,11 +1,13 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { TrendingUp } from "lucide-react"
 
 import eventBus from "@/lib/event-bus"
 import { Button } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
 import { MeterForm } from "@/components/meters/meter-form"
+import { MetricForm } from "@/components/metrics/metric-form"
 import { NoteForm } from "@/components/notes/note-form"
 import { TaskForm } from "@/components/tasks/task-form"
 
@@ -13,6 +15,7 @@ const config = [
   { icon: Icons.checkSquare, form: TaskForm, dict: "taskForm" },
   { icon: Icons.minus, form: NoteForm, dict: "noteForm" },
   { icon: Icons.copyPlus, form: MeterForm, dict: "meterForm" },
+  { icon: TrendingUp, form: MetricForm, dict: "metricForm" },
 ]
 
 export function LogFormSwitcher({ dict, tags }: { dict: any; tags: string[] }) {

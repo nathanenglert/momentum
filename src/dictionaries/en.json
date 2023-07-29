@@ -14,6 +14,21 @@
       "toastError": "An error occurred."
     }
   },
+  "metricForm": {
+    "title": {
+      "placeholder": "What would you like to track?",
+      "description": ""
+    },
+    "category": {
+      "placeholder": "Give your metric a tag...",
+      "description": ""
+    },
+    "submit": {
+      "label": "Track It",
+      "toastSuccess": "Metric saved!",
+      "toastError": "It broke."
+    }
+  },
   "noteForm": {
     "title": {
       "placeholder": "What would you like to save?",

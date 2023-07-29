@@ -20,10 +20,10 @@ import { useToast } from "../ui/use-toast"
 
 export interface LogOptionsProps {
   id: string
-  type: "task" | "note" | "meter"
+  type: "task" | "note" | "meter" | "metric"
   dict: any
-  dueAt: Date | null
-  completedAt: Date | null
+  dueAt?: Date
+  completedAt?: Date
 }
 
 export function LogOptions({

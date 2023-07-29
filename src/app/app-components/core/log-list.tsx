@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth"
 import { prisma } from "@/lib/prisma"
 import { LogGroup } from "@/components/core/log-group"
 import { Meter as MeterItem } from "@/components/meters/meter"
+import { Metric as MetricItem } from "@/components/metrics/metric"
 import { Note as NoteItem } from "@/components/notes/note"
 import { Task as TaskItem } from "@/components/tasks/task"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
@@ -63,6 +64,12 @@ export async function LogList({ dict }: { dict: any }) {
     orderBy: { createdAt: "desc" },
   })
 
+  const metrics = await prisma.metric.findMany({
+    where: { userId: currentUserId },
+    include: { tags: true },
+    orderBy: { createdAt: "desc" },
+  })
+
   return (
     <ul className="mt-12 space-y-4">
       {tasksToday.length === 0 && (
@@ -100,6 +107,15 @@ export async function LogList({ dict }: { dict: any }) {
           createdAt={note.createdAt}
           tags={note.tags}
           title={note.title}
+          dict={dict.taskList}
+        />
+      ))}
+      {metrics.map((metric) => (
+        <MetricItem
+          key={metric.id}
+          id={metric.id}
+          tags={metric.tags}
+          value={metric.value}
           dict={dict.taskList}
         />
       ))}

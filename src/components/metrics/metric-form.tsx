@@ -19,49 +19,30 @@ import {
 } from "@/components/ui/form"
 
 import { Combobox } from "../ui/combobox"
-import { DatePicker } from "../ui/date-picker"
 import { QuickInput } from "../ui/quick-input"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select"
 import { useToast } from "../ui/use-toast"
 
 const formSchema = z.object({
-  title: z.string().min(2, {
-    message: "Title must be at least 2 characters.",
-  }),
+  value: z.number(),
   dueAt: z.date().optional(),
   tags: z.array(z.string()),
   frequency: z.string().optional(),
 })
 
-export interface LogFormProps {
-  type?: "task" | "note" | "meter"
-  features?: {
-    dueDate?: boolean
-    tags?: boolean
-    frequency?: boolean
-  }
+export interface MetricFormProps {
   dict: any
   possibleTags: string[]
 }
 
-export function LogForm({ type, features, dict, possibleTags }: LogFormProps) {
+export function MetricForm({ dict, possibleTags }: MetricFormProps) {
   const router = useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
       tags: [],
     },
   })
-  const [hasDueDate, setHasDueDate] = useState(false)
   const [hasTags, setHasTags] = useState(false)
-  const [hasFrequency, setHasFrequency] = useState(false)
   const [isPending, startTransition] = useTransition()
   const [isFetching, setIsFetching] = useState(false)
   const isMutating = isFetching || isPending
@@ -71,7 +52,7 @@ export function LogForm({ type, features, dict, possibleTags }: LogFormProps) {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsFetching(true)
 
-    const res = await fetch(`/api/${type}`, {
+    const res = await fetch(`/api/metric`, {
       method: "POST",
       body: JSON.stringify(values),
       headers: {
@@ -101,7 +82,7 @@ export function LogForm({ type, features, dict, possibleTags }: LogFormProps) {
 
   useEffect(() => {
     if (form.formState.isDirty) return
-    form.setFocus("title")
+    form.setFocus("value")
   }, [form.setFocus, form.formState.isDirty])
 
   return (
@@ -109,16 +90,18 @@ export function LogForm({ type, features, dict, possibleTags }: LogFormProps) {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           control={form.control}
-          name="title"
+          name="value"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="sr-only">Title</FormLabel>
+              <FormLabel className="sr-only">Value</FormLabel>
               <FormControl>
                 <QuickInput
                   autoFocus
                   onQuickEnter={form.handleSubmit(onSubmit)}
                   placeholder={dict.title.placeholder}
+                  type="number"
                   {...field}
+                  {...form.register("value", { valueAsNumber: true })}
                 />
               </FormControl>
               <FormDescription className="sr-only">
@@ -128,7 +111,7 @@ export function LogForm({ type, features, dict, possibleTags }: LogFormProps) {
             </FormItem>
           )}
         />
-        {features?.tags && hasTags && (
+        {hasTags && (
           <FormField
             control={form.control}
             name="tags"
@@ -153,91 +136,14 @@ export function LogForm({ type, features, dict, possibleTags }: LogFormProps) {
             )}
           />
         )}
-        {features?.frequency && hasFrequency && (
-          <FormField
-            control={form.control}
-            name="frequency"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="sr-only">Frequency</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger
-                      autoFocus
-                      className={cn(!field.value && `text-muted-foreground`)}
-                    >
-                      <SelectValue placeholder={dict.frequency.placeholder} />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="SINGLE">Just Once</SelectItem>
-                    <SelectItem value="DAILY">Daily</SelectItem>
-                    <SelectItem value="WEEKLY">Weekly</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormDescription className="sr-only">
-                  {dict.frequency.description}
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        )}
-        {features?.dueDate && hasDueDate && (
-          <FormField
-            control={form.control}
-            name="dueAt"
-            render={({ field }) => (
-              <FormItem className="space-y-0">
-                <FormLabel className="sr-only">Due</FormLabel>
-                <FormControl>
-                  <DatePicker
-                    autoFocus
-                    className={`w-full`}
-                    placeholder={dict.dueDate.placeholder}
-                    value={field.value}
-                    onChange={field.onChange}
-                  />
-                </FormControl>
-                <FormDescription className="sr-only">
-                  {dict.dueDate.description}
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        )}
         <div className="w-full flex items-center justify-end gap-4">
-          {features?.tags && (
-            <Button
-              type="button"
-              variant={hasTags ? `secondary` : `ghost`}
-              onClick={() => setHasTags(!hasTags)}
-            >
-              Tags
-            </Button>
-          )}
-          {features?.frequency && (
-            <Button
-              type="button"
-              variant={hasFrequency ? `secondary` : `ghost`}
-              onClick={() => setHasFrequency(!hasFrequency)}
-            >
-              Frequency
-            </Button>
-          )}
-          {features?.dueDate && (
-            <Button
-              type="button"
-              variant={hasDueDate ? `secondary` : `ghost`}
-              onClick={() => setHasDueDate(!hasDueDate)}
-            >
-              {hasFrequency ? "Start" : "Due"}
-            </Button>
-          )}
+          <Button
+            type="button"
+            variant={hasTags ? `secondary` : `ghost`}
+            onClick={() => setHasTags(!hasTags)}
+          >
+            Tags
+          </Button>
           <Button
             type="submit"
             className={cn({

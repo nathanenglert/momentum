@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { TrendingUp } from "lucide-react"
 
 import eventBus from "@/lib/event-bus"
 import { useKeyboardShortcut } from "@/hooks/useKeyboardShortcut"
@@ -41,6 +42,10 @@ export function CommandMenu() {
           <CommandItem onSelect={() => handleLogTypeChange(2)}>
             <Icons.copyPlus className="mr-2 h-4 w-4" />
             <span>Create Meter</span>
+          </CommandItem>
+          <CommandItem onSelect={() => handleLogTypeChange(3)}>
+            <TrendingUp className="mr-2 h-4 w-4" />
+            <span>Create Metric</span>
           </CommandItem>
         </CommandGroup>
       </CommandList>

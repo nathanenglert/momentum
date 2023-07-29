@@ -14,6 +14,21 @@
       "toastError": "It broke."
     }
   },
+  "metricForm": {
+    "title": {
+      "placeholder": "Gains, bro? Track it here...",
+      "description": ""
+    },
+    "category": {
+      "placeholder": "Tag it, check it later...",
+      "description": ""
+    },
+    "submit": {
+      "label": "Track It",
+      "toastSuccess": "Gains gained!",
+      "toastError": "It broke."
+    }
+  },
   "noteForm": {
     "title": {
       "placeholder": "Jot down your genius thoughts here, bro...",
