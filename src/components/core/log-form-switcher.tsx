@@ -5,6 +5,7 @@ import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu"
 import { TrendingUp } from "lucide-react"
 
 import eventBus from "@/lib/event-bus"
+import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
 import { MeterForm } from "@/components/meters/meter-form"
@@ -39,12 +40,12 @@ export function LogFormSwitcher({ dict, tags }: { dict: any; tags: string[] }) {
   const Form = config[logType].form
 
   return (
-    <div className="w-full flex">
+    <div className={cn("w-full flex", logType)}>
       <div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
-              className="mt-2 focus-visible:ring-2 focus-visible:ring-offset-0"
+              className="mt-2 focus-visible:ring-2 focus-visible:ring-offset-0 text-accent-foreground"
               variant={`ghost`}
             >
               <Icon size={20} />

@@ -72,6 +72,26 @@
  
     --ring: 217.2 32.6% 17.5%;
   }
+
+  .dark .task {
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 178, 85%, 59%;
+  }
+  
+  .dark .note {
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 118, 60%, 63%;
+  }
+  
+  .dark .meter {
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 302, 67%, 54%;
+  }
+  
+  .dark .metric {
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 47, 99%, 55%;
+  }
 }
  
 @layer base {
