@@ -17,13 +17,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "../ui/dropdown-menu"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select"
 
 const config = {
   task: { icon: Icons.checkSquare, form: TaskForm, dict: "taskForm" },
@@ -35,10 +28,6 @@ export type LogType = "task" | "note" | "meter" | "metric"
 
 export function LogFormSwitcher({ dict, tags }: { dict: any; tags: string[] }) {
   const [logType, setLogType] = useState<LogType>("task")
-
-  // const handleSwitch = () => {
-  //   setLogType((logType + 1) % config.length)
-  // }
 
   useEffect(() => {
     eventBus.on("log-type:change", (type: LogType) => {
