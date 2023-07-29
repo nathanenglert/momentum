@@ -243,10 +243,13 @@ export function LogForm({ type, features, dict, possibleTags }: LogFormProps) {
           )}
           <Button
             type="submit"
-            className={cn({
-              "w-[100px]": !needsExtendedWidth,
-              "w-[160px]": needsExtendedWidth,
-            })}
+            className={cn(
+              "bg-accent-foreground hover:bg-secondary hover:text-accent-foreground",
+              {
+                "w-[100px]": !needsExtendedWidth,
+                "w-[160px]": needsExtendedWidth,
+              }
+            )}
             disabled={isMutating}
           >
             {dict.submit.label}
