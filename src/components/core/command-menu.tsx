@@ -53,6 +53,7 @@ export function CommandMenu() {
             <CommandItem
               onSelect={() => handleLogTypeChange(key)}
               className={cn(key, "text-accent-foreground")}
+              key={key}
             >
               {createElement(logType.icon, { className: "mr-2 h-4 w-4" })}
               <span>Create {logType.title}</span>
@@ -62,7 +63,7 @@ export function CommandMenu() {
             ["Insights", "/insights"],
             ["Today", "/today"],
           ].map(([title, page]) => (
-            <CommandItem onSelect={() => goTo(page)}>
+            <CommandItem onSelect={() => goTo(page)} key={title}>
               <LineChart className="mr-2 h-4 w-4" />
               <span>Go to {title}</span>
             </CommandItem>
