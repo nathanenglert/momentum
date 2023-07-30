@@ -1,9 +1,11 @@
 "use client"
 
-import { useState } from "react"
-import { TrendingUp } from "lucide-react"
+import { createElement, useState } from "react"
+import { usePathname, useRouter } from "next/navigation"
+import { LineChart } from "lucide-react"
 
 import eventBus from "@/lib/event-bus"
+import { cn } from "@/lib/utils"
 import { useKeyboardShortcut } from "@/hooks/useKeyboardShortcut"
 import {
   CommandDialog,
@@ -13,18 +15,32 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command"
-import { Icons } from "@/components/icons"
 
-import { LogType } from "./log-form-switcher"
+import { LogFormConfig, LogType } from "./log-form-switcher"
 
 export function CommandMenu() {
   const [isOpen, setIsOpen] = useState(false)
+  const currentPath = usePathname()
+  const router = useRouter()
 
   useKeyboardShortcut(["meta", "k"], () => setIsOpen(true))
 
   const handleLogTypeChange = (type: string) => {
+    if (currentPath !== "/today") {
+      router.push("/today")
+      return
+    }
+
     eventBus.dispatch("log-type:change", type as LogType)
     setIsOpen(false)
+  }
+
+  const goTo = (page: string) => {
+    if (currentPath === page) {
+      setIsOpen(false)
+      return
+    }
+    router.push(page)
   }
 
   return (
@@ -33,34 +49,24 @@ export function CommandMenu() {
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup heading="Suggestions">
-          <CommandItem
-            onSelect={() => handleLogTypeChange("task")}
-            className="task text-accent-foreground"
-          >
-            <Icons.checkSquare className="mr-2 h-4 w-4" />
-            <span>Create Task</span>
-          </CommandItem>
-          <CommandItem
-            onSelect={() => handleLogTypeChange("note")}
-            className="note text-accent-foreground"
-          >
-            <Icons.minus className="mr-2 h-4 w-4" />
-            <span>Create Note</span>
-          </CommandItem>
-          <CommandItem
-            onSelect={() => handleLogTypeChange("meter")}
-            className="meter text-accent-foreground"
-          >
-            <Icons.copyPlus className="mr-2 h-4 w-4" />
-            <span>Create Meter</span>
-          </CommandItem>
-          <CommandItem
-            onSelect={() => handleLogTypeChange("metric")}
-            className="metric text-accent-foreground"
-          >
-            <TrendingUp className="mr-2 h-4 w-4" />
-            <span>Create Metric</span>
-          </CommandItem>
+          {Object.entries(LogFormConfig).map(([key, logType]) => (
+            <CommandItem
+              onSelect={() => handleLogTypeChange(key)}
+              className={cn(key, "text-accent-foreground")}
+            >
+              {createElement(logType.icon, { className: "mr-2 h-4 w-4" })}
+              <span>Create {logType.title}</span>
+            </CommandItem>
+          ))}
+          {[
+            ["Insights", "/insights"],
+            ["Today", "/today"],
+          ].map(([title, page]) => (
+            <CommandItem onSelect={() => goTo(page)}>
+              <LineChart className="mr-2 h-4 w-4" />
+              <span>Go to {title}</span>
+            </CommandItem>
+          ))}
         </CommandGroup>
       </CommandList>
     </CommandDialog>

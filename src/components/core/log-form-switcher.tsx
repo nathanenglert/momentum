@@ -19,11 +19,26 @@ import {
   DropdownMenuItem,
 } from "../ui/dropdown-menu"
 
-const config = {
-  task: { icon: Icons.checkSquare, form: TaskForm, dict: "taskForm" },
-  note: { icon: Icons.minus, form: NoteForm, dict: "noteForm" },
-  meter: { icon: Icons.copyPlus, form: MeterForm, dict: "meterForm" },
-  metric: { icon: TrendingUp, form: MetricForm, dict: "metricForm" },
+export const LogFormConfig = {
+  task: {
+    title: "Task",
+    icon: Icons.checkSquare,
+    form: TaskForm,
+    dict: "taskForm",
+  },
+  note: { title: "Note", icon: Icons.minus, form: NoteForm, dict: "noteForm" },
+  meter: {
+    title: "Meter",
+    icon: Icons.copyPlus,
+    form: MeterForm,
+    dict: "meterForm",
+  },
+  metric: {
+    title: "Metric",
+    icon: TrendingUp,
+    form: MetricForm,
+    dict: "metricForm",
+  },
 }
 export type LogType = "task" | "note" | "meter" | "metric"
 
@@ -36,8 +51,8 @@ export function LogFormSwitcher({ dict, tags }: { dict: any; tags: string[] }) {
     })
   }, [])
 
-  const Icon = config[logType].icon
-  const Form = config[logType].form
+  const Icon = LogFormConfig[logType].icon
+  const Form = LogFormConfig[logType].form
 
   return (
     <div className={cn("w-full flex", logType)}>
@@ -52,7 +67,7 @@ export function LogFormSwitcher({ dict, tags }: { dict: any; tags: string[] }) {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            {Object.keys(config).map((key) => (
+            {Object.keys(LogFormConfig).map((key) => (
               <DropdownMenuItem
                 key={key}
                 onClick={() => setLogType(key as LogType)}
@@ -64,7 +79,7 @@ export function LogFormSwitcher({ dict, tags }: { dict: any; tags: string[] }) {
         </DropdownMenu>
       </div>
       <div className="flex-grow">
-        <Form dict={dict[config[logType].dict]} possibleTags={tags} />
+        <Form dict={dict[LogFormConfig[logType].dict]} possibleTags={tags} />
       </div>
     </div>
   )
