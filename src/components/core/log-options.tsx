@@ -90,7 +90,10 @@ export function LogOptions({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className={cn("transition", "py-0 h-auto")} variant={`ghost`}>
+        <Button
+          className={cn("transition", "py-0 h-auto text-muted-foreground")}
+          variant={`ghost`}
+        >
           <span className="sr-only">Menu</span>
           <MoreHorizontal size={20} />
         </Button>
