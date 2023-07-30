@@ -64,6 +64,7 @@ export function MetricForm({ dict, possibleTags }: MetricFormProps) {
 
     if (res.status === 201) {
       form.reset()
+      setHasTags(false)
 
       toast({
         description: dict.submit.toastSuccess,

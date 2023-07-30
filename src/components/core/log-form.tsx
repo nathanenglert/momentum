@@ -83,6 +83,9 @@ export function LogForm({ type, features, dict, possibleTags }: LogFormProps) {
 
     if (res.status === 201) {
       form.reset()
+      setHasDueDate(false)
+      setHasTags(false)
+      setHasFrequency(false)
 
       toast({
         description: dict.submit.toastSuccess,
