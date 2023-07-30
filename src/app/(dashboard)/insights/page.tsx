@@ -31,48 +31,34 @@ export default async function Insights() {
   const noteCount = await prisma.note.count({
     where: {
       userId: currentUserId,
-      createdAt: {
-        gte: periodDate,
-      },
+      createdAt: { gte: periodDate },
     },
   })
 
   const previousNoteCount = await prisma.note.count({
     where: {
       userId: currentUserId,
-      createdAt: {
-        gte: previousDate,
-        lte: periodDate,
-      },
+      createdAt: { gte: previousDate, lte: periodDate },
     },
   })
 
   const periodTasks = await prisma.task.findMany({
     where: {
       userId: currentUserId,
-      completedAt: {
-        gte: periodDate,
-      },
+      completedAt: { gte: periodDate },
     },
-    select: {
-      completedAt: true,
-    },
+    select: { completedAt: true },
   })
 
   const previousTaskCount = await prisma.task.count({
     where: {
       userId: currentUserId,
-      completedAt: {
-        gte: previousDate,
-        lte: periodDate,
-      },
+      completedAt: { gte: previousDate, lte: periodDate },
     },
   })
 
   const questions = await prisma.question.findMany({
-    where: {
-      userId: currentUserId,
-    },
+    where: { userId: currentUserId },
   })
 
   return (
@@ -90,7 +76,10 @@ export default async function Insights() {
           previous={previousNoteCount}
           icon={Minus}
         />
-        <div className=" col-span-2 mt-12">
+        <div className="col-span-2 mt-12">
+          <h2 className="text-lg font-medium mb-4 text-center">
+            Tasks Completed
+          </h2>
           <TasksOverTime tasks={periodTasks} />
         </div>
       </div>
