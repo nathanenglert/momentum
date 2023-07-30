@@ -1,17 +1,13 @@
 import { createElement } from "react"
 import { redirect } from "next/navigation"
 import { addDays } from "date-fns"
-import {
-  CheckSquare,
-  LucideIcon,
-  Minus,
-  TrendingDown,
-  TrendingUp,
-} from "lucide-react"
+import { CheckSquare, LucideIcon, Minus } from "lucide-react"
 import { getServerSession } from "next-auth"
 
 import { prisma } from "@/lib/prisma"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { MetricDisplay } from "@/components/charts/metric-display"
+import { PercentageChange } from "@/components/charts/percentage-change"
 import { TasksOverTime } from "@/components/charts/tasks-over-time"
 import { CommandMenu } from "@/components/core/command-menu"
 import { QuestionList } from "@/components/questions/question-list"
@@ -91,57 +87,5 @@ export default async function Insights() {
       {/* <div className="w-[600px] mx-auto mt-8">{AwaitedTaskActivity}</div> */}
       <CommandMenu />
     </section>
-  )
-}
-
-const MetricDisplay = ({
-  name,
-  value,
-  previous,
-  icon,
-}: {
-  name: string
-  value: number
-  previous?: number
-  icon?: LucideIcon
-}) => {
-  return (
-    <Card>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium">{name}</CardTitle>
-        {icon &&
-          createElement(icon, { size: 16, className: "text-muted-foreground" })}
-      </CardHeader>
-      <CardContent>
-        <div className="text-2xl font-bold mb-1">{value.toString()}</div>
-        {previous && <PercentageChange current={value} previous={previous} />}
-      </CardContent>
-    </Card>
-  )
-}
-
-const PercentageChange = ({
-  current,
-  previous,
-}: {
-  current: number
-  previous: number
-}) => {
-  const percentage = ((current - previous) / previous) * 100
-  const symbol = percentage > 0 ? "+" : ""
-  const text =
-    percentage === 0
-      ? `no change from last month`
-      : `${symbol}${percentage}% from last month`
-  return (
-    <p className="text-xs text-muted-foreground flex gap-2 items-center">
-      {percentage != 0 &&
-        (percentage > 0 ? (
-          <TrendingUp size={16} className="note text-accent-foreground" />
-        ) : (
-          <TrendingDown size={16} className="text-destructive" />
-        ))}
-      <span>{text}</span>
-    </p>
   )
 }
