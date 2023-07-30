@@ -56,7 +56,12 @@ export default async function Insights() {
       select: {
         _count: {
           select: {
-            tasks: { where: { userId: currentUserId } },
+            tasks: {
+              where: {
+                userId: currentUserId,
+                completedAt: { gte: periodDate },
+              },
+            },
           },
         },
         name: true,

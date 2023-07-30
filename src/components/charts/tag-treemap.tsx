@@ -52,10 +52,10 @@ export const CustomizedContent = memo(
           strokeOpacity: 1 / (depth! + 1e-10),
         }}
       />
-      {depth === 1 && width! > 80 ? (
+      {depth === 1 && width! > 80 && height! > 20 ? (
         <text
           x={x! + space / 2 + width! / 2}
-          y={y! + space / 2 + height! / 2 + 4}
+          y={y! === 0 ? height! / 2 + 4 : y! + space / 2 + height! / 2 + 4}
           textAnchor="middle"
           fill="#F8FAFC"
           fontSize={14}
