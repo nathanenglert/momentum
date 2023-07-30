@@ -5,6 +5,7 @@ import { getServerSession } from "next-auth"
 
 import { prisma } from "@/lib/prisma"
 import { MetricDisplay } from "@/components/charts/metric-display"
+import { TagTreemap } from "@/components/charts/tag-treemap"
 import { TasksOverTime } from "@/components/charts/tasks-over-time"
 import { CommandMenu } from "@/components/core/command-menu"
 import { QuestionList } from "@/components/questions/question-list"
@@ -50,13 +51,29 @@ export default async function Insights() {
     },
   })
 
+  const tagCount = (
+    await prisma.tag.findMany({
+      select: {
+        _count: {
+          select: {
+            tasks: { where: { userId: currentUserId } },
+          },
+        },
+        name: true,
+      },
+    })
+  ).map((tag) => ({
+    name: tag.name,
+    size: tag._count.tasks,
+  }))
+
   const questions = await prisma.question.findMany({
     where: { userId: currentUserId },
   })
 
   return (
     <section className="container grid gap-6 md:py-10">
-      <div className="w-[600px] mx-auto mt-24 grid grid-cols-2 gap-4">
+      <div className="w-[600px] mx-auto my-24 grid grid-cols-2 gap-4">
         <MetricDisplay
           name="Tasks"
           value={periodTasks.length}
@@ -69,6 +86,10 @@ export default async function Insights() {
           previous={previousNoteCount}
           icon={Minus}
         />
+        <div className="col-span-2">
+          {/* <h2 className="text-lg font-medium mb-4 text-center">Tags</h2> */}
+          <TagTreemap tags={tagCount} />
+        </div>
         <div className="col-span-2 mt-12">
           <h2 className="text-lg font-medium mb-4 text-center">
             Tasks Completed
